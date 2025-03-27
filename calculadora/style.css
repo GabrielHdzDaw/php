@@ -1,0 +1,45 @@
+form {
+  width: 300px;
+  padding: 1em;
+  border: 1px solid #ccc;
+  border-radius: 1em;
+  box-shadow: 0 0 10px #ccc;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+form input,
+form select {
+  width: 95%;
+  padding: 0.5em;
+  margin: 0.5em 0;
+  border-radius: 0.5em;
+  border: 1px solid #ccc;
+}
+
+.result {
+  margin: 0 auto;
+  width: 300px;
+  padding: 1em;
+  border: 1px solid #ccc;
+  border-radius: 1em;
+  background-color: #f0f0f0;
+  box-shadow: 0 0 10px #ccc;
+}
+
+input[type="submit"] {
+  width: 100%;
+  padding: 0.5em;
+  margin: 0.5em 0;
+  border-radius: 0.5em;
+  border: 1px solid #ccc;
+  cursor: pointer;
+}
+
+.error {
+  color: red;
+  font-weight: bold;
+}
+
