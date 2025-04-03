@@ -14,13 +14,7 @@ session_start();
 
 <body>
     <h1>Foro</h1>
-    <?php
-    if (isset($_SESSION["started"])) {
-    ?>
-        <h3>Ya has iniciado sesión</h3>
-    <?php
-    } else {
-    ?>
+    
         <div>
             <h2>Registro</h2>
             <form action="includes/registro.inc.php" method="POST" enctype="multipart/form-data">
@@ -35,16 +29,12 @@ session_start();
         </div>
         <div>
             <h2>Iniciar sesión</h2>
-            <form action="hilos.php" method="POST">
+            <form action="includes/login.inc.php" method="POST">
                 <input type="text" name="nombre" placeholder="Nombre de usuario">
-                <input type="password" name="password" placeholder="Contraseña">
+                <input type="password" name="contrasena" placeholder="Contraseña">
                 <input type="submit" value="Iniciar sesión">
             </form>
         </div>
-
-    <?php
-    }
-    ?>
 </body>
 
 </html>
