@@ -1,6 +1,6 @@
 <?php
 if ($_SERVER["REQUEST_METHOD"] == 'POST') {
-    session_start(); 
+    session_start();
 
     $username = $_POST['nombre'];
     $password = $_POST['contrasena'];
@@ -18,6 +18,7 @@ if ($_SERVER["REQUEST_METHOD"] == 'POST') {
             if ($usuario && password_verify($password, $usuario['contrasena'])) {
                 $_SESSION['started'] = true;
                 $_SESSION['session_token'] = password_hash($username . date("dd/MM/YYYY"),  PASSWORD_BCRYPT);
+                $_SESSION['user_info'] = $usuario;
                 header("Location:../index.php");
                 die();
             } else {

@@ -1,12 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Foro - Hilos</title>
-</head>
-<body>
-    <h1>Hilos</h1>
+<?php
+session_start();
+include_once "includes/nav.inc.php";
+?>
     
 </body>
 </html>
