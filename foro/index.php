@@ -29,8 +29,8 @@ if (isset($_SESSION['started'])) {
 <div>
     <h2>Iniciar sesión</h2>
     <form action="includes/login.inc.php" method="POST">
-        <input type="text" name="nombre" placeholder="Nombre de sexuser">
-        <input type="password" name="contrasena" placeholder="Contraseña">
+        <input type="text" name="nombre" placeholder="Nombre de usuario" required>
+        <input type="password" name="contrasena" placeholder="Contraseña" required>
         <input type="submit" value="Iniciar sesión">
     </form>
 </div>
