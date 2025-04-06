@@ -8,7 +8,7 @@ if ($_SERVER["REQUEST_METHOD"] == 'POST') {
     
 
     if (is_uploaded_file($_FILES['ruta_foto_perfil']['tmp_name'])) {
-        $nombreDirectorio = "../img/";
+        $nombreDirectorio = "../img/profile/";
         $idUnico = time();
         $nombreFichero = $idUnico . "-" . $_FILES['ruta_foto_perfil']['name'];
         $rutaFoto = $nombreDirectorio . $nombreFichero;

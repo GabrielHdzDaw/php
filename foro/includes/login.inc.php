@@ -19,7 +19,7 @@ if ($_SERVER["REQUEST_METHOD"] == 'POST') {
                 $_SESSION['started'] = true;
                 $_SESSION['session_token'] = password_hash($username . date("dd/MM/YYYY"),  PASSWORD_BCRYPT);
                 $_SESSION['user_info'] = $usuario;
-                header("Location:../index.php");
+                header("Location: ../index.php");
                 die();
             } else {
                 echo "Nombre de usuario o contraseña incorrectos.";
