@@ -10,13 +10,13 @@ if ($_SERVER["REQUEST_METHOD"] == 'POST') {
     
 
     if (is_uploaded_file($_FILES['ruta_foto_perfil']['tmp_name'])) {
-        $nombreDirectorio = "../img/profile/";
+        $nombreDirectorio = "img/profile/";
         $idUnico = time();
         $nombreFichero = $idUnico . "-" . $_FILES['ruta_foto_perfil']['name'];
         $rutaFoto = $nombreDirectorio . $nombreFichero;
         move_uploaded_file($_FILES['ruta_foto_perfil']['tmp_name'], $nombreDirectorio . $nombreFichero);
     } else
-        print("No se ha podido subir el fichero\n");
+        $rutaFoto = $nombreDirectorio . "default_user.png";
 
 
     try {

@@ -1,6 +1,3 @@
-const formularioCrearHilo = document.querySelector(".formulario-crear-hilo");
-const dialogoCrearHilo = document.querySelector("#dialogoNuevoHilo");
-const botonCrearHilo = document.querySelector("#botonCrearHilo");
 
 const formularioModificarDatos = document.querySelector(".formulario-modificar-datos");
 const dialogoActualizarDatos = document.querySelector("#dialogoActualizarDatos");
@@ -10,6 +7,9 @@ const formularioborrarUsuario = document.querySelector(".formulario-borrar-usuar
 const dialogoBorrarUsuario = document.querySelector("#dialogoBorrarUsuario");
 const botonBorrarUsuario = document.querySelector("#botonBorrarUsuario");
 
+const formularioCrearHilo = document.querySelector(".formulario-crear-hilo");
+const dialogoCrearHilo = document.querySelector("#dialogoNuevoHilo");
+const botonCrearHilo = document.querySelector("#botonCrearHilo");
 botonCrearHilo.addEventListener("click", (e) => {
     dialogoCrearHilo.showModal();
     if (e.target.matches(".cerrar-dialogo")) {
@@ -17,11 +17,17 @@ botonCrearHilo.addEventListener("click", (e) => {
     }
 });
 
-formularioCrearHilo.addEventListener("submit", (e) => {
-    e.preventDefault();
-    const formData = new FormData(formularioCrearHilo);
-    formData.get('titulo');
-    
-    console.log(datos); // Aquí puedes enviar los datos al servidor o procesarlos como necesites
-    dialogoCrearHilo.close();
+botonActualizarDatos.addEventListener("click", (e) => {
+    dialogoActualizarDatos.showModal();
+    if (e.target.matches(".cerrar-dialogo")) {
+        dialogoActualizarDatos.close();
+    }
 });
+
+botonBorrarUsuario.addEventListener("click", (e) => {
+    dialogoBorrarUsuario.showModal();
+    if (e.target.matches(".cerrar-dialogo")) {
+        dialogoBorrarUsuario.close();
+    }
+});
+
