@@ -46,13 +46,19 @@ a {
 }
 
 .formulario-registro,
-.formulario-login {
+.formulario-login{
   width: 300px;
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
+dialog .formulario-actualizar-datos, .formulario-crear-hilo, .formulario-eliminar-usuario {
+  width: 300px;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
 .formulario-registro {
   display: flex;
   flex-direction: column;
@@ -64,6 +70,7 @@ a {
   border: 1px solid #ccc;
   border-radius: 4px;
 }
+
 input[type="submit"] {
   background-color: #007bff;
   color: white;
@@ -102,7 +109,7 @@ input[type="submit"]:hover {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-.foto-perfil-comentario{
+.foto-perfil-comentario {
   width: 50px;
   height: auto;
   border-radius: 50%;
@@ -145,10 +152,29 @@ input[type="submit"]:hover {
   align-items: center;
 }
 
-.comentario{
+.comentario {
   width: 100%;
   display: flex;
   justify-content: flex-start;
   align-items: center;
   gap: 16px;
+}
+
+.dialogo{
+  
+}
+.foto-perfil-perfil {
+  width: 150px;
+  height: auto;
+  border-radius: 50%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.section-perfil {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  margin-top: 20px;
+  margin-bottom: 20px;
 }

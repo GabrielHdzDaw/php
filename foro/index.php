@@ -1,9 +1,11 @@
 <?php
-session_start();
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 include_once "includes/nav.inc.php";
 
 if (isset($_SESSION['started'])) {
-    echo "<h2>Bienvenido " . $_SESSION['user_info']['nombre'] . "</h2>";
+    echo "<h2>Bienvenido " . "<a href='user.php'>" . $_SESSION['user_info']['nombre'] . "</a>" . "</h2>";
     echo "<a href='includes/logout.inc.php'>Cerrar sesión</a>";
 } else {
     echo "<h2>Inicia sesión o regístrate</h2>";
