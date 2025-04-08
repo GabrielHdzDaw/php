@@ -20,7 +20,7 @@ if (isset($_SESSION['started'])) {
             <input type="email" name="email" placeholder="email" required>
             <label for="ruta_foto_perfil">Foto de perfil</label>
 
-            <input type="file" name="ruta_foto_perfil" id="ruta_foto_perfil">
+            <input type="file" name="ruta_foto_perfil" id="ruta_foto_perfil" accept="image/*" required>
             <input type="submit" value="Registrarme">
         </form>
     </div>

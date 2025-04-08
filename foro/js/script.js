@@ -16,3 +16,12 @@ botonCrearHilo.addEventListener("click", (e) => {
         dialogoCrearHilo.close();
     }
 });
+
+formularioCrearHilo.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const formData = new FormData(formularioCrearHilo);
+    formData.get('titulo');
+    
+    console.log(datos); // Aquí puedes enviar los datos al servidor o procesarlos como necesites
+    dialogoCrearHilo.close();
+});

@@ -2,7 +2,21 @@
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
+
+try{
+    require_once "includes/conectar_db.inc.php";
+    $textoConsulta = $pdo->prepare("SELECT * FROM usuarios WHERE id = :id_usuario");
+    $textoConsulta->bindParam(":id_usuario", $_GET['id']);
+    $textoConsulta->execute();
+}
+catch (PDOException $e) {
+    die("¡Error!: " . $e->getMessage());
+}
 include_once "includes/nav.inc.php";
+
+
+
+
 
 ?>
 
@@ -23,7 +37,7 @@ include_once "includes/nav.inc.php";
     </form>
 </dialog>
 <dialog id="dialogoNuevoHilo" class="dialogo">
-    <form action="" method="POST" class="formulario-nuevo-hilo">
+    <form action="includes/hilo.inc.php" method="POST" class="formulario-nuevo-hilo">
         <input type="text" name="titulo" id="titulo" placeholder="Título del hilo" required>
         <textarea name="descripcion" id="descripcion" cols="70" rows="5" placeholder="Descripción del hilo" required></textarea>
         <input type="file" name="foto_hilo" id="foto_hilo" accept="image/*" required>
@@ -31,6 +45,9 @@ include_once "includes/nav.inc.php";
     </form>
 </dialog>
 
+<?php
+
+?>
 <section class="section-perfil">
     <img src="<?php echo $_SESSION['user_info']['ruta_foto_perfil'] ?>" alt="Foto de perfil" class="foto-perfil-perfil">
     <h2><?php echo $_SESSION['user_info']['nombre'] ?></h2>

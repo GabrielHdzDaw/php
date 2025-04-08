@@ -46,19 +46,22 @@ a {
 }
 
 .formulario-registro,
-.formulario-login{
+.formulario-login {
   width: 300px;
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-dialog .formulario-actualizar-datos, .formulario-crear-hilo, .formulario-eliminar-usuario {
+dialog .formulario-actualizar-datos,
+.formulario-crear-hilo,
+.formulario-eliminar-usuario {
   width: 300px;
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
+
 .formulario-registro {
   display: flex;
   flex-direction: column;
@@ -160,9 +163,9 @@ input[type="submit"]:hover {
   gap: 16px;
 }
 
-.dialogo{
+/* .dialogo{
   
-}
+} */
 .foto-perfil-perfil {
   width: 150px;
   height: auto;
