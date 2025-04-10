@@ -3,13 +3,12 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-try{
+try {
     require_once "includes/conectar_db.inc.php";
     $textoConsulta = $pdo->prepare("SELECT * FROM usuarios WHERE id = :id_usuario");
     $textoConsulta->bindParam(":id_usuario", $_GET['id']);
     $textoConsulta->execute();
-}
-catch (PDOException $e) {
+} catch (PDOException $e) {
     die("¡Error!: " . $e->getMessage());
 }
 include_once "includes/nav.inc.php";
@@ -37,17 +36,15 @@ include_once "includes/nav.inc.php";
     </form>
 </dialog>
 <dialog id="dialogoNuevoHilo" class="dialogo">
-    <form action="includes/hilo.inc.php" method="POST" class="formulario-nuevo-hilo">
+    <form action="includes/hilo.inc.php" method="POST" class="formulario-nuevo-hilo" enctype="multipart/form-data">
         <input type="text" name="titulo" id="titulo" placeholder="Título del hilo" required>
         <textarea name="descripcion" id="descripcion" cols="70" rows="5" placeholder="Descripción del hilo" required></textarea>
-        <input type="file" name="foto_hilo" id="foto_hilo" accept="image/*" required>
+        <input type="file" name="ruta_foto_hilo" id="ruta_foto_hilo" accept="image/*" required>
         <input type="submit" value="Crear hilo">
     </form>
 </dialog>
 
-<?php
 
-?>
 <section class="section-perfil">
     <img src="<?php echo $_SESSION['user_info']['ruta_foto_perfil'] ?>" alt="Foto de perfil" class="foto-perfil-perfil">
     <h2><?php echo $_SESSION['user_info']['nombre'] ?></h2>
@@ -59,4 +56,5 @@ include_once "includes/nav.inc.php";
 </section>
 <script src="js/script.js"></script>
 </body>
+
 </html>

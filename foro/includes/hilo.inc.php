@@ -8,14 +8,15 @@ try {
         $descripcion = $_POST['descripcion'];
         $idUsuario = $_SESSION['user_info']['id'];
 
-        if (is_uploaded_file($_FILES['foto_hilo']['tmp_name'])) {
-            $nombreDirectorio = "../img/thread/";
+        $nombreDirectorio = "../img/thread/";
+        if (is_uploaded_file($_FILES['ruta_foto_hilo']['tmp_name'])) {
             $idUnico = time();
-            $nombreFichero = $idUnico . "-" . $_FILES['foto_hilo']['name'];
-            $rutaFoto = $nombreDirectorio . $nombreFichero;
-            move_uploaded_file($_FILES['foto_hilo']['tmp_name'], $nombreDirectorio . $nombreFichero);
+            $nombreFichero = $idUnico . "-" . $_FILES['ruta_foto_hilo']['name'];
+            $rutaFoto = "img/thread/" . $nombreFichero;
+            move_uploaded_file($_FILES['ruta_foto_hilo']['tmp_name'], $nombreDirectorio . $nombreFichero);
         } else
-            print("No se ha podido subir el fichero\n");
+            $rutaFoto = "img/thread/" . "default_thread.jpg";
+            
     }
     require_once "conectar_db.inc.php";
     $textoConsulta = $pdo->prepare("INSERT INTO hilos (titulo, descripcion, id_usuario, ruta_foto_hilo) 
@@ -27,7 +28,7 @@ try {
     $textoConsulta->bindParam(":ruta_foto_hilo", $rutaFoto);
     $textoConsulta->execute();
     $idHilo = $pdo->lastInsertId();
-    header("Location: hilo.php?id=$idHilo");
+    header("Location: ../hilo.php?id=$idHilo");
 } catch (PDOException $e) {
     die("¡Error!: " . $e->getMessage());
 }

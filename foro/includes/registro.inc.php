@@ -9,14 +9,14 @@ if ($_SERVER["REQUEST_METHOD"] == 'POST') {
     $email = $_POST['email'];
     
 
+    $nombreDirectorio = "../img/profile/";
     if (is_uploaded_file($_FILES['ruta_foto_perfil']['tmp_name'])) {
-        $nombreDirectorio = "img/profile/";
         $idUnico = time();
         $nombreFichero = $idUnico . "-" . $_FILES['ruta_foto_perfil']['name'];
-        $rutaFoto = $nombreDirectorio . $nombreFichero;
+        $rutaFoto = "img/profile/" . $nombreFichero;
         move_uploaded_file($_FILES['ruta_foto_perfil']['tmp_name'], $nombreDirectorio . $nombreFichero);
     } else
-        $rutaFoto = $nombreDirectorio . "default_user.png";
+        $rutaFoto = "img/profile/" . "default_user.png";
 
 
     try {
@@ -33,6 +33,7 @@ if ($_SERVER["REQUEST_METHOD"] == 'POST') {
         die("¡Error!: " . $e->getMessage());
     }
     header('Location: ../index.php');
+   echo  $_FILES['ruta_foto_perfil']['tmp_name'];
 } else {
     header('Location: ../index.php');
     echo "No se ha podido registrar el usuario";

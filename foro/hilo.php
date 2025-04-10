@@ -60,7 +60,7 @@ include_once "includes/nav.inc.php";
             } else {
                 echo "<article class='hilo'>";
                 echo "<section class='hilo-info'>";
-                echo "<h2>" . htmlspecialchars($hilo['titulo']) . " <small>por <a href=''@" . htmlspecialchars($hilo['usuario_']) . "</small></h2>";
+                echo "<h2>" . htmlspecialchars($hilo['titulo']) . " <small>por <a href=''@" . htmlspecialchars($hilo['usuario_']) . "</a>" . "</small></h2>";
                 echo "<img src='" . htmlspecialchars($hilo['ruta_foto_hilo']) . "' alt='Foto del hilo' class='foto-hilo'>";
                 echo "<p>" . htmlspecialchars($hilo['descripcion']) . "</p>";
                 echo "<h4>" . htmlspecialchars($hilo['creado']) . "</h4>";
