@@ -23,9 +23,10 @@
             </div>
             <div>
                 <form action="">
-                    <input type="text" name="nombre_usuario" id="nombre_usuario" placeholder="Nombre de usuario" required>
-                    <input type="password" name="contrasena" id="contrasena" placeholder="Contraseña" required>
+                    <input type="text" name="nombre_usuario_login" id="nombre_usuario_login" placeholder="Nombre de usuario" required>
+                    <input type="password" name="contrasena_login" id="contrasena_login" placeholder="Contraseña" required>
                     <button type="submit">Iniciar sesión</button>
+                    <button type="button" id="botonRegistro">Registrarse</button>
                 </form>
             </div>
 
@@ -34,3 +35,14 @@
             </div> -->
         </nav>
     </header>
+    <dialog id="dialogoRegistro">
+        <form action="registro.inc.php">
+            <h2>Registro</h2>
+            <input type="text" name="nombre_usuario_registro" id="nombre_usuario_registro" placeholder="Nombre de usuario" required>
+            <input type="email" name="email" id="email" placeholder="Email" required>
+            <input type="password" name="contrasena_registro" id="contrasena_registro" placeholder="Contraseña" required>
+            <input type="file" name="ruta_foto_perfil" id="ruta_foto_perfil">
+            <button type="submit">Registrarse</button>
+            <button type="button" id="botonCerrarRegistro">Cerrar</button>
+        </form>
+    </dialog>

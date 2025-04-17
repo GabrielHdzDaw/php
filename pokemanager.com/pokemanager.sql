@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.0.1
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 15-04-2025 a las 14:43:59
--- Versión del servidor: 10.4.6-MariaDB
--- Versión de PHP: 7.2.22
+-- Tiempo de generación: 17-04-2025 a las 14:30:09
+-- Versión del servidor: 10.4.28-MariaDB
+-- Versión de PHP: 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -43,7 +42,7 @@ CREATE TABLE `pokemons` (
   `Generation` int(1) DEFAULT NULL,
   `Legendary` int(1) DEFAULT NULL,
   `icon_path` varchar(32) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Volcado de datos para la tabla `pokemons`
@@ -782,8 +781,10 @@ INSERT INTO `pokemons` (`id`, `Name`, `Type 1`, `Type 2`, `Total`, `HP`, `Attack
 CREATE TABLE `usuarios` (
   `id` int(11) NOT NULL,
   `nombre` varchar(30) NOT NULL,
-  `contrasena` varchar(30) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `contrasena` varchar(30) NOT NULL,
+  `creado` timestamp NOT NULL DEFAULT current_timestamp(),
+  `ruta_foto_perfil` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Índices para tablas volcadas
