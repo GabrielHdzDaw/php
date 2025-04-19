@@ -2,9 +2,9 @@
 if ($_SERVER["REQUEST_METHOD"] == 'POST') {
     session_start();
 
-    $username = isset($_POST['nombre_usuario']) ? $_POST['nombre_usuario'] : null;
-    $password = password_hash($_POST['contrasena'], PASSWORD_BCRYPT);
-    $email = $_POST['email'];
+    $username = isset($_POST['nombre_usuario_registro']) ? $_POST['nombre_usuario_registro'] : null;
+    $password = isset($_POST['contrasena_registro']) ? password_hash($_POST['contrasena_registro'], PASSWORD_BCRYPT) : null;
+    $email = isset($_POST['email']) ? $_POST['email'] : null;
     
 
     $nombreDirectorio = "../img/profile/";

@@ -1,35 +1,37 @@
 <?php
+session_start();
 if ($_SERVER["REQUEST_METHOD"] == 'POST') {
-    if (session_status() === PHP_SESSION_NONE) {
-        session_start();
-    }
-
-    $username = $_POST['nombre'];
-    $password = $_POST['contrasena'];
+    $username = trim($_POST['nombre_usuario_login'] ?? '');
+    $password = $_POST['contrasena_login'] ?? '';
 
     try {
         require_once "conectar_db.inc.php";
-
-        $texto_consulta = "SELECT * FROM usuarios WHERE nombre = :nombre";
-        $consulta = $pdo->prepare($texto_consulta);
+        $consulta = $pdo->prepare("SELECT * FROM usuarios WHERE nombre = :nombre");
         $consulta->bindParam(":nombre", $username);
 
         if ($consulta->execute()) {
             $usuario = $consulta->fetch(PDO::FETCH_ASSOC);
-
-            if ($usuario && password_verify($password, $usuario['contrasena'])) {
-                $_SESSION['started'] = true;
-                $_SESSION['session_token'] = password_hash($username . date("dd/MM/YYYY"),  PASSWORD_BCRYPT);
-                $_SESSION['user_info'] = $usuario;
-                header("Location: ../index.php");
-                die();
+            if ($usuario) {
+                if (password_verify($password, $usuario['contrasena'])) {
+                    $_SESSION['started'] = true;
+                    $_SESSION['session_token'] = password_hash($username . date("d/m/Y"), PASSWORD_BCRYPT);
+                    $_SESSION['user_info'] = $usuario;
+                    header("Location: ../index.php");
+                    die();
+                } else {
+                    error_log("Falló password_verify()");
+                }
             } else {
-                echo "Nombre de usuario o contraseña incorrectos.";
+                error_log("Usuario no encontrado en BD");
             }
+            echo "Nombre de usuario o contraseña incorrectos.";
         } else {
-            print_r($consulta->errorInfo());
+            error_log("Error en la consulta: " . print_r($consulta->errorInfo(), true));
         }
     } catch (PDOException $e) {
-        die("¡Error!: " . $e->getMessage());
+        error_log("¡Error!: " . $e->getMessage());
     }
+} else {
+    header("Location: ../index.php");
+    echo "No se ha podido iniciar sesión.";
 }

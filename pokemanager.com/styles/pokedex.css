@@ -1,0 +1,68 @@
+:root {
+
+    --card-bg-color: #fff;
+    /* Color de fondo de las tarjetas */
+    --card-border-color: #ccc;
+    /* Color del borde de las tarjetas */
+}
+
+.pokedex {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    padding: 20px;
+    margin: 0 auto;
+}
+
+.pokemon-card {
+    background-color: var(--card-bg-color);
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: 0.3s ease;
+}
+
+.pokemon-card:hover {
+    transition: 0.3s ease;
+    transform: scale(1.05);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.pokemon-card h2 {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+}
+
+.pokemon-card img {
+
+    margin-bottom: 10px;
+}
+
+.pokemon-not-found {
+    text-align: center;
+    font-size: 1.2em;
+    margin-top: 20px;
+    filter:
+        brightness(0)
+        /* Hace la imagen completamente negra */
+        contrast(1000%)
+        /* Aumenta el contraste para eliminar medios tonos */
+        drop-shadow(0 0 8px rgba(0, 0, 0, 0.8));
+    /* Opcional: añade sombra para mejor visibilidad */
+
+}
+
+.pokemon-card-hashtag {
+    color: var(--accent-color);
+    font-size: 1.2em;
+    position: fixed;
+    top: 15px;
+    left: 15px;
+    transition: 0.3s ease;  
+}
