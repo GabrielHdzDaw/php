@@ -1,15 +1,15 @@
 import requests
 import time
 
-# Configuración de la API
-API_KEY = 'sk-9482c7d5b67c43d1b19b4685ab95881b'
+
+API_KEY = ''
 API_URL = 'https://api.deepseek.com/v1/chat/completions'
 HEADERS = {
     'Authorization': f'Bearer {API_KEY}',
     'Content-Type': 'application/json'
 }
 
-# Configuración del prompt
+
 PROMPT_TEMPLATE = """
 Proporciona una descripción breve y concisa (máximo 2 oraciones) del Pokémon con número {id} 
 en tercera persona. Solo incluye la descripción sin formato, números, ni nombres de usuario.
@@ -41,7 +41,7 @@ def get_pokemon_description(pokemon_id):
 
 def generate_update_queries():
     with open('pokemon_updates.sql', 'a', encoding='utf-8') as file:
-        for id in range(1, 722):
+        for id in range(293, 722):
             description = None
             retries = 3
 

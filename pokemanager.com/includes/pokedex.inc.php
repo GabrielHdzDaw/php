@@ -12,11 +12,11 @@ try {
 if ($pokedex) {
     echo "<div class='pokedex'>";
     foreach ($pokedex as $pokemon) {
-        echo "<div class='pokemon-card'>";
+        echo "<div class='pokemon-card' data-id='" . $pokemon['id'] . "'>";
         echo "<h2 class='pokemon-card-hashtag'>#" . $pokemon['id'] . "</h2>";
-        echo "<img src='" . $pokemon['icon_path'] . "' alt='" . $pokemon['Name'] . "'>";
+        echo "<img class='pokemon-img' src='" . $pokemon['icon_path'] . "' alt='" . $pokemon['Name'] . "'>";
         echo "<h3>" . $pokemon['Name'] . "</h3>";
-
+        
         echo "</div>";
     }
     echo "</div>";

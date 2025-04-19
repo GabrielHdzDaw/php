@@ -9,17 +9,14 @@
 .pokedex {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 20px;
-    padding: 20px;
+    gap: 10px;
+    padding: 5px;
     margin: 0 auto;
 }
 
 .pokemon-card {
-    background-color: var(--card-bg-color);
     border-radius: 10px;
-    padding: 20px;
     text-align: center;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     transition: transform 0.3s ease;
     display: flex;
     flex-direction: column;
@@ -32,6 +29,7 @@
     transition: 0.3s ease;
     transform: scale(1.05);
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
 }
 
 .pokemon-card h2 {
@@ -39,8 +37,8 @@
     margin-bottom: 10px;
 }
 
-.pokemon-card img {
-
+.pokemon-img {
+    filter: drop-shadow(5px 5px 5px rgba(0, 0, 0, 0.5));
     margin-bottom: 10px;
 }
 
@@ -55,13 +53,12 @@
         /* Aumenta el contraste para eliminar medios tonos */
         drop-shadow(0 0 8px rgba(0, 0, 0, 0.8));
     /* Opcional: añade sombra para mejor visibilidad */
-
 }
 
 .pokemon-card-hashtag {
     color: var(--accent-color);
     font-size: 1.2em;
-    position: fixed;
+    position: relative;
     top: 15px;
     left: 15px;
     transition: 0.3s ease;  
