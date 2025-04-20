@@ -9,10 +9,10 @@
     <meta name="author" content="Gabriel Hernández Collado">
     <link rel="stylesheet" href="style.css">
     <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
-    <link rel="stylesheet" href="styles/style.css" type="text/css">
     <link rel="stylesheet" href="styles/dialogs.css" type="text/css">
     <link rel="stylesheet" href="styles/tabs.css" type="text/css">
     <link rel="stylesheet" href="styles/pokedex.css" type="text/css">
+    <link rel="stylesheet" href="styles/style.css" type="text/css">
 
     <title>PokéManager</title>
 </head>
@@ -53,11 +53,15 @@
     <dialog id="dialogoRegistro">
         <div class="dialogo-registro-contenedor">
             <img src="img/register_bg.jpg" alt="">
-            <form action="includes/registro.inc.php" method="POST" class="formulario-registro" enctype="multipart/form-data">
+            <form action="includes/signup.inc.php" method="POST" class="formulario-registro" enctype="multipart/form-data">
                 <h2>¡Bienvenid@ a PokéManager!</h2>
                 <input type="text" name="nombre_usuario_registro" id="nombre_usuario_registro" placeholder="Nombre de usuario" required>
                 <input type="email" name="email" id="email" placeholder="Email" required>
+                <input type="text" name="repetir_email" id="repetir_email" placeholder="Repetir email" required>
                 <input type="password" name="contrasena_registro" id="contrasena_registro" placeholder="Contraseña" required>
+                <input type="password" name="repetir_contrasena" id="repetir_contrasena" placeholder="Repetir contraseña" required>
+                <label for="fecha_nacimiento">Introduce tu fecha de nacimiento:</label><br>
+                <input type="date" name="fecha_nacimiento" id="fecha_nacimiento" placeholder="Fecha de nacimiento" required">
                 <input type="file" name="ruta_foto_perfil" id="ruta_foto_perfil">
                 <button type="submit">Registrarse</button>
                 <span id="botonCerrarRegistro">X</span>

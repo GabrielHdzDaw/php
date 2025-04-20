@@ -16,7 +16,9 @@ include_once 'includes/header.inc.php';
     <!-- Tab content -->
     <div id="Sobres" class="tabcontent">
         <h3>Sobres</h3>
-        <p>Aquí puedes abrir sobres</p>
+        <?php
+        include_once 'includes/sobres.inc.php';
+        ?>
     </div>
 
     <div id="PokéDex" class="tabcontent">

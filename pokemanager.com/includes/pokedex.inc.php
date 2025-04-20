@@ -13,13 +13,22 @@ if ($pokedex) {
     echo "<div class='pokedex'>";
     foreach ($pokedex as $pokemon) {
         echo "<div class='pokemon-card' data-id='" . $pokemon['id'] . "'>";
-        echo "<h2 class='pokemon-card-hashtag'>#" . $pokemon['id'] . "</h2>";
+        // echo "<h2 class='pokemon-card-hashtag'>#" . $pokemon['id'] . "</h2>";
         echo "<img class='pokemon-img' src='" . $pokemon['icon_path'] . "' alt='" . $pokemon['Name'] . "'>";
         echo "<h3>" . $pokemon['Name'] . "</h3>";
-        
+
         echo "</div>";
     }
     echo "</div>";
 } else {
     echo "<p>No se encontraron Pokémon en la PokéDex.</p>";
 }
+?>
+
+<dialog id="pokemon-dialog" class="pokemon-dialog">
+    <div class="pokemon-dialog-content">
+        <button id="close-dialog" class="close-button">X</button>
+        <h2></h2>
+        <img class="img-pokemon-modal" src="" alt="">
+        <p></p>
+</dialog>
