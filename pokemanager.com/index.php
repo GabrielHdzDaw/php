@@ -13,6 +13,8 @@ include_once 'includes/header.inc.php';
 
     </div>
 
+    
+
     <!-- Tab content -->
     <div id="Sobres" class="tabcontent">
         <h3>Sobres</h3>
@@ -42,6 +44,19 @@ include_once 'includes/header.inc.php';
         <h3>Adminstrador</h3>
         <p>Aquí puedes administrar la página</p>
     </div>
+
+    <?php
+    if(isset($_SESSION['pokemons'])) {
+        echo "<dialog id='dialogoSobre' class='dialogo-sobre'>";
+        echo "<div class='dialogo-sobre-contenido'>";
+        foreach ($_SESSION['pokemons'] as $pokemon) {
+            
+            echo "<img class='pokemon-img' src='img/sprites/gifs/{$pokemon['Name']}.gif' alt='{$pokemon['Name']}'>";
+            
+        }
+        unset($_SESSION['pokemons']);
+    }
+    ?>
 </main>
 <?php
 include_once 'includes/footer.inc.php';

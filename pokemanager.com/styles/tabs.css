@@ -1,3 +1,9 @@
+:root {
+    --main-color: #ffd595;
+    --accent-color: rgb(255, 217, 0);
+    --button-color: #f88418;
+}
+
 /* Style the tab */
 .tab {
     overflow: hidden;
@@ -7,7 +13,7 @@
 
 /* Style the buttons that are used to open the tab content */
 .tab button {
-    background-color: inherit;
+    background-color: var(--button-color);
     float: left;
     border: none;
     outline: none;
@@ -18,12 +24,12 @@
 
 /* Change background color of buttons on hover */
 .tab button:hover {
-    background-color: #ddd;
+    background-color: var(--accent-color);
 }
 
 /* Create an active/current tablink class */
 .tab button.active {
-    background-color: #ccc;
+    background-color: var(--accent-color);
 }
 
 /* Style the tab content */

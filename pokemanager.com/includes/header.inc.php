@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="styles/tabs.css" type="text/css">
     <link rel="stylesheet" href="styles/pokedex.css" type="text/css">
     <link rel="stylesheet" href="styles/style.css" type="text/css">
+    <link rel="stylesheet" href="styles/sobres.css" type="text/css">
 
     <title>PokéManager</title>
 </head>
@@ -50,7 +51,7 @@
             </div> -->
         </nav>
     </header>
-    <dialog id="dialogoRegistro">
+    <dialog id="dialogoRegistro" class="dialogo-registro">
         <div class="dialogo-registro-contenedor">
             <img src="img/register_bg.jpg" alt="">
             <form action="includes/signup.inc.php" method="POST" class="formulario-registro" enctype="multipart/form-data">
@@ -60,7 +61,7 @@
                 <input type="text" name="repetir_email" id="repetir_email" placeholder="Repetir email" required>
                 <input type="password" name="contrasena_registro" id="contrasena_registro" placeholder="Contraseña" required>
                 <input type="password" name="repetir_contrasena" id="repetir_contrasena" placeholder="Repetir contraseña" required>
-                <label for="fecha_nacimiento">Introduce tu fecha de nacimiento:</label><br>
+                <label for="fecha_nacimiento">Introduce tu fecha de nacimiento:</label>
                 <input type="date" name="fecha_nacimiento" id="fecha_nacimiento" placeholder="Fecha de nacimiento" required">
                 <input type="file" name="ruta_foto_perfil" id="ruta_foto_perfil">
                 <button type="submit">Registrarse</button>

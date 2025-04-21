@@ -2,6 +2,9 @@ const botonRegistro = document.getElementById("botonRegistro");
 const dialogoRegistro = document.getElementById("dialogoRegistro");
 const botonCerrarRegistro = document.getElementById("botonCerrarRegistro");
 
+const dialogoSobre = document.getElementById("dialogoSobre");
+
+
 botonRegistro.addEventListener("click", () => {
     document.body.classList.add("modal-abierto", "blur");
     dialogoRegistro.classList.add("blur-inverso");
@@ -19,3 +22,16 @@ botonCerrarRegistro.addEventListener("click", () => {
     // document.body.style.overflow = ""; // Reactiva el scroll del body
 });
 
+document.addEventListener("DOMContentLoaded", () => {
+    dialogoSobre.showModal();
+    dialogoSobre.classList.add("blur-inverso");
+    document.body.classList.add("blur");
+    document.body.style.overflow = "hidden"; // Desactiva el scroll del body
+});
+
+dialogoSobre.addEventListener("cancel", () => {
+    document.body.classList.remove("blur");
+    dialogoSobre.close();
+    document.body.classList.remove("blur-inverso-body");
+    document.body.style.overflow = ""; // Reactiva el scroll del body
+});

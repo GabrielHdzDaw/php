@@ -1,5 +1,5 @@
 :root {
-    --main-color: #ffd595;
+    --main-color: #f8c351;
     --accent-color: orange;
     --button-color: #f88418;
 }
@@ -55,7 +55,7 @@ footer {
     color: white;
     text-align: center;
     padding: 10px;
-    position: fixed;
+    position: static;
     bottom: 0;
     width: 100%;
     min-height: 100px;
