@@ -12,11 +12,14 @@ try {
 if ($pokedex) {
     echo "<div class='pokedex'>";
     foreach ($pokedex as $pokemon) {
-        echo "<div class='pokemon-card' data-id='" . $pokemon['id'] . "'>";
-        // echo "<h2 class='pokemon-card-hashtag'>#" . $pokemon['id'] . "</h2>";
-        echo "<img class='pokemon-img' src='" . $pokemon['icon_path'] . "' alt='" . $pokemon['Name'] . "'>";
-        echo "<h3>" . $pokemon['Name'] . "</h3>";
+        // Verifica si el ID del Pokémon está en la sesión del usuario
+        $notFoundClass = (in_array($pokemon['id'], $_SESSION['pokemons_usuario']))
+            ? ''
+            : 'pokemon-not-found';
 
+        echo "<div class='pokemon-card' data-id='" . $pokemon['id'] . "'>";
+        echo "<img class='pokemon-img $notFoundClass' src='" . $pokemon['icon_path'] . "' alt='" . $pokemon['Name'] . "'>";
+        echo "<h3 class='pokemon-nombre'>" . $pokemon['Name'] . "</h3>";
         echo "</div>";
     }
     echo "</div>";

@@ -1,3 +1,7 @@
+<?php
+session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -31,7 +35,7 @@
             <div>
                 <?php
                 if ($_SESSION['started'] ?? false) {
-                    echo '<button><a href="includes/logout.inc.php">Cerrar sesión</a></button>';
+                    echo '<a href="includes/logout.inc.php"><button>Cerrar sesión</button></a>';
                 } else {
                 ?>
                     <form action="includes/login.inc.php" method="POST" class="formulario-login">

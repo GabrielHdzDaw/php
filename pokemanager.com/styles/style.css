@@ -33,7 +33,7 @@ nav {
     padding: 10px;
 }
 
-nav button {
+button {
     background-color: var(--button-color);
     color: white;
     border: none;
@@ -64,14 +64,15 @@ footer {
 .logo {
     width: 250px;
     margin: 10px;
-    transition: 0.3s ease;
+    filter: drop-shadow(5px 5px 5px rgba(0, 0, 0, 0.5));
+    transition: 0.3s;
 }
 
 .logo:hover {
     cursor: pointer;
-    transition: 0.3s ease;
+    transition: 0.3s;
     transform: scale(1.05);
-    filter: brightness(1.2);
+    filter: drop-shadow(9px 9px 9px rgba(0, 0, 0, 0.5));
 }
 
 .formulario-login input {

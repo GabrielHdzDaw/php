@@ -137,20 +137,143 @@ dialog {
     transition: 0.3s ease;
 }
 
-#dialogoSobre {
-    border: 0px;
-}
-
 .dialogo-sobre {
-    border: 0px;
-    background-color: white;
+    border: none !important;
+    outline: none !important;
+    background-color: rgba(255, 255, 255, 0.35);
     border-radius: 50%;
-    box-shadow: 10px 10px 10px 10px white;
+    padding: 0;
+    box-shadow: inset 0 0 30px 20px white;
+    box-shadow: 0 0 30px 20px white;
+    /* position: relative; */
+    overflow: hidden;
+    /* width: 300px; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 }
 
+.dialogo-sobre::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    /* Heredará la misma forma que tenga .dialogo-sobre */
+    /* No establece border-radius aquí para que tome la forma del padre */
+    background: conic-gradient(from 0deg,
+            #ff00cc,
+            #ff0066,
+            #ff0000,
+            #ff6600,
+            #ffcc00,
+            #66ff00,
+            #00ff66,
+            #00ffcc,
+            #0066ff,
+            #3300ff,
+            #cc00ff,
+            #ff00cc);
+    z-index: -1;
+    filter: blur(50px);
+    animation: rotateGradient 10s linear infinite;
+    transform-origin: center;
+    border-radius: 50%;
+    box-shadow: inset 0 0 30px 20px rgb(255, 255, 255);
+}
+
+/* También ajusta el contenido si es necesario */
 .dialogo-sobre-contenido {
     display: flex;
     align-items: center;
     justify-content: space-evenly;
-    padding: 20px;
+    padding: 50px;
+    background-color: rgba(255, 255, 255, 0.35);
+
+    /* Igual, quita el border-radius fijo si quieres que se adapte */
+    /* position: relative; */
+    z-index: 1;
+    box-shadow: inset 0 0 30px 20px rgb(255, 255, 255);
+    transition: 0.2s ease;
+}
+
+.dialogo-sobre-contenido img {
+    transition: 0.1s ease;
+}
+
+.dialogo-sobre-contenido img:hover {
+    transition: 0.1s ease;
+    transform: scale(1.2);
+    cursor: pointer;
+}
+
+.pokemon-nombre {
+    color: orange;
+    text-align: center;
+    margin-top: 10px;
+    background-color: rgba(255, 255, 255, 0.35);
+    padding: 5px;
+    border-radius: 20px;
+}
+
+.pokemon-sobre-contenedor {
+    transition: 0.2s ease;
+}
+
+.pokemon-sobre-contenedor:hover {
+    transition: 0.2s ease;
+    transform: scale(1.05);
+    cursor: pointer;
+}
+
+/* .cerrar-dialogo-sobre{
+    background-color: #ff6600;
+    color: white;
+    border: none !important;
+    padding: 10px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: 0.3s ease;
+
+} */
+
+.dialogo-sobre-contenido-pokemons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+
+@keyframes rotateGradient {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes rotateShadow {
+    0% {
+        box-shadow: 15px 0 20px -5px rgba(255, 255, 255, 0.8);
+    }
+
+    25% {
+        box-shadow: 0 15px 20px -5px rgba(255, 255, 255, 0.8);
+    }
+
+    50% {
+        box-shadow: -15px 0 20px -5px rgba(255, 255, 255, 0.8);
+    }
+
+    75% {
+        box-shadow: 0 -15px 20px -5px rgba(255, 255, 255, 0.8);
+    }
+
+    100% {
+        box-shadow: 15px 0 20px -5px rgba(255, 255, 255, 0.8);
+    }
 }

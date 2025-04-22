@@ -1,4 +1,5 @@
 <?php
+session_start();
 try {
     require_once 'conectar_db.inc.php';
     $texto_consulta_todos = "SELECT * FROM pokemon ORDER BY id ASC";
@@ -29,7 +30,7 @@ try {
     $consulta_gen_4 = $pdo->prepare($texto_consulta_gen_4);
     $consulta_gen_4->execute();
     $gen_4 = $consulta_gen_4->fetchAll(PDO::FETCH_ASSOC);
-    
+
     // Consulta para los pokemon de la gen 5
     $texto_consulta_gen_5 = "SELECT * FROM pokemon WHERE id > 493 AND id <= 649 ORDER BY id ASC";
     $consulta_gen_5 = $pdo->prepare($texto_consulta_gen_5);
@@ -56,7 +57,16 @@ try {
 
     //unimos los 4 pokemon aleatorios con un legendario
     $legendarios = array_merge($legendarios, $pokemons_aleatorios);
+
+    $texto_consulta_usuario = "SELECT t.id_pokemon FROM tiene t JOIN usuarios u ON t.id_usuario = :id_usuario";
+    $consulta_usuario = $pdo->prepare($texto_consulta_usuario);
+    $consulta_usuario->bindParam(':id_usuario', $usuario['id'], PDO::PARAM_INT);
+    $consulta_usuario->execute();
+    $pokemons_usuario = $consulta_usuario->fetchAll(PDO::FETCH_ASSOC);
+
+    foreach ($pokemons_usuario as $pokemon) {
+        $_SESSION['pokemons_usuario'][] = $pokemon['id_pokemon'];
+    }
 } catch (PDOException $e) {
     die("¡Error!: " . $e->getMessage());
 }
-?>

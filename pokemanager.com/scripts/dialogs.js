@@ -4,13 +4,14 @@ const botonCerrarRegistro = document.getElementById("botonCerrarRegistro");
 
 const dialogoSobre = document.getElementById("dialogoSobre");
 
+const cerrarDialogoSobre = document.getElementById("cerrarDialogoSobre");
 
 botonRegistro.addEventListener("click", () => {
     document.body.classList.add("modal-abierto", "blur");
     dialogoRegistro.classList.add("blur-inverso");
     dialogoRegistro.showModal();
     
-    // document.body.style.overflow = "hidden"; // Desactiva el scroll del body
+    document.body.style.overflow = "hidden"; // Desactiva el scroll del body
 });
 
 botonCerrarRegistro.addEventListener("click", () => {
@@ -19,7 +20,7 @@ botonCerrarRegistro.addEventListener("click", () => {
     dialogoRegistro.classList.remove("blur-inverso");
     document.body.classList.add("blur-inverso-body");
 
-    // document.body.style.overflow = ""; // Reactiva el scroll del body
+    document.body.style.overflow = ""; // Reactiva el scroll del body
 });
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -29,7 +30,14 @@ document.addEventListener("DOMContentLoaded", () => {
     document.body.style.overflow = "hidden"; // Desactiva el scroll del body
 });
 
-dialogoSobre.addEventListener("cancel", () => {
+// dialogoSobre.addEventListener("cancel", () => {
+//     document.body.classList.remove("blur");
+//     dialogoSobre.close();
+//     document.body.classList.remove("blur-inverso-body");
+//     document.body.style.overflow = ""; // Reactiva el scroll del body
+// });
+
+cerrarDialogoSobre.addEventListener("click", () => {
     document.body.classList.remove("blur");
     dialogoSobre.close();
     document.body.classList.remove("blur-inverso-body");

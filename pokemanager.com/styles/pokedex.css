@@ -46,6 +46,7 @@
     /* Ajusta el alto al contenedor */
     object-fit: cover;
     /* Recorta la imagen manteniendo proporciones */
+    display: block;
 }
 
 .pokemon-not-found {
