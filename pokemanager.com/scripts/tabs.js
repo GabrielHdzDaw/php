@@ -1,4 +1,4 @@
-function openCity(evt, tabName) {
+function openTab(evt, tabName) {
   // Declare all variables
   let i, tabcontent, tablinks;
 
@@ -25,13 +25,13 @@ document.addEventListener('DOMContentLoaded', function() {
   const tabButtons = document.querySelectorAll('.tablinks');
   tabButtons.forEach(button => {
       button.addEventListener('click', function(e) {
-          openCity(e, this.dataset.tab);
+          openTab(e, this.dataset.tab);
       });
   });
   
   // Open first tab by default
   if (tabButtons.length > 0) {
-      tabButtons[0].click();
+    tabButtons[0].click();
   }
   
   // // Optional: Check if hash exists in URL to open specific tab

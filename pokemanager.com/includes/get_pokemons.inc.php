@@ -1,5 +1,4 @@
 <?php
-session_start();
 try {
     require_once 'conectar_db.inc.php';
     $texto_consulta_todos = "SELECT * FROM pokemon ORDER BY id ASC";
@@ -8,37 +7,37 @@ try {
     $pokedex = $consulta->fetchAll(PDO::FETCH_ASSOC);
 
     // Consulta para los pokemon de la gen 1
-    $texto_consulta_gen_1 = "SELECT * FROM pokemon WHERE id <= 151 ORDER BY id ASC";
+    $texto_consulta_gen_1 = "SELECT * FROM pokemon WHERE Generation = 1 ORDER BY id ASC";
     $consulta_gen_1 = $pdo->prepare($texto_consulta_gen_1);
     $consulta_gen_1->execute();
     $gen_1 = $consulta_gen_1->fetchAll(PDO::FETCH_ASSOC);
 
     // Consulta para los pokemon de la gen 2
-    $texto_consulta_gen_2 = "SELECT * FROM pokemon WHERE id > 151 AND id <= 251 ORDER BY id ASC";
+    $texto_consulta_gen_2 = "SELECT * FROM pokemon WHERE Generation = 2 ORDER BY id ASC";
     $consulta_gen_2 = $pdo->prepare($texto_consulta_gen_2);
     $consulta_gen_2->execute();
     $gen_2 = $consulta_gen_2->fetchAll(PDO::FETCH_ASSOC);
 
     // Consulta para los pokemon de la gen 3
-    $texto_consulta_gen_3 = "SELECT * FROM pokemon WHERE id > 251 AND id <= 386 ORDER BY id ASC";
+    $texto_consulta_gen_3 = "SELECT * FROM pokemon WHERE Generation = 3 ORDER BY id ASC";
     $consulta_gen_3 = $pdo->prepare($texto_consulta_gen_3);
     $consulta_gen_3->execute();
     $gen_3 = $consulta_gen_3->fetchAll(PDO::FETCH_ASSOC);
 
     // Consulta para los pokemon de la gen 4
-    $texto_consulta_gen_4 = "SELECT * FROM pokemon WHERE id > 386 AND id <= 493 ORDER BY id ASC";
+    $texto_consulta_gen_4 = "SELECT * FROM pokemon WHERE Generation = 4 ORDER BY id ASC";
     $consulta_gen_4 = $pdo->prepare($texto_consulta_gen_4);
     $consulta_gen_4->execute();
     $gen_4 = $consulta_gen_4->fetchAll(PDO::FETCH_ASSOC);
 
     // Consulta para los pokemon de la gen 5
-    $texto_consulta_gen_5 = "SELECT * FROM pokemon WHERE id > 493 AND id <= 649 ORDER BY id ASC";
+    $texto_consulta_gen_5 = "SELECT * FROM pokemon WHERE Generation = 5 ORDER BY id ASC";
     $consulta_gen_5 = $pdo->prepare($texto_consulta_gen_5);
     $consulta_gen_5->execute();
     $gen_5 = $consulta_gen_5->fetchAll(PDO::FETCH_ASSOC);
 
     // Consulta para los pokemon de la gen 6
-    $texto_consulta_gen_6 = "SELECT * FROM pokemon WHERE id > 649 ORDER BY id ASC";
+    $texto_consulta_gen_6 = "SELECT * FROM pokemon WHERE Generation = 6 ORDER BY id ASC";
     $consulta_gen_6 = $pdo->prepare($texto_consulta_gen_6);
     $consulta_gen_6->execute();
     $gen_6 = $consulta_gen_6->fetchAll(PDO::FETCH_ASSOC);
@@ -68,5 +67,14 @@ try {
         $_SESSION['pokemons_usuario'][] = $pokemon['id_pokemon'];
     }
 } catch (PDOException $e) {
-    die("¡Error!: " . $e->getMessage());
+    echo "¡Error!: " . $e->getMessage();
+}
+
+function getUserPokemons($id, $pdo){
+    $texto_consulta_usuario = "SELECT t.id_pokemon FROM tiene t JOIN usuarios u ON t.id_usuario = :id_usuario";
+    $consulta_usuario = $pdo->prepare($texto_consulta_usuario);
+    $consulta_usuario->bindParam(':id_usuario', $id, PDO::PARAM_INT);
+    $consulta_usuario->execute();
+    $pokemons_usuario = $consulta_usuario->fetchAll(PDO::FETCH_ASSOC);
+    return $pokemons_usuario;
 }

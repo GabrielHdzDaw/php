@@ -1,0 +1,26 @@
+.perfil-contenedor{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 20px;
+}
+
+.titulo-perfil{
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.img-perfil{
+    width: 150px;
+    height: auto;
+    border-radius: 50%;
+    filter: drop-shadow(5px 5px 5px rgba(0, 0, 0, 0.5));
+}
+
+.perfil-info{
+    font-size: 1.2rem;
+    color: #555;
+    margin-top: 10px;
+}

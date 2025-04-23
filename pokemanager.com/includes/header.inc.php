@@ -8,8 +8,8 @@ session_start();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="PokéManager - Juego de cartas coleccionables de Pokémon. Crea tus equipos y hazlos combatir.">
-    <meta name="keywords" content="Pokémon, cartas, coleccionables, juego, PokéManager">
+    <meta name="description" content="PokéManager - Juego de coleccionables de Pokémon. Crea tus equipos y hazlos combatir.">
+    <meta name="keywords" content="Pokémon, coleccionables, juego, PokéManager, combates">
     <meta name="author" content="Gabriel Hernández Collado">
     <link rel="stylesheet" href="style.css">
     <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
@@ -18,7 +18,10 @@ session_start();
     <link rel="stylesheet" href="styles/pokedex.css" type="text/css">
     <link rel="stylesheet" href="styles/style.css" type="text/css">
     <link rel="stylesheet" href="styles/sobres.css" type="text/css">
-
+    <link rel="stylesheet" href="styles/combate.css" type="text/css">
+    <link rel="stylesheet" href="styles/perfil.css" type="text/css">
+    <script src="scripts/tabs.js"></script>
+    
     <title>PokéManager</title>
 </head>
 
@@ -35,6 +38,9 @@ session_start();
             <div>
                 <?php
                 if ($_SESSION['started'] ?? false) {
+                    echo "<div class='nav-usuario-contenedor'>";
+                    echo "<p class='nav-usuario-nombre'>Hola " . $_SESSION['user_info']['nombre'] . "</p>";
+                    echo "<img class='img-perfil-nav' src='" . $_SESSION['user_info']['ruta_foto_perfil'] . "'";
                     echo '<a href="includes/logout.inc.php"><button>Cerrar sesión</button></a>';
                 } else {
                 ?>

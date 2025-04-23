@@ -13,7 +13,7 @@ if ($_SERVER["REQUEST_METHOD"] == 'POST') {
 
     if (empty($username) || empty($password) || empty($repetirPassword) || empty($fechaNacimiento) || empty($email) || empty($repetirEmail)) {
         header('Location: ../index.php');
-        exit;
+        // exit;
     }
 
     $regex = '/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/';
@@ -48,12 +48,11 @@ if ($_SERVER["REQUEST_METHOD"] == 'POST') {
 
             $consulta->execute();
         } catch (PDOException $e) {
-            die("¡Error!: " . $e->getMessage());
+            echo "¡Error!: " . $e->getMessage();
         }
         header('Location: ../index.php');
     } else {
         header('Location: ../index.php');
-        exit;
     }
 } else {
     header('Location: ../index.php');

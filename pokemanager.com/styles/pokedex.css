@@ -5,6 +5,11 @@
     --card-border-color: #ccc;
     /* Color del borde de las tarjetas */
 }
+@font-face
+{
+    font-family: 'PokemonFont';
+    src: url('../fonts/pokemon-emerald.otf') format('truetype');
+}
 
 .pokedex {
     display: grid;
@@ -12,6 +17,7 @@
     gap: 5px;
     padding: 5px;
     margin: 0 auto;
+    width: 70%;
 }
 
 .pokemon-card {
@@ -47,6 +53,8 @@
     object-fit: cover;
     /* Recorta la imagen manteniendo proporciones */
     display: block;
+    user-select: none;
+    -webkit-user-drag: none;
 }
 
 .pokemon-not-found {
@@ -69,4 +77,67 @@
     top: 15px;
     left: 15px;
     transition: 0.3s ease;
+}
+
+.modal {
+    
+    /* Hidden by default */
+    position: fixed;
+    /* Stay in place */
+    z-index: 1;
+    /* Sit on top
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%; */
+    /* Full width and height */
+    overflow: auto;
+    /* Enable scroll if needed */
+    background-color: rgb(0, 0, 0);
+    /* Fallback color */
+    background-color: rgba(0, 0, 0, 0.4);
+    /* Black w/ opacity */
+}
+
+.img-pokemon-pokedex-dialog{
+    width: 125px;
+    height: 125px;
+    object-fit: contain;
+    /* Recorta la imagen manteniendo proporciones */
+    display: block;
+    user-select: none;
+    -webkit-user-drag: none;
+}
+
+.pokemon-description{
+    background-color: white;
+    border-radius: 10px;
+    padding: 10px;
+    margin: 10px;
+    border: 2px striped black;
+    font-family: 'PokemonFont', sans-serif;
+}
+
+.pokemon-stats{
+    background-color: white;
+    border-radius: 10px;
+    padding: 10px;
+    margin: 10px;
+    border: 2px striped black;
+    font-family: 'PokemonFont', sans-serif;
+}
+
+.stats-info-container{
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    
+}
+
+.close {
+    color: #ffffff;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
 }

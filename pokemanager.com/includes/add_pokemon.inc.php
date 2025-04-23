@@ -10,15 +10,7 @@ if (isset($_SESSION['pokemons'])) {
             $consulta->bindParam(':id_pokemon', $pokemon['id']);
             $consulta->execute();
         }
-        // $texto_consulta_usuario = "SELECT t.id_pokemon FROM tiene t JOIN usuarios u ON t.id_usuario = :id_usuario";
-        // $consulta_usuario = $pdo->prepare($texto_consulta_usuario);
-        // $consulta_usuario->bindParam(':id_usuario', $usuario['id'], PDO::PARAM_INT);
-        // $consulta_usuario->execute();
-        // $pokemons_usuario = $consulta_usuario->fetchAll(PDO::FETCH_ASSOC);
-
-        // foreach ($pokemons_usuario as $pokemon) {
-        //     $_SESSION['pokemons_usuario'][] = $pokemon['id_pokemon'];
-        // }
+        
     } catch (PDOException $e) {
         echo "¡Error!: " . $e->getMessage();
     }
