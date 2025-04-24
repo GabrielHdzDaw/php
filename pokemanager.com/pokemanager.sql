@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 24-04-2025 a las 01:37:00
+-- Tiempo de generación: 24-04-2025 a las 18:30:04
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.2.4
 
@@ -1349,7 +1349,12 @@ INSERT INTO `tiene` (`id_usuario`, `id_pokemon`, `fecha_obtencion`, `nivel`, `ex
 (3, 185, '2025-04-23 18:32:13', 1, 0),
 (3, 189, '2025-04-23 18:32:13', 1, 0),
 (3, 201, '2025-04-23 18:32:13', 1, 0),
-(3, 224, '2025-04-23 18:32:13', 1, 0);
+(3, 224, '2025-04-23 18:32:13', 1, 0),
+(4, 388, '2025-04-24 13:02:55', 1, 0),
+(4, 458, '2025-04-24 13:02:55', 1, 0),
+(4, 470, '2025-04-24 13:02:55', 1, 0),
+(4, 482, '2025-04-24 13:02:55', 1, 0),
+(4, 491, '2025-04-24 13:02:55', 1, 0);
 
 -- --------------------------------------------------------
 
@@ -1376,9 +1381,9 @@ CREATE TABLE `usuarios` (
 
 INSERT INTO `usuarios` (`id`, `nombre`, `email`, `fecha_nacimiento`, `contrasena`, `creado`, `ruta_foto_perfil`, `sobres`, `ultimo_login`, `is_admin`) VALUES
 (1, 'admin', 'admin@gmail.com', '2025-04-22', '$2y$10$mTGt/DBro0wbFP83Ebhdx.8CFGWcKMgQHa3dRE1LxDwjrY/isV.4S', '2025-04-21 22:55:14', 'img/profile/profile_placeholder.png', 1, '2025-04-23', 1),
-(2, 'hien', 'hien@gmail.com', '1993-02-16', '$2y$10$3k2ZQIHJVrkYiSKbC7q.kO4Axsp.KQVBRsB9n5XK/8NAjsBwSaK9q', '2025-04-21 23:05:26', 'img/profile/profile_placeholder.png', 0, '2025-04-23', 0),
+(2, 'hien', 'hien@gmail.com', '1993-02-16', '$2y$10$3k2ZQIHJVrkYiSKbC7q.kO4Axsp.KQVBRsB9n5XK/8NAjsBwSaK9q', '2025-04-21 23:05:26', 'img/profile/profile_placeholder.png', 0, '2025-04-24', 0),
 (3, 'azucar', 'azucar@gmail.com', '1997-03-29', '$2y$10$3WonGbKLPlP2NV.fGWWt4umaKGZhV7kiwg7Rxp3Z8peoY7SPt/l3i', '2025-04-22 14:37:25', 'img/profile/1745332645-tomate.png', 0, '2025-04-23', 0),
-(4, 'canela', 'canela@gmail.com', '1982-03-12', '$2y$10$xTveFYTIQ.CDsDhSAv7HMe5scwDqiVmK3mqSZ0bSYRVlCMYWjgCuK', '2025-04-23 01:04:24', 'img/profile/1745370264-canela.png', 1, '2025-04-23', 0),
+(4, 'canela', 'canela@gmail.com', '1982-03-12', '$2y$10$xTveFYTIQ.CDsDhSAv7HMe5scwDqiVmK3mqSZ0bSYRVlCMYWjgCuK', '2025-04-23 01:04:24', 'img/profile/1745370264-canela.png', 0, '2025-04-24', 0),
 (5, 'vainilla', 'vainilla@gmail.com', '1991-03-12', '$2y$10$6.izf91Lkf66Q17EVNZRM.rlAk2aEPypAixkJy93rqbw4k.5NdBTS', '2025-04-23 14:41:38', 'img/profile/1745419298-vainilla.png', 1, '2025-04-23', 0);
 
 --

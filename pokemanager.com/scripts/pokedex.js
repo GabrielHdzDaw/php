@@ -2,6 +2,7 @@ const pokemonCards = document.querySelectorAll('.pokemon-card');
 
 pokemonCards.forEach(card => {
     card.addEventListener('click', () => {
+        const pokemonId = card.dataset.id;
         const pokemonName = card.dataset.name;
         const pokemonType1 = card.dataset.type1;
         const pokemonType2 = card.dataset.type2;
@@ -22,26 +23,48 @@ pokemonCards.forEach(card => {
             <span class="close">&times;</span>
             <div class="stats-info-container">
             <div class="pokemon-header">
-            <h2>${pokemonName}</h2>
+            <h2>#${pokemonId} ${pokemonName}</h2> <span>Gen ${pokemonGeneration} ${pokemonLegendary == 1 ? "Legendario" : "" }</span>
             <img class="img-pokemon-pokedex-dialog" src="${pokemonImage}" alt="${pokemonName}">
             <p>Type 1: ${pokemonType1}</p>
             <p>Type 2: ${pokemonType2}</p>
             </div>
             <div class="pokemon-stats">
-                <p>Total: ${pokemonTotal}</p>
-                <p>HP: ${pokemonHP}</p>
-                <p>Attack: ${pokemonAttack}</p>
-                <p>Defense: ${pokemonDefense}</p>
-                <p>Special Attack: ${pokemonSpecialAttack}</p>
-                <p>Special Defense: ${pokemonSpecialDefense}</p>
-                <p>Speed: ${pokemonSpeed}</p>
-            </div>
+               <table>
+               <tr>
+               <td>HP:</td>
+                        <td class="stats-numbers">${pokemonHP}</td>
+                    </tr>
+                    <tr>
+                        <td>Attack:</td>
+                        <td class="stats-numbers">${pokemonAttack}</td>
+                    </tr>
+                    <tr>
+                        <td>Defense:</td>
+                        <td class="stats-numbers">${pokemonDefense}</td>
+                    </tr>
+                    <tr>
+                        <td>Special Attack:</td>
+                        <td class="stats-numbers">${pokemonSpecialAttack}</td>
+                    </tr>
+                    <tr>
+                        <td>Special Defense:</td>
+                        <td class="stats-numbers">${pokemonSpecialDefense}</td>
+                    </tr>
+                    <tr>
+                    <td>Speed:</td>
+                    <td class="stats-numbers">${pokemonSpeed}</td>
+                    </tr>
+                    <tr>
+                        <td>Total:</td>
+                        <td class="stats-numbers">${pokemonTotal}</td>
+                    </tr>
+                    </table>
+                    </div>
             </div>
             <div class="pokemon-description">
             <p>${pokemonDescription}</p>
             </div>
-            <p>Generation: ${pokemonGeneration}</p>
-            <p>Legendary: ${pokemonLegendary}</p>
+            
 
         </div>
         `;

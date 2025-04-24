@@ -1,9 +1,10 @@
 <div class="perfil-contenedor">
-    <h2 class="titulo-perfil"><?php echo $_SESSION['user_info']['nombre']; ?></h2>
-    <div class="perfil-imagen">
-        <img class="img-perfil" src="<?php echo $_SESSION['user_info']['ruta_foto_perfil']; ?>" alt="Imagen de perfil">
-    </div>
-    <div class="perfil-info">
+
+    <div class="info">
+        <h2 class="titulo-perfil"><?php echo $_SESSION['user_info']['nombre']; ?></h2>
+        <div class="perfil-imagen">
+            <img class="img-perfil" src="<?php echo $_SESSION['user_info']['ruta_foto_perfil']; ?>" alt="Imagen de perfil">
+        </div>
         <p><strong>Email:</strong> <?php echo $_SESSION['user_info']['email']; ?></p>
         <p><strong>Miembro desde:</strong> <?php echo $_SESSION['user_info']['creado']; ?></p>
         <p><strong>Combates: </strong> <?php echo ""; ?></p>

@@ -58,7 +58,7 @@ if (empty($_SESSION['pokemons_usuario'])) {
     // Display Pokémon
     echo "<div class='combate-pokemons-container'>";
     echo "<div class='combate-pokemons-usuario-container'>";
-    echo "<h2>Pokémon de " . htmlspecialchars($_SESSION['user_info']['nombre']) . "</h2>";
+    echo "<h2>Equipo de " . htmlspecialchars($_SESSION['user_info']['nombre']) . "</h2>";
     echo "<div class='combate-pokemons-usuario'>";
     foreach ($pokemonsUsuario as $pokemonId) {
         if (isset($pokemonById[$pokemonId])) {
@@ -88,7 +88,7 @@ if (empty($_SESSION['pokemons_usuario'])) {
     echo "</div>";
 
     echo "<div class='combate-pokemons-rival-container'>";
-    echo "<h2>Pokémon de " . htmlspecialchars($randomUsuario['nombre']) . "</h2>";
+    echo "<h2>Equipo de " . htmlspecialchars($randomUsuario['nombre']) . "</h2>";
     echo "<div class='combate-pokemons-rival'>";
     foreach ($pokemonsRival as $pokemonId) {
         if (isset($pokemonById[$pokemonId])) {

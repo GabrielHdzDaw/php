@@ -17,18 +17,33 @@ include_once 'includes/header.inc.php';
         </div>
         <!-- Tab content -->
         <div id="Sobres" class="tabcontent">
-            <h3>Sobres</h3>
+            <div class="info">
+                <h3>¿A quién no le gusta abrir sobres?</h3>
+                <p>¡Inicia sesión cada día para obtener 1 sobre! Cada vez que inicies sesión recibirás una cantidad de sobres proporcional a la cantidad de días que lleves sin conectarte.</p>
+            </div>
             <?php include_once 'includes/sobres.inc.php'; ?>
         </div>
 
         <div id="PokéDex" class="tabcontent">
-            <h3>PokéDex</h3>
+            <div class="info">
+                <h3>Mi colección</h3>
+                <p>¡Aquí podrás ver todos los Pokémons que has conseguido!</p>
+
+
+                <div class="datos-coleccion">
+                    <p>Pokémons en la colección: </p>
+                    <p>Porcentaje: </p>
+                </div>
+            </div>
             <?php include_once 'includes/pokedex.inc.php'; ?>
         </div>
 
         <div id="Combate" class="tabcontent">
-            <h3>Combate</h3>
-            <?php include_once 'includes/combate.inc.php'; ?>
+            <div class="info">
+                <h3>Combate</h3>
+                <p>Aquí podrás enfrentar a tus pokémon con los de otros usuarios. ¡Gana y conseguirás 2 sobres!</p>
+                <?php include_once 'includes/combate.inc.php'; ?>
+            </div>
         </div>
 
         <div id="Perfil" class="tabcontent">
@@ -39,6 +54,14 @@ include_once 'includes/header.inc.php';
         <div id="Administrador" class="tabcontent">
             <h3>Administrador</h3>
             <p>Aquí puedes administrar la página</p>
+        </div>
+    <?php
+    } else {
+    ?>
+        <div class="info">
+            <h2>¡Bienvenido a PokéManager!</h2>
+            <p>¡Saludos entrenador! En PokéManager podrás crear tu colección de Pokémons y ponerlos a combatir contra los de los demás usuarios!</p>
+            <p>¡Inicia sesión o regístrate para iniciar tu aventura!</p>
         </div>
     <?php
     }
