@@ -7,7 +7,7 @@
     margin: 0 auto;
 }
 
-.sobres-contenedor form{
+.sobres-contenedor form {
     display: inline-block;
 }
 
@@ -23,11 +23,19 @@
     transition: 0.3s;
 }
 
+.animacion-sobre {
+    transform-style: preserve-3d;
+    /* Origen centrado en X y Y */
+    transform-origin: center center;
+    /* Ejecuta la animación al cargar la página */
+    animation: flip 2s cubic-bezier(.25, .1, .25, 1) forwards;
+}
+
 .sobre:hover {
     animation: hoverSobre 0.1s forwards;
 }
 
-.sobres-formulario button{
+.sobres-formulario button {
     background-color: transparent;
     border: none;
     cursor: pointer;
@@ -66,5 +74,15 @@
 
     100% {
         transform: translateY(0);
+    }
+}
+
+@keyframes flip {
+    from {
+        transform: rotateY(0deg) scale(1);
+    }
+
+    to {
+        transform: rotateY(2160deg) scale(1.5);
     }
 }

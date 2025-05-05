@@ -23,8 +23,10 @@ if (empty($_SESSION['pokemons_usuario'])) {
         $pokemonRivalTodos = getUserPokemons($usuarioAleatorioId, $pdo);
     }
 
-    // Extract Pokémon IDs and select 6 randomly
-    $pokemonRivalIds = array_column($pokemonRivalTodos, 'id_pokemon');
+    // Extract Pokémon IDs and select 6 randomly, ensuring they are unique
+    $pokemonRivalIds = array_map(function ($pokemon) {
+        return $pokemon['id_pokemon'];
+    }, $pokemonRivalTodos);
     shuffle($pokemonRivalIds);
     $pokemonsRival = array_slice($pokemonRivalIds, 0, 6);
 
@@ -32,10 +34,11 @@ if (empty($_SESSION['pokemons_usuario'])) {
     if (empty($_SESSION['pokemons_usuario'])) {
         echo "No tienes Pokémon.";
     } else {
-        // Select 6 random user Pokémon
+        // Select 6 random user Pokémon ensuring they are unique
         $userPokemonIds = $_SESSION['pokemons_usuario'];
         shuffle($userPokemonIds);
         $pokemonsUsuario = array_slice($userPokemonIds, 0, 6);
+
 
         // Create a lookup array for Pokémon data
         $pokemonById = [];

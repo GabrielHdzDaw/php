@@ -29,10 +29,12 @@ if ($_SERVER["REQUEST_METHOD"] == 'POST') {
                     }
 
                     $fechaActual = new DateTime(date("Y-m-d"));
-                    $fechaLogin = new DateTime($usuario['last_login']);
+                    $fechaLogin = ($usuario['ultimo_login'])
+                        ? new DateTime($usuario['ultimo_login'])
+                        : new DateTime('1970-01-01');
                     $diferencia = $fechaActual->diff($fechaLogin);
 
-                    $sobres = $diferencia->days;
+                    $sobres = $usuario['sobres'] + $diferencia->days;
                     $consulta_sobres = $pdo->prepare("UPDATE usuarios SET sobres = :sobres WHERE id = :id_usuario");
                     $consulta_sobres->bindParam(':sobres', $sobres, PDO::PARAM_INT);
                     $consulta_sobres->bindParam(':id_usuario', $usuario['id'], PDO::PARAM_INT);

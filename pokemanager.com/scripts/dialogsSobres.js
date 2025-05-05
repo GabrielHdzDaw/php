@@ -1,7 +1,27 @@
 const dialogoSobre = document.getElementById("dialogoSobre");
 const cerrarDialogoSobre = document.getElementById("cerrarDialogoSobre");
 
-// Verificar si el modal existe en la página
+const sobresFormulario = document.querySelectorAll(".sobres-formulario");
+
+sobresFormulario.forEach((formulario) => {
+    formulario.addEventListener("submit", (e) => {
+        e.preventDefault();
+
+        const form = e.target;
+        const divSobre = form.closest('.sobre');
+
+        if (divSobre) {
+            divSobre.classList.add('animacion-sobre');
+
+            setTimeout(() => {
+                divSobre.classList.remove('animacion-sobre'); 
+                form.submit();
+            }, 2500);
+        }
+    });
+});
+
+
 if (dialogoSobre) {
     // Mostrar solo si no está cerrado en sessionStorage
     if (!sessionStorage.getItem('dialogoSobreCerrado')) {
@@ -11,17 +31,17 @@ if (dialogoSobre) {
         document.body.style.overflow = "hidden";
     }
 
-    // Cerrar con el botón
+    
     cerrarDialogoSobre?.addEventListener("click", () => {
         dialogoSobre.classList.remove("blur-inverso");
-        dialogoSobre.style.display = "none"; // Oculta el diálogo
+        dialogoSobre.style.display = "none";
         dialogoSobre.close();
         document.body.classList.remove("blur");
         document.body.style.overflow = "";
         sessionStorage.setItem('dialogoSobreCerrado', 'true');
     });
 
-    // Cerrar con ESC
+    
     dialogoSobre.addEventListener("cancel", (e) => {
         e.preventDefault();
         dialogoSobre.close();

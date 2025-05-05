@@ -17,5 +17,4 @@ if ($_SESSION['user_info']['sobres'] > 0) {
     echo "<div class='info'>";
     echo "<p>¡No tienes sobres! ¡Gana combates o espera hasta mañana para poder abrir más!</p>";
     echo "</div>";
-    
 }

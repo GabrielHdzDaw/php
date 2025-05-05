@@ -40,8 +40,8 @@ session_start();
                 if ($_SESSION['started'] ?? false) {
                     echo "<div class='nav-usuario-contenedor'>";
                     echo "<p class='nav-usuario-nombre'>Hola " . $_SESSION['user_info']['nombre'] . "</p>";
-                    echo "<img class='img-perfil-nav' src='" . $_SESSION['user_info']['ruta_foto_perfil'] . "'";
-                    echo '<a href="includes/logout.inc.php"><button>Cerrar sesión</button></a>';
+                    echo "<img class='img-perfil-nav' src='" . $_SESSION['user_info']['ruta_foto_perfil'] . "'>";
+                    echo '<a href="includes/logout.inc.php">Cerrar sesión</a>';
                 } else {
                 ?>
                     <form action="includes/login.inc.php" method="POST" class="formulario-login">
