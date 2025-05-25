@@ -27,7 +27,23 @@ if ($_SERVER["REQUEST_METHOD"] == 'POST') {
                             $_SESSION['pokemons_usuario'][] = $pokemon;
                         }
                     }
+                    if (isset($_SESSION['pokemons_usuario'])) {
+                        $_SESSION['pokemons_usuario'] = array_map(function ($pokemon) {
+                            return $pokemon['id_pokemon'];
+                        }, $_SESSION['pokemons_usuario']);
+                    }
+                    // // comprobamos la cantidad de pokemons únicos que tiene el usuario
+                    // if (isset($_SESSION['pokemons_usuario'])) {
+                    //     $_SESSION['cantidad_pokemons'] = count(array_unique($_SESSION['pokemons_usuario']));
+                    // }
 
+                    // // comprobamos el porcentaje de la colección que tiene el usuario
+                    // if (isset($_SESSION['pokemons_usuario'])) {
+                    //     $_SESSION['porcentaje'] = ($_SESSION['cantidad_pokemons'] / 721) * 100;
+                    // } else {
+                    //     $_SESSION['porcentaje'] = 0;
+                    // }
+                    // comprobamos la cantidad de sobres que le corresponden al usuario
                     $fechaActual = new DateTime(date("Y-m-d"));
                     $fechaLogin = ($usuario['ultimo_login'])
                         ? new DateTime($usuario['ultimo_login'])
@@ -43,6 +59,9 @@ if ($_SERVER["REQUEST_METHOD"] == 'POST') {
                     $consulta_ultimo_login = $pdo->prepare("UPDATE usuarios SET ultimo_login = NOW() WHERE id = :id");
                     $consulta_ultimo_login->bindParam(':id', $usuario['id'], PDO::PARAM_INT);
                     $consulta_ultimo_login->execute();
+
+                    // $usuario = $consulta->fetch(PDO::FETCH_ASSOC);
+                    // $_SESSION['user_info'] = $usuario;
 
 
                     header("Location: ../index.php");

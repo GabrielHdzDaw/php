@@ -1,139 +1,111 @@
 <?php
-if (empty($_SESSION['pokemons_usuario'])) {
+if (isset($_SESSION['pokemons_usuario']) && count(array_unique($_SESSION['pokemons_usuario'])) < 6) {
     echo "<p>No tienes suficientes Pokémon para combatir.</p>";
 } else {
     require_once 'includes/get_usuarios.inc.php';
-
-    // Ensure $usuarios is an array of user arrays with 'id'
-    // Select a random user different from the current user
-    do {
-        $randomUsuario = $usuarios[array_rand($usuarios)];
-        $usuarioAleatorioId = $randomUsuario['id'];
-    } while ($usuarioAleatorioId == $_SESSION['user_info']['id']);
-
     include_once 'includes/get_pokemons.inc.php';
 
-    // Fetch rival's Pokémon
-    $pokemonRivalTodos = getUserPokemons($usuarioAleatorioId, $pdo);
+    $usuariosValidos = array_filter($usuarios, function ($usuario) use ($pdo) {
+        if ($usuario['id'] == $_SESSION['user_info']['id']) return false;
 
-    // Handle case where rival has no Pokémon
-    while (empty($pokemonRivalTodos)) {
-        $randomUsuario = $usuarios[array_rand($usuarios)];
-        $usuarioAleatorioId = $randomUsuario['id'];
-        $pokemonRivalTodos = getUserPokemons($usuarioAleatorioId, $pdo);
+        $pokemons = getUserPokemons($usuario['id'], $pdo);
+        $pokemonUnicos = array_unique(array_column($pokemons, 'id_pokemon'));
+
+        return count($pokemonUnicos) >= 6;
+    });
+
+    if (empty($usuariosValidos)) {
+        die("No hay usuarios válidos con al menos 6 Pokémon únicos.");
     }
 
-    // Extract Pokémon IDs and select 6 randomly, ensuring they are unique
-    $pokemonRivalIds = array_map(function ($pokemon) {
-        return $pokemon['id_pokemon'];
-    }, $pokemonRivalTodos);
+    $randomUsuario = $usuariosValidos[array_rand($usuariosValidos)];
+    $usuarioAleatorioId = $randomUsuario['id'];
+    $pokemonRivalTodos = getUserPokemons($usuarioAleatorioId, $pdo);
+
+    // Selección de Pokémon rival
+    $pokemonRivalTodos = getUserPokemons($usuarioAleatorioId, $pdo);
+    $pokemonRivalIds = array_column($pokemonRivalTodos, 'id_pokemon');
     shuffle($pokemonRivalIds);
     $pokemonsRival = array_slice($pokemonRivalIds, 0, 6);
 
-    // Fetch user's Pokémon from session
-    if (empty($_SESSION['pokemons_usuario'])) {
-        echo "No tienes Pokémon.";
-    } else {
-        // Select 6 random user Pokémon ensuring they are unique
-        $userPokemonIds = $_SESSION['pokemons_usuario'];
-        shuffle($userPokemonIds);
-        $pokemonsUsuario = array_slice($userPokemonIds, 0, 6);
-
-
-        // Create a lookup array for Pokémon data
-        $pokemonById = [];
-        foreach ($pokedex as $p) {
-            $pokemonById[$p['id']] = $p;
-        }
-    }
-
-    // Select 6 random user Pokémon
+    // Selección de Pokémon del usuario
     $userPokemonIds = $_SESSION['pokemons_usuario'];
     shuffle($userPokemonIds);
     $pokemonsUsuario = array_slice($userPokemonIds, 0, 6);
 
-    // Create a lookup array for Pokémon data
+    // Crear lookup de Pokémon
     $pokemonById = [];
     foreach ($pokedex as $p) {
         $pokemonById[$p['id']] = $p;
     }
-
-    // Display Pokémon
-    echo "<div class='combate-pokemons-container'>";
-    echo "<div class='combate-pokemons-usuario-container'>";
-    echo "<h2>Equipo de " . htmlspecialchars($_SESSION['user_info']['nombre']) . "</h2>";
-    echo "<div class='combate-pokemons-usuario'>";
-    foreach ($pokemonsUsuario as $pokemonId) {
-        if (isset($pokemonById[$pokemonId])) {
-            $pokemon = $pokemonById[$pokemonId];
-            echo "<div class='pokemon-card' 
-                    data-id='" . $pokemon['id'] . "'
-                    data-name='" . $pokemon['Name'] . "'
-                    data-type1='" . $pokemon['Type 1'] . "'
-                    data-type2='" . $pokemon['Type 2'] . "'
-                    data-legendary='" . $pokemon['Legendary'] . "'
-                    data-iconpath='" . $pokemon['icon_path'] . "'
-                    data-hp='" . $pokemon['HP'] . "'
-                    data-attack='" . $pokemon['Attack'] . "'
-                    data-defense='" . $pokemon['Defense'] . "'
-                    data-specialattack='" . $pokemon['Sp. Atk'] . "'
-                    data-specialdefense='" . $pokemon['Sp. Def'] . "'
-                    data-speed='" . $pokemon['Speed'] . "'
-                    data-total='" . $pokemon['Total'] . "'
-                    data-generation='" . $pokemon['Generation'] . "'
-                    data-description='" . $pokemon['Description'] . "'>";
-            echo "<img class='pokemon-img' src='" . $pokemon['icon_path'] . "' alt='" . htmlspecialchars($pokemon['Name']) . "'>";
-            echo "<h3 class='pokemon-nombre'>" . htmlspecialchars($pokemon['Name']) . "</h3>";
-            echo "</div>";
-        }
-    }
-    echo "</div>";
-    echo "</div>";
-
-    echo "<div class='combate-pokemons-rival-container'>";
-    echo "<h2>Equipo de " . htmlspecialchars($randomUsuario['nombre']) . "</h2>";
-    echo "<div class='combate-pokemons-rival'>";
-    foreach ($pokemonsRival as $pokemonId) {
-        if (isset($pokemonById[$pokemonId])) {
-            $pokemon = $pokemonById[$pokemonId];
-            echo "<div class='pokemon-card' 
-                    data-id='" . $pokemon['id'] . "'
-                    data-name='" . $pokemon['Name'] . "'
-                    data-type1='" . $pokemon['Type 1'] . "'
-                    data-type2='" . $pokemon['Type 2'] . "'
-                    data-legendary='" . $pokemon['Legendary'] . "'
-                    data-iconpath='" . $pokemon['icon_path'] . "'
-                    data-hp='" . $pokemon['HP'] . "'
-                    data-attack='" . $pokemon['Attack'] . "'
-                    data-defense='" . $pokemon['Defense'] . "'
-                    data-specialattack='" . $pokemon['Sp. Atk'] . "'
-                    data-specialdefense='" . $pokemon['Sp. Def'] . "'
-                    data-speed='" . $pokemon['Speed'] . "'
-                    data-total='" . $pokemon['Total'] . "'
-                    data-generation='" . $pokemon['Generation'] . "'
-                    data-description='" . $pokemon['Description'] . "'>";
-            echo "<img class='pokemon-img' src='" . $pokemon['icon_path'] . "' alt='" . htmlspecialchars($pokemon['Name']) . "'>";
-            echo "<h3 class='pokemon-nombre'>" . htmlspecialchars($pokemon['Name']) . "</h3>";
-            echo "</div>";
-        }
-    }
-    echo "</div>";
-    echo "</div>";
-    echo "</div>";
-}
-
 ?>
 
-<dialog>
-    <div class="combate-dialogo">
-        <h2>¡Combate!</h2>
-        <p>¡Has comenzado un combate contra <?= htmlspecialchars($randomUsuario['nombre_usuario']) ?>!</p>
-        <div id="barraVidaJugadorContenedor">
-            <div id="barraVidaJugador" class="barra-vida"></div>
+
+    <div class='combate-pokemons-container'>
+
+        <div class='combate-pokemons-usuario-container'>
+            <h2>Equipo de <?= htmlspecialchars($_SESSION['user_info']['nombre']) ?></h2>
+            <div class='combate-pokemons-usuario'>
+                <?php foreach ($pokemonsUsuario as $pokemonId):
+                    $pokemon = $pokemonById[$pokemonId] ?? null;
+                    if ($pokemon): ?>
+                        <div class='pokemon-card'
+                            data-id='<?= $pokemon['id'] ?>'
+                            data-name='<?= $pokemon['Name'] ?>'
+                            data-type1='<?= $pokemon['Type 1'] ?>'
+                            data-type2='<?= $pokemon['Type 2'] ?>'
+                            data-iconpath='<?= $pokemon['icon_path'] ?>'
+                            data-hp='<?= $pokemon['HP'] ?>'
+                            data-attack='<?= $pokemon['Attack'] ?>'
+                            data-defense='<?= $pokemon['Defense'] ?>'
+                            data-specialattack='<?= $pokemon['Sp. Atk'] ?>'
+                            data-specialdefense='<?= $pokemon['Sp. Def'] ?>'
+                            data-speed='<?= $pokemon['Speed'] ?>'
+                            data-description='<?= htmlspecialchars($pokemon['Description']) ?>'>
+                            <img class='pokemon-img' src='<?= $pokemon['icon_path'] ?>' alt='<?= htmlspecialchars($pokemon['Name']) ?>'>
+                            <h3 class='pokemon-nombre'><?= htmlspecialchars($pokemon['Name']) ?></h3>
+                        </div>
+                    <?php endif; ?>
+                <?php endforeach; ?>
+            </div>
         </div>
-        <div id="barraVidaRivalContenedor">
-            <div id="barraVidaRival" class="barra-vida"></div>
+
+        <div>
+            <button id="start-battle">¡Combatir!</button>
         </div>
-        <button id="cerrarDialogoCombate" class="cerrar-dialogo-combate">Cerrar</button>
+
+        <div class='combate-pokemons-rival-container'>
+            <h2>Equipo de <?= htmlspecialchars($randomUsuario['nombre']) ?></h2>
+            <div class='combate-pokemons-rival'>
+                <?php foreach ($pokemonsRival as $pokemonId):
+                    $pokemon = $pokemonById[$pokemonId] ?? null;
+                    if ($pokemon): ?>
+                        <div class='pokemon-card'
+                            data-id='<?= $pokemon['id'] ?>'
+                            data-name='<?= $pokemon['Name'] ?>'
+                            data-type1='<?= $pokemon['Type 1'] ?>'
+                            data-type2='<?= $pokemon['Type 2'] ?>'
+                            data-iconpath='<?= $pokemon['icon_path'] ?>'
+                            data-hp='<?= $pokemon['HP'] ?>'
+                            data-attack='<?= $pokemon['Attack'] ?>'
+                            data-defense='<?= $pokemon['Defense'] ?>'
+                            data-specialattack='<?= $pokemon['Sp. Atk'] ?>'
+                            data-specialdefense='<?= $pokemon['Sp. Def'] ?>'
+                            data-speed='<?= $pokemon['Speed'] ?>'
+                            data-description='<?= htmlspecialchars($pokemon['Description']) ?>'>
+                            <img class='pokemon-img' src='<?= $pokemon['icon_path'] ?>' alt='<?= htmlspecialchars($pokemon['Name']) ?>'>
+                            <h3 class='pokemon-nombre'><?= htmlspecialchars($pokemon['Name']) ?></h3>
+                        </div>
+                    <?php endif; ?>
+                <?php endforeach; ?>
+            </div>
+        </div>
     </div>
-</dialog>
+
+
+
+
+
+    
+
+<?php } ?>

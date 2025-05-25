@@ -1,51 +1,164 @@
-.combate-pokemons-usuario, .combate-pokemons-rival{
+/* Contenedores principales */
+.combate-pokemons-usuario, 
+.combate-pokemons-rival {
     display: flex;
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
     margin-top: 20px;
+    gap: 15px;
 }
 
-.combate-pokemons-container{
+.combate-pokemons-container {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
+    gap: 50px;
+    padding: 20px;
+    /* background-image: url('../img/battle_bg.jpg'); */
+    
 }
 
-.combate-pokemons-usuario-container, .combate-pokemons-rival-container{
+.combate-pokemons-usuario-container, 
+.combate-pokemons-rival-container {
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    min-width: 400px;
 }
 
-#barraVidaJugadorContenedor {
-    width: 100%;
-    
-    background-color: #ccc;
-    border-radius: 5px;
-    margin-top: 10px;
+/* Cartas de Pokémon */
+.pokemon-card {
+    border: 2px solid #e0e0e0;
+    border-radius: 10px;
+    padding: 15px;
+    text-align: center;
+    background: white;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    transition: transform 0.2s;
 }
 
+.pokemon-card:hover {
+    transform: translateY(-3px);
+}
+
+.pokemon-img {
+    width: 100px;
+    height: 100px;
+    object-fit: contain;
+}
+
+/* Barras de vida */
+#barraVidaJugadorContenedor,
 #barraVidaRivalContenedor {
     width: 100%;
-    
     background-color: #ccc;
     border-radius: 5px;
     margin-top: 10px;
+    overflow: hidden;
+    /* position: absolute; */
 }
 
-
-#barraVidaJugador {
-    width: 100%;
-    height: 20px;
-    background-color: #4caf50;
-    border-radius: 5px;
-}
-
+#barraVidaJugador,
 #barraVidaRival {
     width: 100%;
     height: 20px;
     background-color: #4caf50;
+    transition: width 0.5s ease-in-out;
+}
+
+
+
+
+#contenedor-combate {
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.3);
+    background-image: url('../img/battle_bg.jpg');
+    background-size: cover; /* Cambiado */
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 100%;
+    height: 500px;
+}
+
+.combate-dialogo {
+    padding: 25px;
+    text-align: center;
+    
+    border-radius: 20px;
+}
+
+
+
+
+#combatLog {
+    height: 200px;
+    overflow-y: auto;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 10px;
+    margin: 15px 0;
+    background: white;
+}
+
+
+
+#pokemon-usuario {
+    position: absolute;
+    top: 78%;
+    left: 42%;
+    transform: translate(-50%, -100%);
+}
+
+#pokemon-rival {
+    position: absolute;
+    top: 65%;
+    right: 30%;
+    transform: translate(-50%, -100%);
+}
+
+#pokemon-usuario-img{
+    object-fit: cover;
+    width: 150px;
+    transform: scaleX(-1);
+}
+#pokemon-rival-img{
+    object-fit: cover;
+    width: 100px;
+}
+
+#pokemon-usuario-nombre,
+#pokemon-rival-nombre {
+    font-size: 20px;
+    font-weight: bold;
+    color: white;
+}
+
+.health-bar {
+    width: 200px;
+    height: 15px;
+    background-color: #ccc;
     border-radius: 5px;
+}
+  
+
+#battle-log {
+    width: 80%;
+    max-height: 150px;
+    overflow-y: auto;
+    background-color: rgb(255, 214, 153);
+    border-radius: 10px;
+    padding: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+li{
+    margin: 5px 0;
+    padding: 10px;
+    border-left: 1px solid #67b9e9;
+    list-style-type: none;
+    background-color: white;
+    border-radius: 20px;
 }

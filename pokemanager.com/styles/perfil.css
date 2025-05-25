@@ -20,7 +20,8 @@
 
 .img-perfil{
     width: 150px;
-    height: auto;
+    height: 150px;
     border-radius: 50%;
     filter: drop-shadow(5px 5px 5px rgba(0, 0, 0, 0.5));
+    object-fit: cover;
 }

@@ -18,6 +18,8 @@ pokemonCards.forEach(card => {
         const pokemonImage = card.dataset.icon;
         const pokemonDescription = card.dataset.description;
 
+        
+
         const modalContent = `
         <div class="modal-content">
             <span class="close">&times;</span>
@@ -25,8 +27,8 @@ pokemonCards.forEach(card => {
             <div class="pokemon-header">
             <h2>#${pokemonId} ${pokemonName}</h2> <span>Gen ${pokemonGeneration} ${pokemonLegendary == 1 ? "Legendario" : "" }</span>
             <img class="img-pokemon-pokedex-dialog" src="${pokemonImage}" alt="${pokemonName}">
-            <p>Type 1: ${pokemonType1}</p>
-            <p>Type 2: ${pokemonType2}</p>
+            <img class="img-pokemon-type" src="img/types/${pokemonType1}.png" alt="${pokemonType1}">
+            <img class="img-pokemon-type" src="img/types/${pokemonType2}.png" alt="${pokemonType2}">
             </div>
             <div class="pokemon-stats">
                <table>

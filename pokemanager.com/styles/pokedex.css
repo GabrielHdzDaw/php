@@ -5,8 +5,8 @@
     --card-border-color: #ccc;
     /* Color del borde de las tarjetas */
 }
-@font-face
-{
+
+@font-face {
     font-family: 'PokemonFont';
     src: url('../fonts/pokemon-emerald.otf') format('truetype');
 }
@@ -16,12 +16,13 @@
     grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
     gap: 5px;
     padding: 5px;
-    width: 70%;
+    
     background-color: white;
     border-radius: 20px;
     margin: 20px auto;
     overflow: hidden;
 }
+
 
 .pokemon-card {
     width: 175px;
@@ -49,6 +50,11 @@
     margin-bottom: 10px;
 }
 
+.pokemon-card:has(.pokemon-img.pokemon-not-found) {
+  pointer-events: none;
+  cursor: default; /* Opcional: cambia el cursor */
+}
+
 .pokemon-img {
     filter: drop-shadow(5px 5px 5px rgba(0, 0, 0, 0.5));
     margin-bottom: 10px;
@@ -66,21 +72,21 @@
     margin-top: 20px;
     filter:
         brightness(0)
-        /* Hace la imagen completamente negra */
+        
         contrast(1000%)
-        /* Aumenta el contraste para eliminar medios tonos */
+       
         drop-shadow(0 0 8px rgba(0, 0, 0, 0.8));
-    /* Opcional: añade sombra para mejor visibilidad */
+    
 }
 
 .modal {
-    
+
     /* Hidden by default */
     position: fixed;
     /* Stay in place */
     z-index: 1;
     /* Sit on top
-    left: 0;
+    left: 0;f
     top: 0;
     width: 100%;
     height: 100%; */
@@ -91,9 +97,10 @@
     /* Fallback color */
     background-color: rgba(124, 124, 124, 0.4);
     /* Black w/ opacity */
+    padding: 20px;
 }
 
-.img-pokemon-pokedex-dialog{
+.img-pokemon-pokedex-dialog {
     width: 125px;
     height: 125px;
     object-fit: contain;
@@ -103,11 +110,11 @@
     -webkit-user-drag: none;
 }
 
-.pokemon-header{
+.pokemon-header {
     color: white;
 }
 
-.pokemon-description{
+.pokemon-description {
     background-color: white;
     border-radius: 10px;
     padding: 10px;
@@ -116,7 +123,7 @@
     font-family: 'PokemonFont', sans-serif;
 }
 
-.pokemon-stats{
+.pokemon-stats {
     background-color: white;
     border-radius: 10px;
     padding: 10px;
@@ -125,17 +132,17 @@
     font-family: 'PokemonFont', sans-serif;
 }
 
-.pokemon-stats table{
+.pokemon-stats table {
     width: 170px;
     border-collapse: collapse;
     border: none;
 }
 
-.stats-info-container{
+.stats-info-container {
     display: flex;
     align-items: center;
     justify-content: space-evenly;
-    
+
 }
 
 .close {
@@ -146,14 +153,107 @@
     cursor: pointer;
 }
 
-.stats-numbers{
+.stats-numbers {
     color: rgb(51, 197, 255);
     text-shadow: 1px 1px 1px #0078bd;
     transition: 0.3s;
 }
 
-.stats-numbers:hover{
+.stats-numbers:hover {
     transition: 0.3s;
     color: #0078bd;
     text-shadow: 1px 1px 1px #33c5ff;
 }
+
+.coleccion-container {
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-grow: 1;
+    margin: 0 auto;
+}
+
+h2 {
+    
+    margin-bottom: 10px;
+}
+
+.subtitle {
+    color: #7f8c8d;
+    margin-bottom: 20px;
+}
+
+.datos-coleccion {
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.datos-coleccion p {
+    color: #34495e;
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+
+.progress-container {
+    position: relative;
+
+    margin: 20px auto;
+}
+
+.progress-circle {
+    transform: rotate(-90deg);
+    width: 100%;
+    height: 100%;
+}
+
+.progress-bg {
+    fill: none;
+    stroke: #e0e0e0;
+    stroke-width: 8;
+}
+
+.progress {
+    fill: none;
+    stroke: #ff6b6b;
+    stroke-width: 8;
+    stroke-linecap: round;
+    transition: stroke 0.3s ease;
+}
+
+.percentage {
+    position: absolute;
+    top: 45%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 80px;
+    font-weight: bold;
+    color: #2c3e50;
+}
+
+.pokemon-count {
+    background: #3498db;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 20px;
+    display: inline-block;
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+.dashboard-container {
+    display: flex;
+    align-items: center;
+    
+    padding: 20px;
+    /* background-color: #f8f9fa; */
+    border-radius: 15px;
+    /* box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); */
+}
+
