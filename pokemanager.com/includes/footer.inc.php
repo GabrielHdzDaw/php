@@ -1,5 +1,5 @@
 <footer>
-    <p><strong>Gabriel Hernández Collado © <?php echo date("Y"); ?></strong></p>
+    <h2><strong>Gabriel Hernández Collado © <?php echo date("Y"); ?></strong></h2>
 </footer>
 <?php
 if (!isset($_SESSION['started'])) {
@@ -13,6 +13,7 @@ if (!isset($_SESSION['started'])) {
 <script src="scripts/progressGenerations.js"></script>
 <script src="scripts/tabs.js"></script>
 <script src="scripts/pokedex.js"></script>
+<script src="scripts/header.js"></script>
 </body>
 
 </html>

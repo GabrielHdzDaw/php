@@ -56,7 +56,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 }, (array)$keys);
                 break;
             default:
-                // die("¡Error!: Sobre no válido.");
+                
                 break;
         }
         $_SESSION['pokemons'] = $pokemons;

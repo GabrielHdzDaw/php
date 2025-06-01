@@ -22,16 +22,12 @@ document.addEventListener('DOMContentLoaded', () => {
         const targetPercentage = parseFloat(progressBar.dataset.percentage) || 0;
         const targetCaptured = parseInt(progressBar.dataset.capturados) || 0;
         
-        // console.log(`Gen ${index + 1}: ${targetPercentage}% (${targetCaptured}/${pokemonTotal})`);
-        
-        // Configurar círculo si existe
         if (circularProgressBar) {
             const circumference = 2 * Math.PI * 16;
             circularProgressBar.style.strokeDasharray = circumference;
             circularProgressBar.style.strokeDashoffset = circumference;
         }
         
-        // Animar después de un delay escalonado
         setTimeout(() => {
             animateGenerationProgress(
                 progressBar, 
@@ -43,7 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 targetCaptured, 
                 pokemonTotal
             );
-        }, 800 + (index * 300)); // Delay mayor para que se vea después del círculo principal
+        }, 800 + (index * 300));
     });
 });
 
@@ -56,28 +52,23 @@ function animateGenerationProgress(progressBar, progressText, circularProgressBa
         const elapsed = currentTime - startTime;
         const progress = Math.min(elapsed / duration, 1);
         
-        // Easing function (ease-out)
         const easedProgress = 1 - Math.pow(1 - progress, 3);
 
-        // Actualizar barra horizontal
         const currentPercentage = targetPercentage * easedProgress;
         progressBar.style.width = `${currentPercentage}%`;
         progressText.textContent = `${Math.round(currentPercentage)}%`;
 
-        // Actualizar círculo si existe
         if (circularProgressBar && circularText) {
             const currentOffset = circumference * (1 - easedProgress * (targetPercentage / 100));
             circularProgressBar.style.strokeDashoffset = currentOffset;
             circularText.textContent = `${Math.round(currentPercentage)}%`;
         }
 
-        // Actualizar contador de Pokémon
         const currentCaptured = Math.round(targetCaptured * easedProgress);
         if (pokemonCapturados) {
             pokemonCapturados.textContent = currentCaptured;
         }
 
-        // Cambiar color de la barra según el progreso
         const normalizedProgress = targetPercentage / 100;
         const hue = Math.round(120 * normalizedProgress * easedProgress); // De rojo (0) a verde (120)
         const saturation = 70;

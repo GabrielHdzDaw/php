@@ -3,43 +3,70 @@ import { getTypeMultiplier } from './typeMatrix.js';
 
 class Battle {
     /**
-     * Represents a battle between two Pokémon trainers.
-     * @param {Pokemon} player - The player's Pokémon.
-     * @param {Pokemon} opponent - The opponent's Pokémon.
+     * Batalla entre dos entrenadores.
+     * @param {Pokemon} player - Equipo del jugador.
+     * @param {Pokemon} opponent - Equipo del oponente.
      */
-    constructor(player, opponent) {
-        this.player = player;
-        this.opponent = opponent;
+    constructor(playerPokemons, opponentPokemons) {
+        this.playerPokemons = [...playerPokemons];
+        this.opponentPokemons = [...opponentPokemons];
+        this.currentPlayerPokemon = this.playerPokemons[0];
+        this.currentOpponentPokemon = this.opponentPokemons[0];
         this.turn = 0;
         this.log = [];
         this.battleInterval = null;
     }
 
     start() {
-        console.log(`Battle started between ${this.player.name} and ${this.opponent.name}`);
-        this.log.push(`Battle started between ${this.player.name} and ${this.opponent.name}`);
+        this.log.push(`¡Comienza el combate entre ${this.currentPlayerPokemon.name} y ${this.currentOpponentPokemon.name}!`);
         this.updateUI();
 
-        // Start battle with 1-second intervals between turns
         this.battleInterval = setInterval(() => {
-            if (this.player.isAlive() && this.opponent.isAlive()) {
+            if (this.currentPlayerPokemon.isAlive() && this.currentOpponentPokemon.isAlive()) {
                 this.takeTurn();
                 this.updateUI();
             } else {
-                this.endBattle();
+                this.checkFaintedPokemon();
             }
         }, 1000);
     }
 
+    checkFaintedPokemon() {
+        if (!this.currentPlayerPokemon.isAlive()) {
+            this.log.push(`¡${this.currentPlayerPokemon.name} se debilitó!`);
+            const index = this.playerPokemons.indexOf(this.currentPlayerPokemon);
+            this.playerPokemons.splice(index, 1);
+
+            if (this.playerPokemons.length > 0) {
+                this.currentPlayerPokemon = this.playerPokemons[0];
+                this.log.push(`¡Ve! ¡${this.currentPlayerPokemon.name}!`);
+            }
+        }
+
+        if (!this.currentOpponentPokemon.isAlive()) {
+            this.log.push(`¡${this.currentOpponentPokemon.name} se debilitó!`);
+            const index = this.opponentPokemons.indexOf(this.currentOpponentPokemon);
+            this.opponentPokemons.splice(index, 1);
+
+            if (this.opponentPokemons.length > 0) {
+                this.currentOpponentPokemon = this.opponentPokemons[0];
+                this.log.push(`¡El rival envió a ${this.currentOpponentPokemon.name}!`);
+            }
+        }
+
+        this.updateUI();
+
+        if (this.playerPokemons.length === 0 || this.opponentPokemons.length === 0) {
+            this.endBattle();
+        }
+    }
+
     endBattle() {
         clearInterval(this.battleInterval);
-        if (!this.player.isAlive()) {
-            this.log.push(`${this.player.name} has fainted!`);
-            console.log(`${this.player.name} has fainted!`);
-        }
-        if (!this.opponent.isAlive()) {
-            this.log.push(`${this.opponent.name} has fainted!`);
-            console.log(`${this.opponent.name} has fainted!`);
+        if (this.playerPokemons.length === 0) {
+            this.log.push(`¡Todos tus Pokémon se debilitaron! ¡Has perdido!`);
+        } else {
+            this.log.push(`¡Has derrotado a todos los Pokémon del rival! ¡Ganaste!`);
         }
         this.updateUI();
     }
@@ -48,22 +75,18 @@ class Battle {
         this.turn++;
         let attacker, defender;
 
-        // Determine who attacks first based on speed
-        if (this.player.speed >= this.opponent.speed) {
-            attacker = this.player;
-            defender = this.opponent;
+        if (this.currentPlayerPokemon.speed >= this.currentOpponentPokemon.speed) {
+            attacker = this.currentPlayerPokemon;
+            defender = this.currentOpponentPokemon;
         } else {
-            attacker = this.opponent;
-            defender = this.player;
+            attacker = this.currentOpponentPokemon;
+            defender = this.currentPlayerPokemon;
         }
 
-        this.log.push(`Turn ${this.turn}: ${attacker.name} attacks first!`);
-        console.log(`Turn ${this.turn}: ${attacker.name} attacks first!`);
+        this.log.push(`Turno ${this.turn}: ¡${attacker.name} ataca primero!`);
 
-        // Perform attack
         this.performAttack(attacker, defender);
 
-        // If defender is still alive, they attack back
         if (defender.isAlive()) {
             this.performAttack(defender, attacker);
         }
@@ -72,46 +95,104 @@ class Battle {
     performAttack(attacker, defender) {
         let damage;
         let attackType;
+        let effectiveness = "";
 
-        // 50% chance for physical or special attack
         if (Math.random() < 0.5) {
-            // Physical attack
-            attackType = "Physical";
+            attackType = "ataque físico";
             damage = attacker.attack / (1 + (defender.defense / 100)) * 0.5;
         } else {
-            // Special attack
-            attackType = "Special";
+            attackType = "ataque especial";
             const typeMultiplier = getTypeMultiplier(attacker.type1.toUpperCase(), defender.type1.toUpperCase());
             damage = attacker.spAttack / (1 + (defender.spDefense / 100)) * 0.5 * typeMultiplier;
+
+
+            if (typeMultiplier > 1) effectiveness = " ¡Es muy efectivo!";
+            else if (typeMultiplier < 1 && typeMultiplier > 0) effectiveness = " ¡No es muy efectivo...";
+            else if (typeMultiplier === 0) effectiveness = " ¡No afecta a este tipo de Pokémon!";
         }
 
         defender.receiveDamage(Math.round(damage));
 
-        const logMessage = `${attacker.name} uses ${attackType} attack! ${defender.name} takes ${Math.round(damage)} damage.`;
+        const logMessage = `${attacker.name} usa ${attackType}! ${defender.name} pierde ${Math.round(damage)} PS.${effectiveness}`;
         this.log.push(logMessage);
-        console.log(logMessage);
     }
 
+    scrollToBottom(element) {
+
+        element.scrollTop = element.scrollHeight;
+
+        requestAnimationFrame(() => {
+            element.scrollTop = element.scrollHeight;
+            const lastItem = element.lastElementChild;
+            if (lastItem) {
+                lastItem.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'end'
+                });
+            }
+        });
+
+        // setTimeout(() => {
+        //     element.scrollTop = element.scrollHeight;
+        // }, 50);
+    }
     updateUI() {
-        // Update health bars
-        const playerHP = document.querySelector('#pokemon-usuario .health-bar');
-        const opponentHP = document.querySelector('#pokemon-rival .health-bar');
 
-        if (playerHP) {
-            playerHP.style.width = `${(this.player.hp / this.player.maxHP) * 100}%`;
-        }
-        if (opponentHP) {
-            opponentHP.style.width = `${(this.opponent.hp / this.opponent.maxHP) * 100}%`;
+        if (this.currentPlayerPokemon) {
+            const playerName = document.getElementById('pokemon-usuario-nombre');
+            const playerImg = document.getElementById('pokemon-usuario-img');
+            const playerHP = document.querySelector('#pokemon-usuario .health-bar');
+
+            if (playerName) playerName.textContent = this.currentPlayerPokemon.name;
+            if (playerImg) playerImg.src = this.currentPlayerPokemon.getImage();
+            if (playerHP) {
+                playerHP.style.width = `${(this.currentPlayerPokemon.hp / this.currentPlayerPokemon.maxHP) * 200}%`;
+                playerHP.style.backgroundColor = this.getHealthBarColor(this.currentPlayerPokemon.hp / this.currentPlayerPokemon.maxHP);
+            }
         }
 
-        // Update battle log
+
+        if (this.currentOpponentPokemon) {
+            const opponentName = document.getElementById('pokemon-rival-nombre');
+            const opponentImg = document.getElementById('pokemon-rival-img');
+            const opponentHP = document.querySelector('#pokemon-rival .health-bar');
+
+            if (opponentName) opponentName.textContent = this.currentOpponentPokemon.name;
+            if (opponentImg) opponentImg.src = this.currentOpponentPokemon.getImage();
+            if (opponentHP) {
+                opponentHP.style.width = `${(this.currentOpponentPokemon.hp / this.currentOpponentPokemon.maxHP) * 200}%`;
+                opponentHP.style.backgroundColor = this.getHealthBarColor(this.currentOpponentPokemon.hp / this.currentOpponentPokemon.maxHP);
+            }
+        }
+
+
+        const playerRemaining = document.querySelector('#pokemon-usuario .pokemon-usuario-restantes');
+        const opponentRemaining = document.querySelector('#pokemon-rival .pokemon-usuario-restantes');
+
+        if (playerRemaining) playerRemaining.textContent = `Pokémon restantes: ${this.playerPokemons.length}`;
+        if (opponentRemaining) opponentRemaining.textContent = `Pokémon restantes: ${this.opponentPokemons.length}`;
+
+
         const logList = document.getElementById('log-list');
         if (logList) {
+            // Actualizar contenido
             logList.innerHTML = this.log.map(entry => `<li>${entry}</li>`).join('');
-            logList.scrollTop = logList.scrollHeight;
+
+            // Forzar scroll hacia abajo usando múltiples métodos
+            this.scrollToBottom(logList);
         }
+
+        console.log('Altura del log:', logList.scrollHeight, 'Posición scroll:', logList.scrollTop);
+        console.log('Altura visible:', logList.clientHeight);
+    }
+
+    getHealthBarColor(percentage) {
+        if (percentage > 0.6) return '#4CAF50'; // Verde
+        if (percentage > 0.2) return '#FFC107'; // Amarillo
+        return '#F44336'; // Rojo
     }
 }
+
 
 function getPokemons(list) {
     const pokemonList = [];
@@ -150,11 +231,9 @@ const opponentPokemonCards = document.querySelector('.combate-pokemons-rival').q
 const userPokemon = getPokemons(userPokemonCards);
 const opponentPokemon = getPokemons(opponentPokemonCards);
 
-userPokemon.forEach(pokemon => {
-    console.log(pokemon.toString());
-});
+console.log(userPokemon);
 
-const battle = new Battle(userPokemon[0], opponentPokemon[0]);
+
 
 const battleContainer = document.querySelector('.combate-pokemons-container');
 const startButton = document.getElementById('start-battle');
@@ -163,8 +242,9 @@ startButton.addEventListener('click', () => {
     battleContainer.innerHTML = '';
     battleContainer.innerHTML = `
     <div id="contenedor-combate">
-        <div id="pokemon-usuario" class="pokemon-container">
-            <div class="pokemon-usuario-restantes"></div>
+
+        <div class="pokemon-usuario-restantes"></div>   
+            <div id="pokemon-usuario" class="pokemon-container">
                 <div class="pokemon-info">
                     <h3 id="pokemon-usuario-nombre">${userPokemon[0].getName()}</h3>
                     <div class="health-bar-container">
@@ -177,15 +257,16 @@ startButton.addEventListener('click', () => {
 
         <div id="pokemon-rival" class="pokemon-container">
             <div class="pokemon-usuario-restantes"></div>
-            <div class="pokemon-info">
-                <h3 id="pokemon-rival-nombre">${opponentPokemon[0].getName()}</h3>
-                <div class="health-bar-container">
+                <div class="pokemon-info">
+                    <h3 id="pokemon-rival-nombre">${opponentPokemon[0].getName()}</h3>
+                    <div class="health-bar-container">
                     <div class="health-bar" style="width: 100%"></div>
                 </div>
             </div>
             <img id="pokemon-rival-img" src="${opponentPokemon[0].getImage()}" alt="Imagen Pokémon">
         </div>        
     </div>
+
     <div id="battle-log" class="battle-log">
         <h2>Battle Log</h2>
         <ul id="log-list"></ul>
@@ -193,6 +274,8 @@ startButton.addEventListener('click', () => {
     `;
 
     // Start the battle
-    const battle = new Battle(userPokemon[0], opponentPokemon[0]);
+    const battle = new Battle(userPokemon, opponentPokemon);
+    console.log(userPokemon);
+    console.log(opponentPokemon);
     battle.start();
 });

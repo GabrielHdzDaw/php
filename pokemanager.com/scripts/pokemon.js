@@ -43,7 +43,7 @@ export class Pokemon {
         return this.speed;
     }
     getImage() {
-        return this.img || 'default.png'; // Default image if not specified
+        return this.img || 'default.png';
     }
 
     setHP(hp) {
@@ -51,7 +51,7 @@ export class Pokemon {
     }
     setMaxHP(maxHP) {
         this.maxHP = maxHP;
-        this.hp = Math.min(this.hp, this.maxHP); // Ensure current HP does not exceed new max
+        this.hp = Math.min(this.hp, this.maxHP);
     }
     setAttack(attack) {
         this.attack = attack;
@@ -68,7 +68,6 @@ export class Pokemon {
     setSpeed(speed) {
         this.speed = speed;
     }
-    // Métodos para manejar el daño y la vida del Pokémon
     
     receiveDamage(damage) {
         this.hp = Math.max(0, this.hp - damage);
@@ -78,7 +77,6 @@ export class Pokemon {
         return this.hp > 0;
     }
 
-    // Métodos opcionales (para futuras expansiones)
     attackOpponent(opponent) {
         const damage = this.attack / (1 + (opponent.defense / 100)) * 0.5;
         opponent.receiveDamage(damage);
