@@ -1,6 +1,6 @@
 <?php
-if (isset($_SESSION['pokemons_usuario']) && count(array_unique($_SESSION['pokemons_usuario'])) < 6) {
-    echo "<p>No tienes suficientes Pokémon para combatir.</p>";
+if (!isset($_SESSION['pokemons_usuario']) || (isset($_SESSION['pokemons_usuario']) && count(array_unique($_SESSION['pokemons_usuario'])) < 6)) {
+    echo "<p>¡No tienes suficientes Pokémon para combatir! Necesitas al menos 6 Pokémon únicos en tu equipo.</p>";
 } else {
     require_once 'includes/get_usuarios.inc.php';
     include_once 'includes/get_pokemons.inc.php';
@@ -15,36 +15,31 @@ if (isset($_SESSION['pokemons_usuario']) && count(array_unique($_SESSION['pokemo
     });
 
     if (empty($usuariosValidos)) {
-        die("No hay usuarios válidos con al menos 6 Pokémon únicos.");
+        die("¡Todavía no hay usuarios con suficientes pokémon para combatir!.");
     }
 
     $randomUsuario = $usuariosValidos[array_rand($usuariosValidos)];
     $usuarioAleatorioId = $randomUsuario['id'];
     $pokemonRivalTodos = getUserPokemons($usuarioAleatorioId, $pdo);
 
-    // Selección de Pokémon rival
-    $pokemonRivalTodos = getUserPokemons($usuarioAleatorioId, $pdo);
     $pokemonRivalIds = array_column($pokemonRivalTodos, 'id_pokemon');
     shuffle($pokemonRivalIds);
     $pokemonsRival = array_slice($pokemonRivalIds, 0, 6);
 
-    // Selección de Pokémon del usuario
     $userPokemonIds = $_SESSION['pokemons_usuario'];
     shuffle($userPokemonIds);
     $pokemonsUsuario = array_slice($userPokemonIds, 0, 6);
 
-    // Crear lookup de Pokémon
     $pokemonById = [];
     foreach ($pokedex as $p) {
         $pokemonById[$p['id']] = $p;
     }
 ?>
 
-
     <div class='combate-pokemons-container'>
-
         <div class='combate-pokemons-usuario-container'>
-            <h2>Equipo de <?= htmlspecialchars($_SESSION['user_info']['nombre']) ?></h2>
+            <h2><?= htmlspecialchars($_SESSION['user_info']['nombre']) ?></h2>
+            <img class="combat-profile-picture" src="<?= htmlspecialchars($_SESSION['user_info']['ruta_foto_perfil']) ?>" alt="<?= htmlspecialchars($_SESSION['user_info']['nombre']) ?>">
             <div class='combate-pokemons-usuario'>
                 <?php foreach ($pokemonsUsuario as $pokemonId):
                     $pokemon = $pokemonById[$pokemonId] ?? null;
@@ -75,7 +70,8 @@ if (isset($_SESSION['pokemons_usuario']) && count(array_unique($_SESSION['pokemo
         </div>
 
         <div class='combate-pokemons-rival-container'>
-            <h2>Equipo de <?= htmlspecialchars($randomUsuario['nombre']) ?></h2>
+            <h2><?= htmlspecialchars($randomUsuario['nombre']) ?></h2>
+            <img class="combat-profile-picture" src="<?= htmlspecialchars($randomUsuario['ruta_foto_perfil']) ?>" alt="<?= htmlspecialchars($randomUsuario['nombre']) ?>">
             <div class='combate-pokemons-rival'>
                 <?php foreach ($pokemonsRival as $pokemonId):
                     $pokemon = $pokemonById[$pokemonId] ?? null;
@@ -106,6 +102,6 @@ if (isset($_SESSION['pokemons_usuario']) && count(array_unique($_SESSION['pokemo
 
 
 
-    
+
 
 <?php } ?>

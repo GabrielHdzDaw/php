@@ -2,11 +2,7 @@ import { Pokemon } from './pokemon.js';
 import { getTypeMultiplier } from './typeMatrix.js';
 
 class Battle {
-    /**
-     * Batalla entre dos entrenadores.
-     * @param {Pokemon} player - Equipo del jugador.
-     * @param {Pokemon} opponent - Equipo del oponente.
-     */
+
     constructor(playerPokemons, opponentPokemons) {
         this.playerPokemons = [...playerPokemons];
         this.opponentPokemons = [...opponentPokemons];
@@ -24,11 +20,10 @@ class Battle {
         this.battleInterval = setInterval(() => {
             if (this.currentPlayerPokemon.isAlive() && this.currentOpponentPokemon.isAlive()) {
                 this.takeTurn();
-                this.updateUI();
             } else {
                 this.checkFaintedPokemon();
             }
-        }, 1000);
+        }, 3000); // Aumentado el intervalo para dar tiempo a los ataques secuenciales
     }
 
     checkFaintedPokemon() {
@@ -74,7 +69,6 @@ class Battle {
     takeTurn() {
         this.turn++;
         let attacker, defender;
-
         if (this.currentPlayerPokemon.speed >= this.currentOpponentPokemon.speed) {
             attacker = this.currentPlayerPokemon;
             defender = this.currentOpponentPokemon;
@@ -84,12 +78,22 @@ class Battle {
         }
 
         this.log.push(`Turno ${this.turn}: ¡${attacker.name} ataca primero!`);
+        this.updateUI();
 
-        this.performAttack(attacker, defender);
+        // Primer ataque
+        setTimeout(() => {
+            this.performAttack(attacker, defender);
+            this.updateUI();
 
-        if (defender.isAlive()) {
-            this.performAttack(defender, attacker);
-        }
+            // Verificar si el defensor sigue vivo después del primer ataque
+            if (defender.isAlive()) {
+                // ✅ SEGUNDO ATAQUE: Anidado dentro del primer setTimeout
+                setTimeout(() => {
+                    this.performAttack(defender, attacker);
+                    this.updateUI();
+                }, 1500); // 1.5 segundos después del primer ataque
+            }
+        }, 500); // 0.5 segundos antes del primer ataque
     }
 
     performAttack(attacker, defender) {
@@ -105,7 +109,6 @@ class Battle {
             const typeMultiplier = getTypeMultiplier(attacker.type1.toUpperCase(), defender.type1.toUpperCase());
             damage = attacker.spAttack / (1 + (defender.spDefense / 100)) * 0.5 * typeMultiplier;
 
-
             if (typeMultiplier > 1) effectiveness = " ¡Es muy efectivo!";
             else if (typeMultiplier < 1 && typeMultiplier > 0) effectiveness = " ¡No es muy efectivo...";
             else if (typeMultiplier === 0) effectiveness = " ¡No afecta a este tipo de Pokémon!";
@@ -118,7 +121,6 @@ class Battle {
     }
 
     scrollToBottom(element) {
-
         element.scrollTop = element.scrollHeight;
 
         requestAnimationFrame(() => {
@@ -131,13 +133,9 @@ class Battle {
                 });
             }
         });
-
-        // setTimeout(() => {
-        //     element.scrollTop = element.scrollHeight;
-        // }, 50);
     }
-    updateUI() {
 
+    updateUI() {
         if (this.currentPlayerPokemon) {
             const playerName = document.getElementById('pokemon-usuario-nombre');
             const playerImg = document.getElementById('pokemon-usuario-img');
@@ -146,11 +144,11 @@ class Battle {
             if (playerName) playerName.textContent = this.currentPlayerPokemon.name;
             if (playerImg) playerImg.src = this.currentPlayerPokemon.getImage();
             if (playerHP) {
-                playerHP.style.width = `${(this.currentPlayerPokemon.hp / this.currentPlayerPokemon.maxHP) * 200}%`;
-                playerHP.style.backgroundColor = this.getHealthBarColor(this.currentPlayerPokemon.hp / this.currentPlayerPokemon.maxHP);
+                const percentage = this.currentPlayerPokemon.hp / this.currentPlayerPokemon.maxHP;
+                playerHP.style.width = `${percentage * 100}%`;
+                playerHP.style.backgroundColor = this.getHealthBarColor(percentage);
             }
         }
-
 
         if (this.currentOpponentPokemon) {
             const opponentName = document.getElementById('pokemon-rival-nombre');
@@ -160,11 +158,11 @@ class Battle {
             if (opponentName) opponentName.textContent = this.currentOpponentPokemon.name;
             if (opponentImg) opponentImg.src = this.currentOpponentPokemon.getImage();
             if (opponentHP) {
-                opponentHP.style.width = `${(this.currentOpponentPokemon.hp / this.currentOpponentPokemon.maxHP) * 200}%`;
-                opponentHP.style.backgroundColor = this.getHealthBarColor(this.currentOpponentPokemon.hp / this.currentOpponentPokemon.maxHP);
+                const percentage = this.currentOpponentPokemon.hp / this.currentOpponentPokemon.maxHP;
+                opponentHP.style.width = `${percentage * 100}%`;
+                opponentHP.style.backgroundColor = this.getHealthBarColor(percentage);
             }
         }
-
 
         const playerRemaining = document.querySelector('#pokemon-usuario .pokemon-usuario-restantes');
         const opponentRemaining = document.querySelector('#pokemon-rival .pokemon-usuario-restantes');
@@ -172,18 +170,13 @@ class Battle {
         if (playerRemaining) playerRemaining.textContent = `Pokémon restantes: ${this.playerPokemons.length}`;
         if (opponentRemaining) opponentRemaining.textContent = `Pokémon restantes: ${this.opponentPokemons.length}`;
 
-
         const logList = document.getElementById('log-list');
         if (logList) {
-            // Actualizar contenido
             logList.innerHTML = this.log.map(entry => `<li>${entry}</li>`).join('');
-
-            // Forzar scroll hacia abajo usando múltiples métodos
             this.scrollToBottom(logList);
+            console.log('Altura del log:', logList.scrollHeight, 'Posición scroll:', logList.scrollTop);
+            console.log('Altura visible:', logList.clientHeight);
         }
-
-        console.log('Altura del log:', logList.scrollHeight, 'Posición scroll:', logList.scrollTop);
-        console.log('Altura visible:', logList.clientHeight);
     }
 
     getHealthBarColor(percentage) {
@@ -193,13 +186,12 @@ class Battle {
     }
 }
 
-
 function getPokemons(list) {
     const pokemonList = [];
 
     list.forEach((pokemonCard, index) => {
         const pokemonName = pokemonCard.dataset.name;
-        const pokemonType1 = pokemonCard.dataset.type1 || 'Normal'; // Default to Normal type if not specified
+        const pokemonType1 = pokemonCard.dataset.type1 || 'Normal';
         const pokemonType2 = pokemonCard.dataset.type2 || null;
         const pokemonHP = parseInt(pokemonCard.dataset.hp) || 100;
         const pokemonAttack = parseInt(pokemonCard.dataset.attack) || 50;
@@ -207,7 +199,7 @@ function getPokemons(list) {
         const pokemonSpAttack = parseInt(pokemonCard.dataset.specialattack) || 50;
         const pokemonSpDefense = parseInt(pokemonCard.dataset.specialdefense) || 50;
         const pokemonSpeed = parseInt(pokemonCard.dataset.speed) || 50;
-        const pokemonImg = pokemonCard.dataset.iconpath; // Default image if not specified
+        const pokemonImg = pokemonCard.dataset.iconpath;
 
         pokemonList[index] = new Pokemon(
             pokemonName,
@@ -233,43 +225,41 @@ const opponentPokemon = getPokemons(opponentPokemonCards);
 
 console.log(userPokemon);
 
-
-
 const battleContainer = document.querySelector('.combate-pokemons-container');
 const startButton = document.getElementById('start-battle');
 
 startButton.addEventListener('click', () => {
     battleContainer.innerHTML = '';
     battleContainer.innerHTML = `
-    <div id="contenedor-combate">
+    <div class="contenedor-combate">
+        <div id="combate">
+            <div class="pokemon-usuario-restantes"></div>   
+                <div id="pokemon-usuario" class="pokemon-container">
+                    <div class="pokemon-info">
+                        <h3 id="pokemon-usuario-nombre">${userPokemon[0].getName()}</h3>
+                        <div class="health-bar-container">
+                            <div class="health-bar" style="width: 100%"></div>
+                        </div>
+                    </div>
+                    <img id="pokemon-usuario-img" src="${userPokemon[0].getImage()}" alt="Imagen Pokémon">
+                </div>
+            </div>
 
-        <div class="pokemon-usuario-restantes"></div>   
-            <div id="pokemon-usuario" class="pokemon-container">
-                <div class="pokemon-info">
-                    <h3 id="pokemon-usuario-nombre">${userPokemon[0].getName()}</h3>
-                    <div class="health-bar-container">
+            <div id="pokemon-rival" class="pokemon-container">
+                <div class="pokemon-usuario-restantes"></div>
+                    <div class="pokemon-info">
+                        <h3 id="pokemon-rival-nombre">${opponentPokemon[0].getName()}</h3>
+                        <div class="health-bar-container">
                         <div class="health-bar" style="width: 100%"></div>
                     </div>
                 </div>
-                <img id="pokemon-usuario-img" src="${userPokemon[0].getImage()}" alt="Imagen Pokémon">
-            </div>
+                <img id="pokemon-rival-img" src="${opponentPokemon[0].getImage()}" alt="Imagen Pokémon">
+            </div>  
+            <div id="battle-log" class="battle-log">
+                <h2>Battle Log</h2>
+                <ul id="log-list"></ul>
+            </div>      
         </div>
-
-        <div id="pokemon-rival" class="pokemon-container">
-            <div class="pokemon-usuario-restantes"></div>
-                <div class="pokemon-info">
-                    <h3 id="pokemon-rival-nombre">${opponentPokemon[0].getName()}</h3>
-                    <div class="health-bar-container">
-                    <div class="health-bar" style="width: 100%"></div>
-                </div>
-            </div>
-            <img id="pokemon-rival-img" src="${opponentPokemon[0].getImage()}" alt="Imagen Pokémon">
-        </div>        
-    </div>
-
-    <div id="battle-log" class="battle-log">
-        <h2>Battle Log</h2>
-        <ul id="log-list"></ul>
     </div>
     `;
 

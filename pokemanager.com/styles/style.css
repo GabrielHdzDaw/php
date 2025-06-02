@@ -39,9 +39,9 @@ header {
     overflow: hidden;
     background-color: #df923b;
     background-image: url("../img/header_bg.png");
-    background-size: 250%;
+    background-size: 200%;
     background-repeat: no-repeat;
-    transition: background-position 60s ease;
+    transition: background-position 60s ease-in-out;
 }
 
 

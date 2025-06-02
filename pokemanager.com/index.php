@@ -9,12 +9,22 @@ include_once 'includes/header.inc.php';
     if (isset($_SESSION['started'])) {
     ?>
         <div class="tab">
-            <button class="tablinks" data-tab="Sobres">Sobres</button>
-            <button class="tablinks" data-tab="PokéDex">PokéDex</button>
-            <button class="tablinks" data-tab="Combate">Combate</button>
-            <button class="tablinks" data-tab="Perfil">Perfil</button>
+            <button class="tablinks" onclick="openTab(event, 'Sobres')"
+                <?php echo (!isset($_SESSION['tab']) || $_SESSION['tab'] == 'Sobres') ? 'id="defaultOpen"' : ''; ?>>
+                Sobres</button>
+            <button class="tablinks" onclick="openTab(event, 'Colección')"
+                <?php echo (isset($_SESSION['tab']) && $_SESSION['tab'] == 'Colección') ? 'id="defaultOpen"' : ''; ?>>
+                Colección</button>
+            <button class="tablinks" onclick="openTab(event, 'Combate')"
+                <?php echo (isset($_SESSION['tab']) && $_SESSION['tab'] == 'Combate') ? 'id="defaultOpen"' : ''; ?>>
+                Combate</button>
+            <button class="tablinks tabPerfil" onclick="openTab(event, 'Perfil')"
+                <?php echo (isset($_SESSION['tab']) && $_SESSION['tab'] == 'Perfil') ? 'id="defaultOpen"' : ''; ?>>
+                Perfil</button>
             <?php if ($_SESSION['user_info']['is_admin'] == 1) { ?>
-                <button class="tablinks" data-tab="Administrador">Administrador</button>
+                <button class="tablinks" onclick="openTab(event, 'Administrador')"
+                    <?php echo (isset($_SESSION['tab']) && $_SESSION['tab'] == 'Administrador') ? 'id="defaultOpen"' : ''; ?>>
+                    Administrador</button>
             <?php } ?>
         </div>
         <!-- Tab content -->
@@ -26,12 +36,12 @@ include_once 'includes/header.inc.php';
             <?php include_once 'includes/sobres.inc.php'; ?>
         </div>
 
-        <div id="PokéDex" class="tabcontent">
+        <div id="Colección" class="tabcontent">
             <div class="info">
                 <h3>Mi colección</h3>
                 <p>¡Aquí podrás ver todos los Pokémons que has conseguido!</p>
 
-                
+
                 <?php include_once 'includes/pokedex.inc.php'; ?>
             </div>
         </div>
