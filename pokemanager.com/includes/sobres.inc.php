@@ -2,6 +2,7 @@
 if ($_SESSION['user_info']['sobres'] > 0) {
     echo "<div class='sobres-contenedor'>";
     echo "<h2 class='titulo-sobres'>¡Tienes " . $_SESSION['user_info']['sobres'] . " sobres!</h2>";
+    echo "<div class='sobres-contenedor-grid'>";
     for ($i = 0; $i < 7; $i++) {
         echo "<div class='sobre'>";
         echo "<form action='includes/abrir_sobre.inc.php' method='POST' class='sobres-formulario'>";
@@ -12,6 +13,7 @@ if ($_SESSION['user_info']['sobres'] > 0) {
         echo "</form>";
         echo "</div>";
     }
+    echo "</div>";
     echo "</div>";
 } else {
     echo "<div class='info'>";

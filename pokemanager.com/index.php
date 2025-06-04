@@ -32,8 +32,8 @@ include_once 'includes/header.inc.php';
             <div class="info">
                 <h3>¿A quién no le gusta abrir sobres?</h3>
                 <p>¡Inicia sesión cada día para obtener 1 sobre! Cada vez que inicies sesión recibirás una cantidad de sobres proporcional a la cantidad de días que lleves sin conectarte.</p>
+                <?php include_once 'includes/sobres.inc.php'; ?>
             </div>
-            <?php include_once 'includes/sobres.inc.php'; ?>
         </div>
 
         <div id="Colección" class="tabcontent">

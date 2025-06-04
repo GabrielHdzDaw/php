@@ -36,6 +36,7 @@ if (isset($_SESSION['pokemons_usuario'])) {
 
 include_once 'includes/progreso_generaciones.inc.php';
 ?>
+<a href="#"><button class="volver-arriba">^</button></a>
 <div class="dashboard-container">
     <div class="generaciones-container">
         <div class="datos-coleccion">

@@ -1,20 +1,9 @@
-/* Contenedores principales */
-.combat-profile-picture{
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
-    filter: drop-shadow(5px 5px 5px rgba(0, 0, 0, 0.5));
-    object-fit: cover;
-}
-
-.combate-pokemons-usuario,
-.combate-pokemons-rival {
+/* ===== CONTENEDORES PRINCIPALES ===== */
+.contenedor-combate {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
-    flex-wrap: wrap;
-    margin-top: 20px;
-    gap: 15px;
+    justify-content: center;
 }
 
 .combate-pokemons-container {
@@ -35,52 +24,17 @@
     flex-wrap: wrap;
 }
 
-/* Cartas de Pokémon */
-.pokemon-card {
-    border: 2px solid #e0e0e0;
-    border-radius: 10px;
-    padding: 15px;
-    text-align: center;
-    background: white;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    transition: transform 0.2s;
-}
-
-.pokemon-card:hover {
-    transform: translateY(-3px);
-}
-
-.pokemon-img {
-    width: 100px;
-    height: 100px;
-    object-fit: contain;
-}
-
-/* Barras de vida */
-#barraVidaJugadorContenedor,
-#barraVidaRivalContenedor {
-    width: 100%;
-    background-color: #ccc;
-    border-radius: 5px;
-    margin-top: 10px;
-    overflow: hidden;
-}
-
-#barraVidaJugador,
-#barraVidaRival {
-    width: 100%;
-    height: 20px;
-    background-color: #4caf50;
-    transition: width 0.5s ease-in-out;
-}
-
-.contenedor-combate {
+.combate-pokemons-usuario,
+.combate-pokemons-rival {
     display: flex;
-    flex-direction: column;
-    align-items: center;
     justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-top: 20px;
+    gap: 15px;
 }
 
+/* ===== ESCENARIO DE COMBATE ===== */
 #combate {
     position: relative;
     border-radius: 15px;
@@ -105,8 +59,9 @@
     border-radius: 20px;
 }
 
+/* ===== POKÉMON EN COMBATE ===== */
 .pokemon-info {
-    background-color: rgba(245, 245, 220, 0.95);
+    background-color: rgba(245, 245, 220, 0.7);
     padding: 15px 20px;
     border-radius: 15px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
@@ -114,7 +69,6 @@
     border: 2px solid rgba(255, 255, 255, 0.3);
 }
 
-/* Posicionamiento absoluto usando viewport units para consistencia */
 #pokemon-usuario {
     position: absolute;
     bottom: 15%;
@@ -129,13 +83,13 @@
 
 #pokemon-rival {
     position: absolute;
-    top: 40%;
+    top: 37%;
     left: 53%;
     transform: translateX(0);
     z-index: 10;
 }
 
-/* Imágenes de Pokémon con tamaños consistentes */
+/* ===== IMÁGENES DE POKÉMON ===== */
 #pokemon-usuario-img {
     object-fit: contain;
     width: 120px;
@@ -153,6 +107,7 @@
     filter: drop-shadow(3px 3px 6px rgba(0, 0, 0, 0.3));
 }
 
+/* ===== NOMBRES DE POKÉMON ===== */
 #pokemon-usuario-nombre,
 #pokemon-rival-nombre {
     font-size: 18px;
@@ -162,6 +117,7 @@
     text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.8);
 }
 
+/* ===== BARRAS DE VIDA ===== */
 .health-bar-container {
     width: 160px;
     height: 18px;
@@ -181,30 +137,359 @@
     box-shadow: 0 0 10px rgba(81, 218, 63, 0.4);
 }
 
-/* Información de Pokémon restantes */
-.pokemon-usuario-restantes {
-    position: absolute;
+/* Barras de vida alternativas (si se usan) */
+#barraVidaJugadorContenedor,
+#barraVidaRivalContenedor {
+    width: 100%;
+    background-color: #ccc;
+    border-radius: 5px;
+    margin-top: 10px;
+    overflow: hidden;
+}
+
+#barraVidaJugador,
+#barraVidaRival {
+    width: 100%;
+    height: 20px;
+    background-color: #4caf50;
+    transition: width 0.5s ease-in-out;
+}
+
+/* ===== CARTAS DE POKÉMON ===== */
+.pokemon-card {
+    border: 2px solid #e0e0e0;
+    border-radius: 10px;
+    padding: 15px;
+    text-align: center;
+    background: white;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
+}
+
+.pokemon-card:hover {
+    transform: translateY(-3px);
+}
+
+.pokemon-img {
+    width: 100px;
+    height: 100px;
+    object-fit: contain;
+}
+
+/* ===== FOTO DE PERFIL ===== */
+.combat-profile-picture {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    filter: drop-shadow(5px 5px 5px rgba(0, 0, 0, 0.5));
+    object-fit: cover;
+}
+
+/* ===== POKÉMON RESTANTES ===== */
+.pokemon-restantes-usuario,
+.pokemon-restantes-rival {
+    position: relative;
     font-size: 14px;
     font-weight: bold;
     color: white;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
-    background-color: rgba(0, 0, 0, 0.6);
     padding: 5px 10px;
     border-radius: 15px;
     white-space: nowrap;
 }
 
-#pokemon-usuario .pokemon-usuario-restantes {
-    top: -35px;
-    left: 0;
+/* ===== ANIMACIONES DE POKÉMON DEBILITADOS ===== */
+.pokemon-fainted-user {
+    animation: pokemon-faint-user 1.5s ease-in-out forwards;
 }
 
-#pokemon-rival .pokemon-usuario-restantes {
-    top: -35px;
-    left: 0;
+.pokemon-fainted-rival {
+    animation: pokemon-faint-rival 1.5s ease-in-out forwards;
 }
 
-/* Combat Log reposicionado a la esquina inferior derecha */
+@keyframes pokemon-faint-user {
+    0% {
+        transform: scaleX(-1) rotate(0deg);
+        filter: grayscale(0%) brightness(1) drop-shadow(3px 3px 6px rgba(0, 0, 0, 0.3));
+        opacity: 1;
+    }
+    
+    50% {
+        transform: scaleX(-1) rotate(45deg);
+        filter: grayscale(50%) brightness(0.8) drop-shadow(3px 3px 6px rgba(0, 0, 0, 0.3));
+        opacity: 0.85;
+    }
+    
+    100% {
+        transform: scaleX(-1) rotate(90deg);
+        filter: grayscale(100%) brightness(0.7) drop-shadow(3px 3px 6px rgba(0, 0, 0, 0.3));
+        opacity: 0.7;
+    }
+}
+
+@keyframes pokemon-faint-rival {
+    0% {
+        transform: rotate(0deg);
+        filter: grayscale(0%) brightness(1) drop-shadow(3px 3px 6px rgba(0, 0, 0, 0.3));
+        opacity: 1;
+    }
+    
+    50% {
+        transform: rotate(-45deg);
+        filter: grayscale(50%) brightness(0.8) drop-shadow(3px 3px 6px rgba(0, 0, 0, 0.3));
+        opacity: 0.85;
+    }
+    
+    100% {
+        transform: rotate(-90deg);
+        filter: grayscale(100%) brightness(0.7) drop-shadow(3px 3px 6px rgba(0, 0, 0, 0.3));
+        opacity: 0.7;
+    }
+}
+
+/* ===== ANIMACIONES DE POKÉMON DEBILITADOS ===== */
+.pokemon-fainted-user {
+    animation: pokemon-faint-user 1.5s ease-in-out forwards;
+}
+
+.pokemon-fainted-rival {
+    animation: pokemon-faint-rival 1.5s ease-in-out forwards;
+}
+
+@keyframes pokemon-faint-user {
+    0% {
+        transform: scaleX(-1) rotate(0deg);
+        filter: grayscale(0%) brightness(1) drop-shadow(3px 3px 6px rgba(0, 0, 0, 0.3));
+        opacity: 1;
+    }
+    
+    50% {
+        transform: scaleX(-1) rotate(45deg);
+        filter: grayscale(50%) brightness(0.8) drop-shadow(3px 3px 6px rgba(0, 0, 0, 0.3));
+        opacity: 0.85;
+    }
+    
+    100% {
+        transform: scaleX(-1) rotate(90deg);
+        filter: grayscale(100%) brightness(0.7) drop-shadow(3px 3px 6px rgba(0, 0, 0, 0.3));
+        opacity: 0.7;
+    }
+}
+
+@keyframes pokemon-faint-rival {
+    0% {
+        transform: rotate(0deg);
+        filter: grayscale(0%) brightness(1) drop-shadow(3px 3px 6px rgba(0, 0, 0, 0.3));
+        opacity: 1;
+    }
+    
+    50% {
+        transform: rotate(-45deg);
+        filter: grayscale(50%) brightness(0.8) drop-shadow(3px 3px 6px rgba(0, 0, 0, 0.3));
+        opacity: 0.85;
+    }
+    
+    100% {
+        transform: rotate(-90deg);
+        filter: grayscale(100%) brightness(0.7) drop-shadow(3px 3px 6px rgba(0, 0, 0, 0.3));
+        opacity: 0.7;
+    }
+}
+
+/* ===== ANIMACIONES DE APARICIÓN DE POKÉMON ===== */
+.pokemon-appear-user {
+    animation: pokemon-appear-from-ball 1s ease-out forwards;
+}
+
+.pokemon-appear-rival {
+    animation: pokemon-appear-from-ball 1s ease-out forwards;
+}
+
+@keyframes pokemon-appear-from-ball {
+    0% {
+        transform: scale(0) scaleX(-1);
+        filter: brightness(10) blur(5px) drop-shadow(0 0 20px rgba(255, 255, 255, 1));
+        opacity: 0.3;
+    }
+    
+    20% {
+        transform: scale(0.3) scaleX(-1);
+        filter: brightness(8) blur(3px) drop-shadow(0 0 25px rgba(255, 255, 255, 0.9));
+        opacity: 0.6;
+    }
+    
+    40% {
+        transform: scale(0.6) scaleX(-1);
+        filter: brightness(5) blur(2px) drop-shadow(0 0 20px rgba(255, 255, 255, 0.7));
+        opacity: 0.8;
+    }
+    
+    60% {
+        transform: scale(0.8) scaleX(-1);
+        filter: brightness(3) blur(1px) drop-shadow(0 0 15px rgba(255, 255, 255, 0.5));
+        opacity: 0.9;
+    }
+    
+    80% {
+        transform: scale(1.1) scaleX(-1);
+        filter: brightness(1.5) drop-shadow(0 0 10px rgba(255, 255, 255, 0.3));
+        opacity: 1;
+    }
+    
+    100% {
+        transform: scale(1) scaleX(-1);
+        filter: brightness(1) drop-shadow(3px 3px 6px rgba(0, 0, 0, 0.3));
+        opacity: 1;
+    }
+}
+
+/* Animación específica para el rival (sin scaleX) */
+@keyframes pokemon-appear-from-ball-rival {
+    0% {
+        transform: scale(0);
+        filter: brightness(10) blur(5px) drop-shadow(0 0 20px rgba(255, 255, 255, 1));
+        opacity: 0.3;
+    }
+    
+    20% {
+        transform: scale(0.3);
+        filter: brightness(8) blur(3px) drop-shadow(0 0 25px rgba(255, 255, 255, 0.9));
+        opacity: 0.6;
+    }
+    
+    40% {
+        transform: scale(0.6);
+        filter: brightness(5) blur(2px) drop-shadow(0 0 20px rgba(255, 255, 255, 0.7));
+        opacity: 0.8;
+    }
+    
+    60% {
+        transform: scale(0.8);
+        filter: brightness(3) blur(1px) drop-shadow(0 0 15px rgba(255, 255, 255, 0.5));
+        opacity: 0.9;
+    }
+    
+    80% {
+        transform: scale(1.1);
+        filter: brightness(1.5) drop-shadow(0 0 10px rgba(255, 255, 255, 0.3));
+        opacity: 1;
+    }
+    
+    100% {
+        transform: scale(1);
+        filter: brightness(1) drop-shadow(3px 3px 6px rgba(0, 0, 0, 0.3));
+        opacity: 1;
+    }
+}
+
+.pokemon-appear-rival {
+    animation: pokemon-appear-from-ball-rival 1s ease-out forwards;
+}
+
+/* ===== POKÉBALLS ===== */
+.pokeballs-container {
+    position: relative;
+    top: -10px;
+    left: -15px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.pokeball-icon {
+    width: 15px;
+    height: 15px;
+    object-fit: contain;
+    filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.2));
+    transition: transform 0.2s ease;
+}
+
+/* ===== ANIMACIONES DE POKÉBALL DINÁMICAS ===== */
+.pokeball-usuario-animation,
+.pokeball-rival-animation {
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    z-index: 15;
+}
+
+.pokeball-usuario-animation {
+    top: 60%;
+    left: 0%;
+    animation: pokeball-user-launch 1.2s linear forwards;
+}
+
+.pokeball-rival-animation {
+    top: 30%;
+    right: 0%;
+    animation: pokeball-rival-launch 1.2s linear forwards;
+}
+
+@keyframes pokeball-user-launch {
+    0% {
+        transform: translateY(40%) translateX(0) scale(2) rotate(0deg);
+        opacity: 1;
+    }
+
+    25% {
+        transform: translateY(0%) translateX(80px) scale(1.7) rotate(540deg);
+        opacity: 1;
+    }
+
+    50% {
+        transform: translateY(-20%) translateX(150px) scale(1.4) rotate(1080deg);
+        opacity: 1;
+    }
+
+    75% {
+        transform: translateY(10%) translateX(200px) scale(1.2) rotate(1620deg);
+        opacity: 1;
+    }
+
+    90% {
+        transform: translateY(50%) translateX(250px) scale(1) rotate(1980deg);
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateY(50%) translateX(250px) scale(0.8) rotate(2160deg);
+        opacity: 0;
+    }
+}
+
+@keyframes pokeball-rival-launch {
+    0% {
+        transform: translateY(15%) translateX(0) scale(0.3) rotate(0deg);
+        opacity: 1;
+    }
+
+    25% {
+        transform: translateY(-15%) translateX(-80px) scale(0.5) rotate(540deg);
+        opacity: 1;
+    }
+
+    50% {
+        transform: translateY(-35%) translateX(-150px) scale(0.7) rotate(1080deg);
+        opacity: 1;
+    }
+
+    75% {
+        transform: translateY(-5%) translateX(-200px) scale(0.9) rotate(1620deg);
+        opacity: 1;
+    }
+
+    90% {
+        transform: translateY(25%) translateX(-250px) scale(1) rotate(1980deg);
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateY(25%) translateX(-250px) scale(0.8) rotate(2160deg);
+        opacity: 0;
+    }
+}
+
+/* ===== LOG DE BATALLA ===== */
 #battle-log {
     position: absolute;
     bottom: 25%;
@@ -242,6 +527,7 @@
     overflow-y: auto;
 }
 
+/* ===== SCROLLBAR DEL LOG ===== */
 #log-list::-webkit-scrollbar {
     width: 6px;
 }
@@ -260,6 +546,7 @@
     background: #2980b9;
 }
 
+/* ===== ELEMENTOS DE LISTA ===== */
 li {
     margin: 4px 0;
     padding: 8px 10px;
@@ -273,61 +560,62 @@ li {
     transition: transform 0.2s ease;
 }
 
+/* ===== MEDIA QUERIES ===== */
 
-
-/* Responsive adjustments */
+/* Tablets grandes y pantallas medianas */
 @media (max-width: 1024px) {
     #combate {
         min-width: 700px;
         height: 70vh;
         min-height: 500px;
     }
-    
+
     #pokemon-usuario {
         bottom: 12%;
         left: 6%;
     }
-    
+
     #pokemon-rival {
         top: 12%;
         left: 68%;
     }
-    
+
     #battle-log {
         width: 240px;
         max-height: 150px;
         bottom: 3%;
         right: 3%;
     }
-    
+
     #pokemon-usuario-img {
         width: 100px;
         height: 100px;
     }
-    
+
     #pokemon-rival-img {
         width: 80px;
         height: 80px;
     }
 }
 
+/* Tablets y móviles */
 @media (max-width: 768px) {
     #combate {
         min-width: 600px;
         height: 60vh;
         min-height: 450px;
     }
-    
+
     #pokemon-usuario {
         bottom: 10%;
         left: 4%;
     }
-    
+
     #pokemon-rival {
         top: 10%;
         left: 65%;
     }
-    
+
     #battle-log {
         width: 200px;
         max-height: 120px;
@@ -335,16 +623,16 @@ li {
         bottom: 2%;
         right: 2%;
     }
-    
+
     .pokemon-info {
         padding: 10px 15px;
     }
-    
+
     #pokemon-usuario-nombre,
     #pokemon-rival-nombre {
         font-size: 16px;
     }
-    
+
     .health-bar-container {
         width: 140px;
         height: 16px;

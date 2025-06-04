@@ -17,7 +17,7 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.info-usuario-admin{
+.info-usuario-admin {
     display: flex;
     flex-direction: column;
     margin-left: 20px;
@@ -34,11 +34,11 @@
     margin: 5px;
 }
 
-.contenedor-img-usuario-admin{
+.contenedor-img-usuario-admin {
     margin: 10px;
 }
 
-.img-usuario-admin{
+.img-usuario-admin {
     width: 100px;
     height: 100px;
     border-radius: 50%;
@@ -46,7 +46,7 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.contenedor-controles-usuario-admin{
+.contenedor-controles-usuario-admin {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -54,9 +54,91 @@
 }
 
 .contenedor-controles-usuario-admin button {
-    
+
     padding: 10px;
     border-radius: 20px;
     cursor: pointer;
     margin-top: 10px;
+}
+
+.tabla-usuarios-admin {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 10px;
+    font-size: 14px;
+    background-color: #f9f9f9;
+    margin: 0 auto;
+}
+
+.tabla-usuarios-admin thead th {
+    background-color: #2c3e50;
+    color: white;
+    padding: 12px 10px;
+    text-align: left;
+
+}
+
+.tabla-usuarios-admin tbody tr {
+    background-color: white;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    border-radius: 8px;
+    overflow: hidden;
+    transition: transform 0.2s;
+}
+
+.tabla-usuarios-admin tbody tr:hover {
+    transform: scale(1.01);
+}
+
+.tabla-usuarios-admin td {
+    padding: 10px;
+    vertical-align: middle;
+}
+
+.img-usuario-admin {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
+}
+
+.tabla-usuarios-admin button {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    padding: 6px 10px;
+    border-radius: 6px;
+    margin: 2px 2px;
+    cursor: pointer;
+    font-size: 13px;
+    transition: background-color 0.2s, transform 0.1s;
+}
+
+.tabla-usuarios-admin button:hover {
+    background-color: #2980b9;
+    transform: scale(1.05);
+}
+
+.tabla-usuarios-admin button:active {
+    transform: scale(0.98);
+}
+
+.btn-toggle-admin {
+    padding: 6px 10px;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.admin-si {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.admin-no {
+    background-color: #f44336;
+    color: white;
 }

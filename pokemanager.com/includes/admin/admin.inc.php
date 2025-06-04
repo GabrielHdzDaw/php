@@ -3,27 +3,49 @@ include_once "includes/get_usuarios.inc.php";
 
 if ($_SESSION['started'] && $_SESSION['user_info']['is_admin'] == 1) {
 
-    echo "<div class='admin-usuarios'>";
+    
+    echo "<table class='tabla-usuarios-admin'>";
+    echo "<thead>";
+    echo "<tr>";
+    echo "<th>Foto</th>";
+    echo "<th>ID</th>";
+    echo "<th>Es admin</th>";
+    echo "<th>Nombre</th>";
+    echo "<th>Correo</th>";
+    echo "<th>Fecha de nacimiento</th>";
+    echo "<th>Fecha de registro</th>";
+    echo "<th>Último acceso</th>";
+    echo "<th>Sobres</th>";
+    echo "<th>Acciones</th>";
+    echo "</tr>";
+    echo "</thead>";
+    echo "<tbody>";
+
     foreach ($usuarios as $usuario) {
-        echo "<div class='usuario'>";
-        echo "<div class='contenedor-controles-usuario-admin'>";
-        echo "<div class='contenedor-img-usuario-admin'>";
-        echo "<img class='img-usuario-admin' src='" . $usuario['ruta_foto_perfil'] .  "' alt='Usuario' class='icono-usuario'>";
-        echo "</div>";
-        echo "<button data-id='" . $usuario['id'] . "'  class='btn-eliminar-usuario'>Eliminar usuario</button>";
-        echo "<button class='btn-borrar-sobres'>Borrar sobres</button>";
-        echo "<button class='btn-anadir-sobres'>Añadir sobres</button>";
-        echo "<button class='btn-borrar-coleccion'>Borrar colección</button>";
-        echo "</div>";
-        echo "<div class='info-usuario-admin'>";
-        echo "<span>ID: " . $usuario['id'] . "</span>";
-        echo "<span>Nombre: " . $usuario['nombre'] . "</span>";
-        echo "<span>Correo: " . $usuario['email'] . "</span>";
-        echo "<span>Fecha de nacimiento: " . $usuario['fecha_nacimiento'] . "</span>";
-        echo "<span>Fecha de registro: " . $usuario['creado'] . "</span>";
-        echo "<span>Último login: " . $usuario['ultimo_login'] . "</span>";
-        echo "<span>Sobres: " . $usuario['sobres'] . "</span>";
-        echo "</div>";
-        echo "</div>";
+        $esAdmin = $usuario['is_admin'] == 1;
+        $textoBtn = $esAdmin ? 'Sí' : 'No';
+        $claseBtn = $esAdmin ? 'admin-si' : 'admin-no';
+        echo "<tr>";
+        echo "<td><img class='img-usuario-admin' src='" . $usuario['ruta_foto_perfil'] . "' alt='Usuario'></td>";
+        echo "<td>" . $usuario['id'] . "</td>";
+        echo "<td><button class='btn-toggle-admin $claseBtn' data-id='{$usuario['id']}' data-estado='{$usuario['is_admin']}'>$textoBtn</button></td>";
+        echo "<td>" . $usuario['nombre'] . "</td>";
+        echo "<td>" . $usuario['email'] . "</td>";
+        echo "<td>" . $usuario['fecha_nacimiento'] . "</td>";
+        echo "<td>" . $usuario['creado'] . "</td>";
+        echo "<td>" . $usuario['ultimo_login'] . "</td>";
+        echo "<td>" . $usuario['sobres'] . "</td>";
+        
+        echo "<td>";
+        echo "<button data-id='" . $usuario['id'] . "' class='btn-guardar-usuario' style='display:none;'>Guardar</button> ";
+        echo "<button data-id='" . $usuario['id'] . "' class='btn-cancelar-edicion' style='display:none;'>Cancelar</button>";
+        echo "<button data-id='" . $usuario['id'] . "' class='btn-editar-usuario'>Editar</button> ";
+        
+        echo "</td>";
+        echo "</tr>";
     }
+
+    echo "</tbody>";
+    echo "</table>";
+    
 }

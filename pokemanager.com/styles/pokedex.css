@@ -11,6 +11,20 @@
     src: url('../fonts/pokemon-emerald.otf') format('truetype');
 }
 
+.volver-arriba{
+    position: fixed;
+    bottom: 250px;
+    right: 200px;
+    background-color: #0078bd;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
 .pokedex {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
