@@ -40,8 +40,6 @@ include_once 'includes/header.inc.php';
             <div class="info">
                 <h3>Mi colección</h3>
                 <p>¡Aquí podrás ver todos los Pokémons que has conseguido!</p>
-
-
                 <?php include_once 'includes/pokedex.inc.php'; ?>
             </div>
         </div>
@@ -58,8 +56,12 @@ include_once 'includes/header.inc.php';
         </div>
 
         <div id="Administrador" class="tabcontent">
-            <h3>Administrador</h3>
-            <p>Aquí puedes administrar la página</p>
+            <div class="info">
+                <h3>Administrador</h3>
+                <p>Aquí puedes administrar los usuarios de la página</p>
+                <?php include_once 'includes/admin/admin.inc.php' ?>
+            </div>
+
         </div>
     <?php
     } else {

@@ -18,8 +18,6 @@ pokemonCards.forEach(card => {
         const pokemonImage = card.dataset.icon;
         const pokemonDescription = card.dataset.description;
 
-        
-
         const modalContent = `
         <div class="modal-content">
             <span class="close">&times;</span>

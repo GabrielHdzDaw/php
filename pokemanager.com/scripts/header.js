@@ -3,7 +3,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const originalImgWidth = 2058;
     const originalImgHeight = 956;
-    const zoomFactor = 2;
 
     const imgWidth = originalImgWidth;
     const imgHeight = originalImgHeight;
@@ -27,6 +26,6 @@ document.addEventListener('DOMContentLoaded', function () {
         forward = !forward;
     }
 
-    updatePosition(); // Inicia movimiento inmediatamente
+    updatePosition();
     setInterval(updatePosition, 60000);
 });

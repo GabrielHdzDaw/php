@@ -1,11 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     const generaciones = document.querySelectorAll('.generacion-item');
     
-    if (generaciones.length === 0) {
-        console.log('No se encontraron elementos de generación');
-        return;
-    }
-    
     generaciones.forEach((generacion, index) => {
         const progressBar = generacion.querySelector('.progress-bar');
         const progressText = generacion.querySelector('.progress-text');

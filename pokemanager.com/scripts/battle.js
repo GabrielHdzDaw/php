@@ -14,7 +14,7 @@ class Battle {
     }
 
     start() {
-        this.log.push(`¡Comienza el combate entre ${this.currentPlayerPokemon.name} y ${this.currentOpponentPokemon.name}!`);
+        this.log.push("¡Comienza el combate!");
         this.updateUI();
 
         this.battleInterval = setInterval(() => {
@@ -23,7 +23,7 @@ class Battle {
             } else {
                 this.checkFaintedPokemon();
             }
-        }, 3000); // Aumentado el intervalo para dar tiempo a los ataques secuenciales
+        }, 2500);
     }
 
     checkFaintedPokemon() {
@@ -59,9 +59,22 @@ class Battle {
     endBattle() {
         clearInterval(this.battleInterval);
         if (this.playerPokemons.length === 0) {
-            this.log.push(`¡Todos tus Pokémon se debilitaron! ¡Has perdido!`);
+            this.log.push("¡Todos tus Pokémon se debilitaron! ¡Has perdido!");
         } else {
-            this.log.push(`¡Has derrotado a todos los Pokémon del rival! ¡Ganaste!`);
+            this.log.push("¡Has derrotado a todos los Pokémon del rival! ¡Ganaste!");
+            fetch('includes/agregar_sobres.inc.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        this.log.push("¡Has recibido dos sobres por ganar!");
+                    }
+                })
+
         }
         this.updateUI();
     }
@@ -80,20 +93,17 @@ class Battle {
         this.log.push(`Turno ${this.turn}: ¡${attacker.name} ataca primero!`);
         this.updateUI();
 
-        // Primer ataque
         setTimeout(() => {
             this.performAttack(attacker, defender);
             this.updateUI();
 
-            // Verificar si el defensor sigue vivo después del primer ataque
             if (defender.isAlive()) {
-                // ✅ SEGUNDO ATAQUE: Anidado dentro del primer setTimeout
                 setTimeout(() => {
                     this.performAttack(defender, attacker);
                     this.updateUI();
-                }, 1500); // 1.5 segundos después del primer ataque
+                }, 1000);
             }
-        }, 500); // 0.5 segundos antes del primer ataque
+        }, 500);
     }
 
     performAttack(attacker, defender) {
@@ -174,8 +184,7 @@ class Battle {
         if (logList) {
             logList.innerHTML = this.log.map(entry => `<li>${entry}</li>`).join('');
             this.scrollToBottom(logList);
-            console.log('Altura del log:', logList.scrollHeight, 'Posición scroll:', logList.scrollTop);
-            console.log('Altura visible:', logList.clientHeight);
+
         }
     }
 
@@ -223,8 +232,6 @@ const opponentPokemonCards = document.querySelector('.combate-pokemons-rival').q
 const userPokemon = getPokemons(userPokemonCards);
 const opponentPokemon = getPokemons(opponentPokemonCards);
 
-console.log(userPokemon);
-
 const battleContainer = document.querySelector('.combate-pokemons-container');
 const startButton = document.getElementById('start-battle');
 
@@ -265,7 +272,6 @@ startButton.addEventListener('click', () => {
 
     // Start the battle
     const battle = new Battle(userPokemon, opponentPokemon);
-    console.log(userPokemon);
-    console.log(opponentPokemon);
+
     battle.start();
 });

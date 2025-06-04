@@ -14,6 +14,7 @@ if (!isset($_SESSION['started'])) {
 <script src="scripts/tabs.js"></script>
 <script src="scripts/pokedex.js"></script>
 <script src="scripts/header.js"></script>
+<script src="scripts/admin.js"></script>
 </body>
 
 </html>

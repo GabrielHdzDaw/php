@@ -20,6 +20,7 @@ session_start();
     <link rel="stylesheet" href="styles/combate.css" type="text/css">
     <link rel="stylesheet" href="styles/perfil.css" type="text/css">
     <link rel="stylesheet" href="styles/generaciones.css" type="text/css">
+    <link rel="stylesheet" href="styles/admin.css" type="text/css">
     <script src="scripts/tabs.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
 
