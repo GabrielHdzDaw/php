@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
     editarBtns.forEach(btn => {
         btn.addEventListener('click', () => {
             const fila = btn.closest('tr');
-            const celdasEditables = fila.querySelectorAll('td:nth-child(n+3):nth-child(-n+8)');
+            const celdasEditables = fila.querySelectorAll('td:nth-child(n+4):nth-child(-n+9)');
 
             celdasEditables.forEach(td => {
                 td.setAttribute('contenteditable', 'true');
@@ -28,12 +28,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const datos = {
                 id: id,
-                nombre: celdas[2].innerText.trim(),
-                email: celdas[3].innerText.trim(),
-                fecha_nacimiento: celdas[4].innerText.trim(),
-                creado: celdas[5].innerText.trim(),
-                ultimo_login: celdas[6].innerText.trim(),
-                sobres: celdas[7].innerText.trim()
+                nombre: celdas[3].innerText.trim(),
+                email: celdas[4].innerText.trim(),
+                fecha_nacimiento: celdas[5].innerText.trim(),
+                creado: celdas[6].innerText.trim(),
+                ultimo_login: celdas[7].innerText.trim(),
+                sobres: celdas[8].innerText.trim()
             };
 
             fetch('includes/admin/editar_usuario.inc.php', {
@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', () => {
     cancelarBtns.forEach(btn => {
         btn.addEventListener('click', () => {
             const fila = btn.closest('tr');
-            const celdas = fila.querySelectorAll('td:nth-child(n+3):nth-child(-n+8)');
+            const celdas = fila.querySelectorAll('td:nth-child(n+4):nth-child(-n+9)');
 
             celdas.forEach(td => {
                 td.innerText = td.dataset.original;

@@ -30,9 +30,7 @@
 
 .animacion-sobre {
     transform-style: preserve-3d;
-    /* Origen centrado en X y Y */
     transform-origin: center center;
-    /* Ejecuta la animación al cargar la página */
     animation: flip 2s cubic-bezier(.25, .1, .25, 1) forwards;
 }
 
