@@ -4,7 +4,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $id_sobre = $_POST['id_sobre'] ?? null;
     try {
         require_once 'get_pokemons.inc.php';
-        require_once 'conectar_db.inc.php'; // Asegurate de tener $pdo definido
+        require_once 'conectar_db.inc.php';
 
         $pokemons = [];
         switch ($id_sobre) {

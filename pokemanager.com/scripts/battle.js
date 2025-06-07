@@ -1,6 +1,7 @@
 import { Pokemon } from './pokemon.js';
 import { getTypeMultiplier } from './typeMatrix.js';
 
+
 class Battle {
     constructor(playerPokemons, opponentPokemons) {
         this.playerPokemons = [...playerPokemons];
@@ -10,12 +11,13 @@ class Battle {
         this.turn = 0;
         this.log = [];
         this.battleInterval = null;
+        this.isAnimating = false; // Flag para controlar animaciones
 
-        // Guardar el número inicial de Pokémon para las pokéballs
+        // número de Pokémon iniciales
         this.initialPlayerCount = this.playerPokemons.length;
         this.initialOpponentCount = this.opponentPokemons.length;
 
-        this.setAttackPriority();  // Inicializar la prioridad de ataque
+        this.setAttackPriority();
     }
 
     setAttackPriority() {
@@ -35,21 +37,18 @@ class Battle {
         const combateDiv = document.getElementById('combate');
         if (!combateDiv) return;
 
-        // Crear elemento de pokéball
         const pokeball = document.createElement('img');
         pokeball.src = 'img/pokeball_launch.png';
         pokeball.alt = 'Pokéball';
         pokeball.className = isPlayer ? 'pokeball-usuario-animation' : 'pokeball-rival-animation';
 
-        // Añadir la pokéball al combate
         combateDiv.appendChild(pokeball);
 
-        // Remover la pokéball después de la animación
         setTimeout(() => {
             if (pokeball.parentNode) {
                 pokeball.parentNode.removeChild(pokeball);
             }
-        }, 1200); // Duración de la animación
+        }, 1200);
     }
 
     /**
@@ -61,12 +60,36 @@ class Battle {
             document.getElementById('pokemon-rival-img');
 
         if (pokemonImg) {
+
+            pokemonImg.classList.remove('pokemon-appear-user', 'pokemon-appear-rival', 'pokemon-fainted-user', 'pokemon-fainted-rival');
+
+            pokemonImg.style.opacity = '1';
+
             pokemonImg.classList.add(isPlayer ? 'pokemon-appear-user' : 'pokemon-appear-rival');
 
-            // Remover la clase después de la animación
             setTimeout(() => {
                 pokemonImg.classList.remove(isPlayer ? 'pokemon-appear-user' : 'pokemon-appear-rival');
             }, 1000);
+        }
+    }
+
+    /**
+     * Muestra la animación de Pokémon debilitado
+     */
+    showPokemonFaintedAnimation(isPlayer = true) {
+        const pokemonImg = isPlayer ?
+            document.getElementById('pokemon-usuario-img') :
+            document.getElementById('pokemon-rival-img');
+
+        if (pokemonImg) {
+            pokemonImg.classList.remove('pokemon-appear-user', 'pokemon-appear-rival');
+
+            pokemonImg.classList.add(isPlayer ? 'pokemon-fainted-user' : 'pokemon-fainted-rival');
+
+            setTimeout(() => {
+                pokemonImg.style.opacity = '0';
+                pokemonImg.classList.remove('pokemon-fainted-user', 'pokemon-fainted-rival');
+            }, 1500);
         }
     }
 
@@ -106,10 +129,13 @@ class Battle {
         this.updateUI();
 
         this.battleInterval = setInterval(() => {
-            if (this.currentPlayerPokemon.isAlive() && this.currentOpponentPokemon.isAlive()) {
-                this.takeTurn();
-            } else {
-                this.checkFaintedPokemon();
+            // Solo continuar si no hay animaciones en curso
+            if (!this.isAnimating) {
+                if (this.currentPlayerPokemon.isAlive() && this.currentOpponentPokemon.isAlive()) {
+                    this.takeTurn();
+                } else {
+                    this.checkFaintedPokemon();
+                }
             }
         }, 2500);
     }
@@ -121,54 +147,89 @@ class Battle {
         let pokemonSwitched = false;
 
         if (!this.currentPlayerPokemon.isAlive()) {
+            this.isAnimating = true; // Activar flag de animación
             this.log.push(`¡${this.currentPlayerPokemon.name} se debilitó!`);
+
+            // Mostrar animación de debilitado
+            this.showPokemonFaintedAnimation(true);
+
             const index = this.playerPokemons.indexOf(this.currentPlayerPokemon);
             this.playerPokemons.splice(index, 1);
 
             if (this.playerPokemons.length > 0) {
-                this.currentPlayerPokemon = this.playerPokemons[0];
-                this.log.push(`¡Ve! ¡${this.currentPlayerPokemon.name}!`);
-
-                // Mostrar animación de pokéball al enviar nuevo Pokémon
                 setTimeout(() => {
-                    this.showPokeballAnimation(true);
-                }, 500);
+                    this.currentPlayerPokemon = this.playerPokemons[0];
+                    this.log.push(`¡Ve! ¡${this.currentPlayerPokemon.name}!`);
+                    this.updateUI();
 
-                this.setAttackPriority();  // Recalcular quién ataca primero
+                    this.showPokeballAnimation(true);
+
+                    setTimeout(() => {
+                        this.showPokemonAppearAnimation(true);
+
+                        setTimeout(() => {
+                            this.setAttackPriority();
+                            this.isAnimating = false;
+                        }, 1000);
+                    }, 1200);
+                }, 1800);
+
                 pokemonSwitched = true;
+            } else {
+                this.isAnimating = false; // Desactivar flag si no hay más Pokémon
             }
         }
 
         if (!this.currentOpponentPokemon.isAlive()) {
+            this.isAnimating = true; // Activar flag de animación
             this.log.push(`¡${this.currentOpponentPokemon.name} se debilitó!`);
+
+            // Mostrar animación de debilitado
+            this.showPokemonFaintedAnimation(false);
+
             const index = this.opponentPokemons.indexOf(this.currentOpponentPokemon);
             this.opponentPokemons.splice(index, 1);
 
             if (this.opponentPokemons.length > 0) {
-                this.currentOpponentPokemon = this.opponentPokemons[0];
-                this.log.push(`¡El rival envió a ${this.currentOpponentPokemon.name}!`);
-
-                // Mostrar animación de pokéball al enviar nuevo Pokémon
+                // Esperar a que termine la animación de debilitado antes de cambiar
                 setTimeout(() => {
-                    this.showPokeballAnimation(false);
-                }, 500);
+                    this.currentOpponentPokemon = this.opponentPokemons[0];
+                    this.log.push(`¡El rival envió a ${this.currentOpponentPokemon.name}!`);
+                    this.updateUI();
 
-                this.setAttackPriority();  // Recalcular quién ataca primero
+                    // Mostrar animación de pokéball al enviar nuevo Pokémon
+                    this.showPokeballAnimation(false);
+
+                    // Después de la pokéball, mostrar el nuevo Pokémon
+                    setTimeout(() => {
+                        this.showPokemonAppearAnimation(false);
+
+                        // Esperar a que termine la animación de aparición antes de continuar
+                        setTimeout(() => {
+                            this.setAttackPriority();
+                            this.isAnimating = false;
+                        }, 1000); // duracion aparición
+
+                    }, 1200); // duración pokéball
+                }, 1800); //fainted + un pequeño margen
+
                 pokemonSwitched = true;
+            } else {
+                this.isAnimating = false; // Desactivar flag si no hay más Pokémon
             }
         }
 
-        // Si se cambió un Pokémon, esperar un poco antes de actualizar la UI
-        if (pokemonSwitched) {
-            setTimeout(() => {
-                this.updateUI();
-            }, 1500);
-        } else {
+        // Si no se cambió un Pokémon, actualizar la UI
+        if (!pokemonSwitched) {
             this.updateUI();
         }
 
         if (this.playerPokemons.length === 0 || this.opponentPokemons.length === 0) {
-            this.endBattle();
+
+            const delay = pokemonSwitched ? 4000 : 0;
+            setTimeout(() => {
+                this.endBattle();
+            }, delay);
         }
     }
 
@@ -176,8 +237,26 @@ class Battle {
         clearInterval(this.battleInterval);
         if (this.playerPokemons.length === 0) {
             this.log.push("¡Todos tus Pokémon se debilitaron! ¡Has perdido!");
+            Swal.fire({
+                title: "¡Has perdido!",
+                text: "¿Quieres jugar de nuevo?",
+                icon: "error",
+                showDenyButton: true,
+                showCancelButton: true,
+                confirmButtonText: "Sí",
+                denyButtonText: `No, quiero ver el resultado`,
+                cancelButtonText: "Cancelar",
+                customClass: {
+                    popup: 'PokemonFont'
+                }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    location.reload();
+                }
+            });
+            this.sendBattleResult(false);
         } else {
-            this.log.push("¡Has derrotado a todos los Pokémon del rival! ¡Ganaste!");
+            this.log.push("¡Has derrotado a todos los Pokémon del rival! ¡Ganaste dos sobres!");
             fetch('includes/agregar_sobres.inc.php', {
                 method: 'POST',
                 headers: {
@@ -188,10 +267,47 @@ class Battle {
                 .then(data => {
                     if (data.success) {
                         this.log.push("¡Has recibido dos sobres por ganar!");
+                        Swal.fire({
+                            title: "¡Has ganado y recibido dos sobres!",
+                            text: "¿Quieres jugar de nuevo?",
+                            icon: "success",
+                            showDenyButton: true,
+                            showCancelButton: true,
+                            confirmButtonText: "Sí",
+                            denyButtonText: `No, quiero ver el resultado`,
+                            cancelButtonText: "Cancelar",
+                            customClass: {
+                                popup: 'PokemonFont'
+                            }
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                location.reload();
+                            }
+                        });
+                        this.sendBattleResult(true);
                     }
                 });
         }
         this.updateUI();
+    }
+
+    sendBattleResult(isVictory) {
+        fetch('includes/agregar_combates.inc.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ victoria: isVictory })
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    console.log("Combate registrado correctamente.");
+                    if (isVictory) {
+                        console.log("Victoria registrada correctamente.");
+                    }
+                }
+            });
     }
 
     takeTurn() {
@@ -230,9 +346,27 @@ class Battle {
         else if (typeMultiplier === 0) effectiveness = " ¡No afecta a este tipo de Pokémon!";
 
         defender.receiveDamage(Math.round(damage));
-
         const logMessage = `${attacker.name} usa ${attackType}! ${defender.name} pierde ${Math.round(damage)} PS.${effectiveness}`;
         this.log.push(logMessage);
+
+        // Animaciones
+        const attackerImg = attacker === this.currentPlayerPokemon
+            ? document.getElementById('pokemon-usuario-img')
+            : document.getElementById('pokemon-rival-img');
+
+        const defenderImg = defender === this.currentPlayerPokemon
+            ? document.getElementById('pokemon-usuario-img')
+            : document.getElementById('pokemon-rival-img');
+
+        if (attackerImg) {
+            attackerImg.classList.add(attacker === this.currentPlayerPokemon ? 'golpe-usuario' : 'golpe-rival');
+            setTimeout(() => attackerImg.classList.remove('golpe-usuario', 'golpe-rival'), 500);
+        }
+
+        if (defenderImg) {
+            defenderImg.classList.add('golpeado');
+            setTimeout(() => defenderImg.classList.remove('golpeado'), 500);
+        }
     }
 
     /**
@@ -269,7 +403,10 @@ class Battle {
             const playerHP = document.querySelector('#pokemon-usuario .health-bar');
 
             if (playerName) playerName.textContent = this.currentPlayerPokemon.name;
-            if (playerImg) playerImg.src = this.currentPlayerPokemon.getImage();
+            if (playerImg) {
+                playerImg.src = this.currentPlayerPokemon.getImage();
+                playerImg.title = this.getPokemonTooltip(this.currentPlayerPokemon);
+            }
             if (playerHP) {
                 const percentage = this.currentPlayerPokemon.hp / this.currentPlayerPokemon.maxHP;
                 playerHP.style.width = `${percentage * 100}%`;
@@ -283,7 +420,10 @@ class Battle {
             const opponentHP = document.querySelector('#pokemon-rival .health-bar');
 
             if (opponentName) opponentName.textContent = this.currentOpponentPokemon.name;
-            if (opponentImg) opponentImg.src = this.currentOpponentPokemon.getImage();
+            if (opponentImg) {
+                opponentImg.src = this.currentOpponentPokemon.getImage();
+                opponentImg.title = this.getPokemonTooltip(this.currentOpponentPokemon);
+            }
             if (opponentHP) {
                 const percentage = this.currentOpponentPokemon.hp / this.currentOpponentPokemon.maxHP;
                 opponentHP.style.width = `${percentage * 100}%`;
@@ -313,6 +453,20 @@ class Battle {
         if (percentage > 0.6) return '#4CAF50'; // Verde
         if (percentage > 0.2) return '#FFC107'; // Amarillo
         return '#F44336'; // Rojo
+    }
+
+    getPokemonTooltip(pokemon) {
+        return `
+        Nombre: ${pokemon.name}
+        Tipo 1: ${pokemon.type1}
+        ${pokemon.type2 ? `Tipo 2: ${pokemon.type2}` : ''}
+        PS: ${pokemon.hp}/${pokemon.maxHP}
+        Ataque: ${pokemon.attack}
+        Defensa: ${pokemon.defense}
+        Ataque Especial: ${pokemon.spAttack}
+        Defensa Especial: ${pokemon.spDefense}
+        Velocidad: ${pokemon.speed}
+    `;
     }
 }
 
@@ -355,6 +509,11 @@ const opponentPokemon = getPokemons(opponentPokemonCards);
 
 const battleContainer = document.querySelector('.combate-pokemons-container');
 const startButton = document.getElementById('start-battle');
+const searchRivalButton = document.getElementById('search-rival');
+
+searchRivalButton.addEventListener('click', () => {
+    location.reload();
+});
 
 startButton.addEventListener('click', () => {
     battleContainer.innerHTML = '';
@@ -383,15 +542,15 @@ startButton.addEventListener('click', () => {
             </div>
             <img id="pokemon-rival-img" src="${opponentPokemon[0].getImage()}" alt="Imagen Pokémon">
         </div>  
+           
+        </div>
         <div id="battle-log" class="battle-log">
             <h2>Battle Log</h2>
             <ul id="log-list"></ul>
-        </div>      
-        </div>
+        </div>   
     </div>
     `;
 
-    // Start the battle
     const battle = new Battle(userPokemon, opponentPokemon);
 
     battle.start();

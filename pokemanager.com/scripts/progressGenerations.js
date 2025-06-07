@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-function animateGenerationProgress(progressBar, progressText, circularProgressBar, circularText, pokemonCapturados, targetPercentage, targetCaptured, pokemonTotal) {
+function animateGenerationProgress(progressBar, progressText, circularProgressBar, circularText, pokemonCapturados, targetPercentage, targetCaptured) {
     const duration = 2000;
     const startTime = performance.now();
     const circumference = circularProgressBar ? 2 * Math.PI * 16 : 0;

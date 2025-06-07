@@ -9,7 +9,7 @@ botonRegistro.addEventListener("click", () => {
     dialogoRegistro.classList.add("blur-inverso");
     dialogoRegistro.showModal();
     
-    document.body.style.overflow = "hidden"; // Desactiva el scroll del body
+    document.body.style.overflow = "hidden";
 });
 
 botonCerrarRegistro.addEventListener("click", () => {
@@ -18,6 +18,6 @@ botonCerrarRegistro.addEventListener("click", () => {
     dialogoRegistro.classList.remove("blur-inverso");
     document.body.classList.add("blur-inverso-body");
 
-    document.body.style.overflow = ""; // Reactiva el scroll del body
+    document.body.style.overflow = "";
 });
 

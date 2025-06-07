@@ -11,7 +11,6 @@ if (!isset($_SESSION['user_info']['id'])) {
 try {
     $id_usuario = $_SESSION['user_info']['id'];
 
-    // Sumar 2 sobres
     $agregarSobres = $pdo->prepare("UPDATE usuarios SET sobres = sobres + 2 WHERE id = :id");
     $agregarSobres->execute([':id' => $id_usuario]);
 

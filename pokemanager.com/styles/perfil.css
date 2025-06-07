@@ -1,4 +1,4 @@
-.perfil-contenedor{
+.perfil-contenedor {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -10,18 +10,91 @@
     align-items: center;
     text-align: center;
     flex-direction: column;
+    max-width: 500px;
+    width: 100%;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.titulo-perfil{
+.titulo-perfil {
     font-size: 2rem;
     color: #333;
     margin-bottom: 20px;
 }
 
-.img-perfil{
+.img-perfil {
     width: 150px;
     height: 150px;
     border-radius: 50%;
-    filter: drop-shadow(5px 5px 5px rgba(0, 0, 0, 0.5));
+    filter: drop-shadow(5px 5px 5px rgba(0, 0, 0, 0.3));
     object-fit: cover;
+    border: 3px solid #4CAF50;
+}
+
+/* Estilos para edición */
+[contenteditable="true"] {
+    padding: 5px 10px;
+    border-radius: 4px;
+    outline: none;
+    min-width: 100px;
+    display: inline-block;
+    border: 1px solid transparent;
+    transition: all 0.3s;
+}
+
+[contenteditable="true"]:focus {
+    background: #f0f8ff;
+    border-color: #4d90fe;
+    box-shadow: 0 0 5px rgba(77, 144, 254, 0.5);
+}
+
+.perfil-imagen label {
+    cursor: pointer;
+    display: inline-block;
+    transition: opacity 0.3s;
+    margin-bottom: 15px;
+    position: relative;
+}
+
+.perfil-imagen label:hover {
+    opacity: 0.8;
+}
+
+.perfil-imagen label:hover::after {
+    content: 'Cambiar foto de perfil';
+    position: absolute;
+    bottom: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.8rem;
+    color: #4CAF50;
+}
+
+.btn-guardar {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: all 0.3s;
+    font-size: 1rem;
+}
+
+.btn-guardar:hover {
+    background-color: #45a049;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.info p {
+    margin: 8px 0;
+    font-size: 1.1rem;
+}
+
+.info p strong {
+    color: #555;
 }

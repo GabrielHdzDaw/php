@@ -20,7 +20,6 @@ try {
     die("¡Error!: " . $e->getMessage());
 }
 
-
 $pokemons_usuario = 0;
 if (isset($_SESSION['started'])) {
     if (isset($_SESSION['pokemons_usuario'])) {
@@ -36,7 +35,10 @@ if (isset($_SESSION['pokemons_usuario'])) {
 
 include_once 'includes/progreso_generaciones.inc.php';
 ?>
-<a href="#"><button class="volver-arriba">^</button></a>
+
+
+
+<a class="a-volver-arriba" href="#"><button class="volver-arriba">Volver arriba</button></a>
 <div class="dashboard-container">
     <div class="generaciones-container">
         <div class="datos-coleccion">
@@ -47,7 +49,7 @@ include_once 'includes/progreso_generaciones.inc.php';
                 </svg>
                 <div class="percentage-container">
                     <div data-percentage="<?php echo round($porcentaje, 2); ?>" class="percentage">0%</div>
-                    <div class="pokemon-count"><?php echo $pokemons_usuario; ?>/721 capturados</div>
+                    <div class="pokemon-count"><?php echo $pokemons_usuario; ?>/721 Pokémon capturados</div>
                 </div>
             </div>
         </div>
@@ -78,19 +80,20 @@ include_once 'includes/progreso_generaciones.inc.php';
                         <div class="progress-text">0%</div>
                     </div>
                 </div>
-
             <?php endforeach; ?>
         </div>
     </div>
 </div>
-<?php
 
+
+
+<?php
 if ($pokedex) {
     if (isset($_SESSION['started'])) {
         echo "<div class='pokedex'>";
         foreach ($pokedex as $pokemon) {
             $nombrePokemon = "?";
-            
+
             if (isset($_SESSION['pokemons_usuario'])) {
                 $notFoundClass = (in_array($pokemon['id'], $_SESSION['pokemons_usuario']))
                     ? ''

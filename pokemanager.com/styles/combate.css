@@ -1,9 +1,46 @@
+.custom-swal-font {
+    font-family: 'PokemonFont', sans-serif !important;
+}
+
+/* Si quieres cambiar también la fuente de los botones */
+.custom-swal-font .swal2-title,
+.custom-swal-font .swal2-content,
+.custom-swal-font .swal2-confirm,
+.custom-swal-font .swal2-deny,
+.custom-swal-font .swal2-cancel {
+    font-family: 'PokemonFont', sans-serif !important;
+}
+
+/* ===== TOOLTIP PARA IMÁGENES ===== */
+img[title] {
+    cursor: help;
+    position: relative;
+}
+
+img[title]:hover::after {
+    content: attr(title);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    white-space: pre;
+    font-family: monospace;
+    font-size: 14px;
+    z-index: 1000;
+    pointer-events: none;
+}
+
 /* ===== CONTENEDORES PRINCIPALES ===== */
 .contenedor-combate {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    user-select: none;
 }
 
 .combate-pokemons-container {
@@ -83,7 +120,7 @@
 
 #pokemon-rival {
     position: absolute;
-    top: 37%;
+    top: 40%;
     left: 53%;
     transform: translateX(0);
     z-index: 10;
@@ -199,12 +236,13 @@
 }
 
 /* ===== ANIMACIONES DE POKÉMON DEBILITADOS ===== */
+
 .pokemon-fainted-user {
-    animation: pokemon-faint-user 1.5s ease-in-out forwards;
+    animation: pokemon-faint-user 1.5s linear forwards;
 }
 
 .pokemon-fainted-rival {
-    animation: pokemon-faint-rival 1.5s ease-in-out forwards;
+    animation: pokemon-faint-rival 1.5s linear forwards;
 }
 
 @keyframes pokemon-faint-user {
@@ -213,17 +251,17 @@
         filter: grayscale(0%) brightness(1) drop-shadow(3px 3px 6px rgba(0, 0, 0, 0.3));
         opacity: 1;
     }
-    
+
     50% {
         transform: scaleX(-1) rotate(45deg);
         filter: grayscale(50%) brightness(0.8) drop-shadow(3px 3px 6px rgba(0, 0, 0, 0.3));
-        opacity: 0.85;
+        opacity: 0.5;
     }
-    
+
     100% {
         transform: scaleX(-1) rotate(90deg);
         filter: grayscale(100%) brightness(0.7) drop-shadow(3px 3px 6px rgba(0, 0, 0, 0.3));
-        opacity: 0.7;
+        opacity: 0;
     }
 }
 
@@ -233,76 +271,27 @@
         filter: grayscale(0%) brightness(1) drop-shadow(3px 3px 6px rgba(0, 0, 0, 0.3));
         opacity: 1;
     }
-    
+
     50% {
         transform: rotate(-45deg);
         filter: grayscale(50%) brightness(0.8) drop-shadow(3px 3px 6px rgba(0, 0, 0, 0.3));
-        opacity: 0.85;
+        opacity: 0.5;
     }
-    
+
     100% {
         transform: rotate(-90deg);
         filter: grayscale(100%) brightness(0.7) drop-shadow(3px 3px 6px rgba(0, 0, 0, 0.3));
-        opacity: 0.7;
-    }
-}
-
-/* ===== ANIMACIONES DE POKÉMON DEBILITADOS ===== */
-.pokemon-fainted-user {
-    animation: pokemon-faint-user 1.5s ease-in-out forwards;
-}
-
-.pokemon-fainted-rival {
-    animation: pokemon-faint-rival 1.5s ease-in-out forwards;
-}
-
-@keyframes pokemon-faint-user {
-    0% {
-        transform: scaleX(-1) rotate(0deg);
-        filter: grayscale(0%) brightness(1) drop-shadow(3px 3px 6px rgba(0, 0, 0, 0.3));
-        opacity: 1;
-    }
-    
-    50% {
-        transform: scaleX(-1) rotate(45deg);
-        filter: grayscale(50%) brightness(0.8) drop-shadow(3px 3px 6px rgba(0, 0, 0, 0.3));
-        opacity: 0.85;
-    }
-    
-    100% {
-        transform: scaleX(-1) rotate(90deg);
-        filter: grayscale(100%) brightness(0.7) drop-shadow(3px 3px 6px rgba(0, 0, 0, 0.3));
-        opacity: 0.7;
-    }
-}
-
-@keyframes pokemon-faint-rival {
-    0% {
-        transform: rotate(0deg);
-        filter: grayscale(0%) brightness(1) drop-shadow(3px 3px 6px rgba(0, 0, 0, 0.3));
-        opacity: 1;
-    }
-    
-    50% {
-        transform: rotate(-45deg);
-        filter: grayscale(50%) brightness(0.8) drop-shadow(3px 3px 6px rgba(0, 0, 0, 0.3));
-        opacity: 0.85;
-    }
-    
-    100% {
-        transform: rotate(-90deg);
-        filter: grayscale(100%) brightness(0.7) drop-shadow(3px 3px 6px rgba(0, 0, 0, 0.3));
-        opacity: 0.7;
+        opacity: 0;
     }
 }
 
 /* ===== ANIMACIONES DE APARICIÓN DE POKÉMON ===== */
 .pokemon-appear-user {
-    animation: pokemon-appear-from-ball 1s ease-out forwards;
+    animation: pokemon-appear-from-ball 1s linear forwards;
 }
 
 .pokemon-appear-rival {
-    animation: pokemon-appear-from-ball 1s ease-out forwards;
+    animation: pokemon-appear-from-ball 1s linear forwards;
 }
 
 @keyframes pokemon-appear-from-ball {
@@ -311,31 +300,31 @@
         filter: brightness(10) blur(5px) drop-shadow(0 0 20px rgba(255, 255, 255, 1));
         opacity: 0.3;
     }
-    
+
     20% {
         transform: scale(0.3) scaleX(-1);
         filter: brightness(8) blur(3px) drop-shadow(0 0 25px rgba(255, 255, 255, 0.9));
         opacity: 0.6;
     }
-    
+
     40% {
         transform: scale(0.6) scaleX(-1);
         filter: brightness(5) blur(2px) drop-shadow(0 0 20px rgba(255, 255, 255, 0.7));
         opacity: 0.8;
     }
-    
+
     60% {
         transform: scale(0.8) scaleX(-1);
         filter: brightness(3) blur(1px) drop-shadow(0 0 15px rgba(255, 255, 255, 0.5));
         opacity: 0.9;
     }
-    
+
     80% {
         transform: scale(1.1) scaleX(-1);
         filter: brightness(1.5) drop-shadow(0 0 10px rgba(255, 255, 255, 0.3));
         opacity: 1;
     }
-    
+
     100% {
         transform: scale(1) scaleX(-1);
         filter: brightness(1) drop-shadow(3px 3px 6px rgba(0, 0, 0, 0.3));
@@ -350,31 +339,31 @@
         filter: brightness(10) blur(5px) drop-shadow(0 0 20px rgba(255, 255, 255, 1));
         opacity: 0.3;
     }
-    
+
     20% {
         transform: scale(0.3);
         filter: brightness(8) blur(3px) drop-shadow(0 0 25px rgba(255, 255, 255, 0.9));
         opacity: 0.6;
     }
-    
+
     40% {
         transform: scale(0.6);
         filter: brightness(5) blur(2px) drop-shadow(0 0 20px rgba(255, 255, 255, 0.7));
         opacity: 0.8;
     }
-    
+
     60% {
         transform: scale(0.8);
         filter: brightness(3) blur(1px) drop-shadow(0 0 15px rgba(255, 255, 255, 0.5));
         opacity: 0.9;
     }
-    
+
     80% {
         transform: scale(1.1);
         filter: brightness(1.5) drop-shadow(0 0 10px rgba(255, 255, 255, 0.3));
         opacity: 1;
     }
-    
+
     100% {
         transform: scale(1);
         filter: brightness(1) drop-shadow(3px 3px 6px rgba(0, 0, 0, 0.3));
@@ -383,8 +372,79 @@
 }
 
 .pokemon-appear-rival {
-    animation: pokemon-appear-from-ball-rival 1s ease-out forwards;
+    animation: pokemon-appear-from-ball-rival 1s linear forwards;
 }
+
+/* ===== ANIMACIONES DE GOLPE ===== */
+@keyframes golpe-usuario {
+    0% {
+        transform: scaleX(-1) translateX(0);
+    }
+
+    50% {
+        transform: scaleX(-1) translateX(-20px);
+    }
+
+    100% {
+        transform: scaleX(-1) translateX(0);
+    }
+}
+
+@keyframes golpe-rival {
+    0% {
+        transform: translateX(0);
+
+    }
+
+    50% {
+        transform: translateX(-20px);
+
+    }
+
+    100% {
+        transform: translateX(0);
+
+    }
+}
+
+@keyframes golpeado {
+    0% {
+        filter: none;
+    }
+
+    20% {
+        filter: brightness(0) saturate(100%) sepia(100%) hue-rotate(-50deg) saturate(600%) brightness(90%);
+    }
+
+    40% {
+        filter: none;
+    }
+
+    60% {
+        filter: brightness(0) saturate(100%) sepia(100%) hue-rotate(-50deg) saturate(600%) brightness(90%);
+    }
+
+    80% {
+        filter: none;
+    }
+
+    100% {
+        filter: none;
+    }
+}
+
+.golpe-usuario {
+    animation: golpe-usuario 0.5s ease-in-out forwards;
+}
+
+.golpe-rival {
+    animation: golpe-rival 0.5s ease-in-out forwards;
+}
+
+.golpeado {
+    animation: golpeado 0.5s ease-in-out forwards;
+}
+
 
 /* ===== POKÉBALLS ===== */
 .pokeballs-container {
@@ -492,12 +552,12 @@
 /* ===== LOG DE BATALLA ===== */
 #battle-log {
     position: absolute;
-    bottom: 25%;
+    bottom: 20%;
     right: 25%;
     width: 250px;
     max-width: 25vw;
     min-width: 250px;
-    max-height: 100px;
+    max-height: 150px;
     min-height: 100px;
     overflow-y: auto;
     background-color: rgba(255, 255, 255, 0.92);

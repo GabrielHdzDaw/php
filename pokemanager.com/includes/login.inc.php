@@ -51,19 +51,21 @@ if ($_SERVER["REQUEST_METHOD"] == 'POST') {
 
                     header("Location: ../index.php");
                 } else {
-                    error_log("Falló password_verify()");
+                    $_SESSION['error'] = "<p>Ha fallado la verificación.</p>";
+                    header("Location: ../error.php");
                 }
             } else {
-                error_log("Usuario no encontrado en BD");
+                $_SESSION['error'] = "<p>Nombre de usuario o contraseña incorrectos.</p>";
+                header("Location: ../error.php");
             }
-            echo "Nombre de usuario o contraseña incorrectos.";
         } else {
-            error_log("Error en la consulta: " . print_r($consulta->errorInfo(), true));
+            $_SESSION['error'] = "<p>Error en la consulta.</p>";
+            header("Location: ../error.php");
         }
     } catch (PDOException $e) {
         error_log("¡Error!: " . $e->getMessage());
     }
 } else {
-    header("Location: ../index.php");
-    echo "No se ha podido iniciar sesión.";
+    $_SESSION['error'] = "<p>No se ha podido iniciar sesión.</p>";
+    header("Location: ../error.php");
 }

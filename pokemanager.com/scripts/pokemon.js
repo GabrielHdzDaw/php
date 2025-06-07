@@ -3,13 +3,13 @@ export class Pokemon {
         this.name = name;
         this.type1 = type1;
         this.type2 = type2 || null;
-        this.maxHP = hp || 100;
+        this.maxHP = hp;
         this.hp = this.maxHP;
-        this.attack = attack || 50;
-        this.defense = defense || 50;
-        this.spAttack = spAttack || 50;
-        this.spDefense = spDefense || 50;
-        this.speed = speed || 50;
+        this.attack = attack;
+        this.defense = defense;
+        this.spAttack = spAttack;
+        this.spDefense = spDefense;
+        this.speed = speed;
         this.img = img;
     }
     getName() {
@@ -68,7 +68,7 @@ export class Pokemon {
     setSpeed(speed) {
         this.speed = speed;
     }
-    
+
     receiveDamage(damage) {
         this.hp = Math.max(0, this.hp - damage);
     }

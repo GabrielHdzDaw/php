@@ -1,12 +1,11 @@
 <?php
-// Obtener progreso por generaciones
+
 $generaciones_data = [];
 
 if (isset($_SESSION['started'])) {
     try {
         require_once 'conectar_db.inc.php';
 
-        // Nombres de regiones por generación
         $regiones = [
             1 => 'Kanto',
             2 => 'Johto',

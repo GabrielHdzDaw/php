@@ -1,5 +1,81 @@
 const pokemonCards = document.querySelectorAll('.pokemon-card');
 
+document.addEventListener('DOMContentLoaded', function () {
+    const botonSubir = document.querySelector('.a-volver-arriba');
+    const distanciaParaMostrar = 300;
+
+    window.addEventListener('scroll', function () {
+        if (window.pageYOffset > distanciaParaMostrar) {
+            botonSubir.style.display = 'block';
+        } else {
+            botonSubir.style.display = 'none';
+        }
+    });
+
+    botonSubir.addEventListener('click', function (e) {
+        e.preventDefault();
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    });
+
+    initGenerationFilter();
+});
+
+function initGenerationFilter() {
+    const generacionItems = document.querySelectorAll('.generacion-item');
+    const pokemonCards = document.querySelectorAll('.pokemon-card');
+    let currentFilter = 'all';
+
+    generacionItems.forEach(item => {
+        item.addEventListener('click', () => {
+            const selectedGen = item.dataset.gen;
+
+            // Toggle: si ya está seleccionada la misma generación, mostrar todos
+            if (currentFilter === selectedGen) {
+                showAllPokemon();
+                removeActiveClass();
+                currentFilter = 'all';
+            } else {
+                filterByGeneration(selectedGen);
+                setActiveGeneration(item);
+                currentFilter = selectedGen;
+            }
+        });
+    });
+
+    function filterByGeneration(generation) {
+        pokemonCards.forEach(card => {
+            const pokemonGen = card.dataset.generation;
+            if (pokemonGen === generation) {
+                card.style.display = 'block';
+            } else {
+                card.style.display = 'none';
+            }
+        });
+    }
+
+    function showAllPokemon() {
+        pokemonCards.forEach(card => {
+            card.style.display = 'block';
+        });
+    }
+
+    function setActiveGeneration(activeItem) {
+        generacionItems.forEach(item => {
+            item.classList.remove('generation-active');
+        });
+        activeItem.classList.add('generation-active');
+    }
+
+    function removeActiveClass() {
+        generacionItems.forEach(item => {
+            item.classList.remove('generation-active');
+        });
+    }
+}
+
 pokemonCards.forEach(card => {
     card.addEventListener('click', () => {
         const pokemonId = card.dataset.id;
@@ -23,7 +99,7 @@ pokemonCards.forEach(card => {
             <span class="close">&times;</span>
             <div class="stats-info-container">
             <div class="pokemon-header">
-            <h2>#${pokemonId} ${pokemonName}</h2> <span>Gen ${pokemonGeneration} ${pokemonLegendary == 1 ? "Legendario" : "" }</span>
+            <h2>#${pokemonId} ${pokemonName}</h2> <span>Gen ${pokemonGeneration} ${pokemonLegendary == 1 ? "Legendario" : ""}</span>
             <img class="img-pokemon-pokedex-dialog" src="${pokemonImage}" alt="${pokemonName}">
             <img class="img-pokemon-type" src="img/types/${pokemonType1}.png" alt="${pokemonType1}">
             <img class="img-pokemon-type" src="img/types/${pokemonType2}.png" alt="${pokemonType2}">
@@ -64,8 +140,6 @@ pokemonCards.forEach(card => {
             <div class="pokemon-description">
             <p>${pokemonDescription}</p>
             </div>
-            
-
         </div>
         `;
 

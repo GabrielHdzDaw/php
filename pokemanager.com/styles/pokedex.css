@@ -1,9 +1,7 @@
 :root {
 
     --card-bg-color: #fff;
-    /* Color de fondo de las tarjetas */
     --card-border-color: #ccc;
-    /* Color del borde de las tarjetas */
 }
 
 @font-face {
@@ -11,26 +9,36 @@
     src: url('../fonts/pokemon-emerald.otf') format('truetype');
 }
 
-.volver-arriba{
+.a-volver-arriba {
+    display: none;
     position: fixed;
-    bottom: 250px;
-    right: 200px;
-    background-color: #0078bd;
+    bottom: 20px;
+    right: 20px;
+    z-index: 99;
+    
+}
+
+.volver-arriba {
+    font-family: "PokemonFont", sans-serif;
+    background: #e9a143;
     color: white;
     border: none;
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
+    border-radius: 20px;
     cursor: pointer;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: opacity 0.3s;
+}
+
+.volver-arriba:hover {
+    transition: 0.3s;
+    background: #ffbd67;
 }
 
 .pokedex {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
     gap: 5px;
     padding: 5px;
-    
+
     background-color: white;
     border-radius: 20px;
     margin: 20px auto;
@@ -44,12 +52,10 @@
     border-radius: 50%;
     overflow: hidden;
     display: flex;
-    text-align: center;
-    transition: transform 0.3s ease;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    transition: 0.3s ease;
+    transition: transform 0.3s ease; /* Solo una transición */
 }
 
 .pokemon-card:hover {
@@ -65,19 +71,21 @@
 }
 
 .pokemon-card:has(.pokemon-img.pokemon-not-found) {
-  pointer-events: none;
-  cursor: default; /* Opcional: cambia el cursor */
+    pointer-events: none;
+    cursor: default;
 }
 
 .pokemon-img {
     filter: drop-shadow(5px 5px 5px rgba(0, 0, 0, 0.5));
     margin-bottom: 10px;
-    /* Ajusta el alto al contenedor */
     object-fit: cover;
-    /* Recorta la imagen manteniendo proporciones */
     display: block;
     user-select: none;
     -webkit-user-drag: none;
+    /* Añadir estas líneas para forzar el centrado */
+    margin-left: auto;
+    margin-right: auto;
+    flex-shrink: 0; /* Evita que la imagen se comprima */
 }
 
 .pokemon-not-found {
@@ -85,12 +93,7 @@
     font-size: 1.2em;
     margin-top: 20px;
     filter:
-        brightness(0)
-        
-        contrast(1000%)
-       
-        drop-shadow(0 0 8px rgba(0, 0, 0, 0.8));
-    
+        brightness(0) contrast(1000%) drop-shadow(0 0 8px rgba(0, 0, 0, 0.8));
 }
 
 .modal {
@@ -192,7 +195,7 @@
 }
 
 h2 {
-    
+
     margin-bottom: 10px;
 }
 
@@ -264,10 +267,9 @@ h2 {
 .dashboard-container {
     display: flex;
     align-items: center;
-    
+
     padding: 20px;
     /* background-color: #f8f9fa; */
     border-radius: 15px;
     /* box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); */
 }
-

@@ -22,13 +22,13 @@ if (!isset($_SESSION['pokemons_usuario']) || (isset($_SESSION['pokemons_usuario'
     $usuarioAleatorioId = $randomUsuario['id'];
     $pokemonRivalTodos = getUserPokemons($usuarioAleatorioId, $pdo);
 
-    $pokemonRivalIds = array_column($pokemonRivalTodos, 'id_pokemon');
-    shuffle($pokemonRivalIds);
-    $pokemonsRival = array_slice($pokemonRivalIds, 0, 6);
-
-    $userPokemonIds = $_SESSION['pokemons_usuario'];
+    $userPokemonIds = array_unique($_SESSION['pokemons_usuario']);
     shuffle($userPokemonIds);
     $pokemonsUsuario = array_slice($userPokemonIds, 0, 6);
+
+    $pokemonRivalIds = array_unique(array_column($pokemonRivalTodos, 'id_pokemon'));
+    shuffle($pokemonRivalIds);
+    $pokemonsRival = array_slice($pokemonRivalIds, 0, 6);
 
     $pokemonById = [];
     foreach ($pokedex as $p) {
@@ -67,6 +67,7 @@ if (!isset($_SESSION['pokemons_usuario']) || (isset($_SESSION['pokemons_usuario'
 
         <div>
             <button id="start-battle">¡Combatir!</button>
+            <button id="search-rival">Buscar otro adversario</button>
         </div>
 
         <div class='combate-pokemons-rival-container'>
@@ -97,11 +98,4 @@ if (!isset($_SESSION['pokemons_usuario']) || (isset($_SESSION['pokemons_usuario'
             </div>
         </div>
     </div>
-
-
-
-
-
-
-
 <?php } ?>

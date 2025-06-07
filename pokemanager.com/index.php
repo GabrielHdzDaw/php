@@ -1,7 +1,10 @@
 <?php
 include_once 'includes/header.inc.php';
 
-
+if (!empty($_SESSION['registro_exitoso'])) {
+    echo "<script>alert('Registro exitoso');</script>";
+    unset($_SESSION['registro_exitoso']);
+}
 ?>
 <main>
     <!-- Tab links -->

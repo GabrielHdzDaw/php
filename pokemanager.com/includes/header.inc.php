@@ -22,7 +22,7 @@ session_start();
     <link rel="stylesheet" href="styles/generaciones.css" type="text/css">
     <link rel="stylesheet" href="styles/admin.css" type="text/css">
     <script src="scripts/tabs.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <title>PokéManager</title>
 </head>
@@ -43,7 +43,8 @@ session_start();
                     echo "<div class='nav-usuario-contenedor'>";
                     echo "<p class='nav-usuario-nombre'>¡Hola, " . $_SESSION['user_info']['nombre'] . "!</p>";
                     echo "<img class='img-perfil-nav' src='" . $_SESSION['user_info']['ruta_foto_perfil'] . "'>";
-                    echo '<a href="includes/logout.inc.php">Cerrar sesión</a>';
+                    echo '<a class="logout-a" href="includes/logout.inc.php"><button class="logout-button">Cerrar sesión</button></a>';
+                    echo '</div>';
                 } else {
                 ?>
                     <form action="includes/login.inc.php" method="POST" class="formulario-login">
@@ -68,11 +69,18 @@ session_start();
                 <input type="text" name="nombre_usuario_registro" id="nombre_usuario_registro" placeholder="Nombre de usuario" required>
                 <input type="email" name="email" id="email" placeholder="Email" required>
                 <input type="text" name="repetir_email" id="repetir_email" placeholder="Repetir email" required>
-                <input type="password" name="contrasena_registro" id="contrasena_registro" placeholder="Contraseña" required>
+                <input type="password" name="contrasena_registro" id="contrasena_registro"
+                    placeholder="Contraseña" required
+                    pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$"
+                    title="Mínimo 8 caracteres con letras y números">
                 <input type="password" name="repetir_contrasena" id="repetir_contrasena" placeholder="Repetir contraseña" required>
                 <label for="fecha_nacimiento">Introduce tu fecha de nacimiento:</label>
-                <input type="date" name="fecha_nacimiento" id="fecha_nacimiento" placeholder="Fecha de nacimiento" required">
-                <input type="file" name="ruta_foto_perfil" id="ruta_foto_perfil">
+                <input type="date" name="fecha_nacimiento" id="fecha_nacimiento"
+                    required max="2010-01-01"
+                    title="Debes tener más de 14 años">
+                <input type="file" name="ruta_foto_perfil" id="ruta_foto_perfil"
+                    accept="image/*"
+                    title="Solo se permiten imágenes">
                 <button type="submit">Registrarse</button>
                 <span id="botonCerrarRegistro">X</span>
             </form>

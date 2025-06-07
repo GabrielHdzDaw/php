@@ -14,16 +14,16 @@ sobresFormulario.forEach((formulario) => {
             divSobre.classList.add('animacion-sobre');
 
             setTimeout(() => {
-                divSobre.classList.remove('animacion-sobre'); 
+                divSobre.classList.remove('animacion-sobre');
                 form.submit();
             }, 2500);
         }
     });
 });
 
-
+// Tuve muchos problemas con el dialogo de sobre. Esto es lo que se me propuso para que funcione correctamente.
+//  Se guarda en sessionStorage si el dialogo se ha cerrado para que no se vuelva a abrir al recargar la pagina.
 if (dialogoSobre) {
-    // Mostrar solo si no está cerrado en sessionStorage
     if (!sessionStorage.getItem('dialogoSobreCerrado')) {
         dialogoSobre.classList.add("blur-inverso");
         dialogoSobre.showModal();
@@ -31,7 +31,7 @@ if (dialogoSobre) {
         document.body.style.overflow = "hidden";
     }
 
-    
+
     cerrarDialogoSobre?.addEventListener("click", () => {
         dialogoSobre.classList.remove("blur-inverso");
         dialogoSobre.style.display = "none";
@@ -41,7 +41,7 @@ if (dialogoSobre) {
         sessionStorage.setItem('dialogoSobreCerrado', 'true');
     });
 
-    
+
     dialogoSobre.addEventListener("cancel", (e) => {
         e.preventDefault();
         dialogoSobre.close();
@@ -51,7 +51,6 @@ if (dialogoSobre) {
     });
 }
 
-// Limpiar sessionStorage al salir de la página
 window.addEventListener('beforeunload', () => {
     sessionStorage.removeItem('dialogoSobreCerrado');
 });
